@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/logo_bg">
+
+    <!-- Center Logo -->
+    <LinearLayout
+        android:id="@+id/centerSection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <!-- Shield Icon -->
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="216dp"
+            android:layout_height="208dp"
+            android:src="@drawable/download"
+            android:alpha="0"
+            android:scaleX="0.5"
+            android:scaleY="0.5" />
+
+        <!-- App Name -->
+        <TextView
+            android:id="@+id/tvAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="ShaktiSetu"
+            android:textColor="@color/logo_text"
+            android:fontFamily="@font/bdscript_regular"
+            android:textSize="80sp"
+            android:alpha="0" />
+
+        <!-- Tagline -->
+        <TextView
+            android:id="@+id/tvTagline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="A BRIDGE TO SAFETY"
+            android:fontFamily="@font/inter_semibold"
+            android:textColor="#999999"
+            android:textSize="14sp"
+            android:alpha="0" />
+    </LinearLayout>
+
+    <!-- Bottom Loading -->
+    <LinearLayout
+        android:id="@+id/bottomSection"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="60dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:alpha="0">
+
+        <ProgressBar
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:indeterminateTint="@color/logo_text" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Loading..."
+            android:visibility="gone"
+            android:textColor="#AAAAAA"
+            android:textSize="13sp" />
+    </LinearLayout>
+
+</RelativeLayout>

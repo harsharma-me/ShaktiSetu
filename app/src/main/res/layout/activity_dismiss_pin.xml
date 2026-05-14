@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D32F2F"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <!-- Shakti Setu Title -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:fontFamily="cursive"
+        android:text="Shakti Setu"
+        android:textColor="#FFFFFF"
+        android:textSize="36sp" />
+
+    <!-- Shield Icon — white version -->
+    <ImageView
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="30dp"
+        android:src="@drawable/ic_shield_white"
+        android:contentDescription="Shield" />
+
+    <!-- PIN Display Box -->
+    <TextView
+        android:id="@+id/tvPinDisplay"
+        android:layout_width="250dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/pin_box_border"
+        android:gravity="center"
+        android:letterSpacing="0.5"
+        android:textColor="#FFFFFF"
+        android:textSize="28sp" />
+
+    <!-- Number Pad -->
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:columnCount="3"
+        android:rowCount="4"
+        android:alignmentMode="alignBounds">
+
+        <!-- Row 1: 1 2 3 -->
+        <TextView android:id="@+id/btn1" style="@style/PinButton" android:text="1" />
+        <TextView android:id="@+id/btn2" style="@style/PinButton" android:text="2" />
+        <TextView android:id="@+id/btn3" style="@style/PinButton" android:text="3" />
+
+        <!-- Row 2: 4 5 6 -->
+        <TextView android:id="@+id/btn4" style="@style/PinButton" android:text="4" />
+        <TextView android:id="@+id/btn5" style="@style/PinButton" android:text="5" />
+        <TextView android:id="@+id/btn6" style="@style/PinButton" android:text="6" />
+
+        <!-- Row 3: 7 8 9 -->
+        <TextView android:id="@+id/btn7" style="@style/PinButton" android:text="7" />
+        <TextView android:id="@+id/btn8" style="@style/PinButton" android:text="8" />
+        <TextView android:id="@+id/btn9" style="@style/PinButton" android:text="9" />
+
+        <!-- Row 4: empty 0 backspace -->
+        <TextView style="@style/PinButton" android:text="" android:clickable="false" />
+        <TextView android:id="@+id/btn0" style="@style/PinButton" android:text="0" />
+        <TextView android:id="@+id/btnBackspace" style="@style/PinButton" android:text="⌫" />
+
+    </GridLayout>
+
+    <!-- Confirm Button -->
+    <Button
+        android:id="@+id/btnConfirm"
+        android:layout_width="280dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/confirm_button_border"
+        android:text="Confirm"
+        android:textColor="#FFFFFF"
+        android:textSize="18sp"
+        android:textAllCaps="false" />
+
+</LinearLayout>

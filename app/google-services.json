@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "933736652914",
+    "project_id": "shaktisetu-18b97",
+    "storage_bucket": "shaktisetu-18b97.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:933736652914:android:b8ee621b533cd76664a2eb",
+        "android_client_info": {
+          "package_name": "com.example.shaktisetu"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8rirB71PKtvKFEVKhiIa0d63sRAWe0m4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

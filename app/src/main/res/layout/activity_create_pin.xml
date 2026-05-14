@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:background="#EFE6E3"
+    android:padding="24dp">
+
+    <!-- Logo Title -->
+
+
+    <!-- Subtitle -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create Password"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/inter_semibold"
+        android:textColor="#222222"
+        android:layout_marginTop="8dp"/>
+
+    <!-- Shield Icon -->
+    <ImageView
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:src="@drawable/ic_shield"
+        android:layout_marginTop="30dp"/>
+
+    <!-- PIN Display Box -->
+    <TextView
+        android:id="@+id/tvPinDisplay"
+        android:layout_width="250dp"
+        android:layout_height="55dp"
+        android:background="@drawable/pin_input_box"
+        android:gravity="center"
+        android:textSize="28sp"
+        android:textColor="#222222"
+        android:letterSpacing="0.5"
+        android:layout_marginTop="30dp"/>
+
+    <!-- Number Pad -->
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:columnCount="3"
+        android:layout_marginTop="30dp"
+        android:useDefaultMargins="true">
+
+        <!-- Row 1 -->
+        <TextView
+            android:id="@+id/btn1"
+            style="@style/PinButton"
+            android:text="1"/>
+        <TextView
+            android:id="@+id/btn2"
+            style="@style/PinButton"
+            android:text="2"/>
+        <TextView
+            android:id="@+id/btn3"
+            style="@style/PinButton"
+            android:text="3"/>
+
+        <!-- Row 2 -->
+        <TextView
+            android:id="@+id/btn4"
+            style="@style/PinButton"
+            android:text="4"/>
+        <TextView
+            android:id="@+id/btn5"
+            style="@style/PinButton"
+            android:text="5"/>
+        <TextView
+            android:id="@+id/btn6"
+            style="@style/PinButton"
+            android:text="6"/>
+
+        <!-- Row 3 -->
+        <TextView
+            android:id="@+id/btn7"
+            style="@style/PinButton"
+            android:text="7"/>
+        <TextView
+            android:id="@+id/btn8"
+            style="@style/PinButton"
+            android:text="8"/>
+        <TextView
+            android:id="@+id/btn9"
+            style="@style/PinButton"
+            android:text="9"/>
+
+        <!-- Row 4 -->
+        <Space
+            android:layout_width="80dp"
+            android:layout_height="80dp"/>
+        <TextView
+            android:id="@+id/btn0"
+            style="@style/PinButton"
+            android:text="0"/>
+        <TextView
+            android:id="@+id/btnBackspace"
+            style="@style/PinButton"
+            android:text="⌫"
+            android:textSize="24sp"/>
+
+    </GridLayout>
+
+    <!-- Spacer -->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"/>
+
+    <!-- Confirm Button -->
+    <!-- Confirm Button -->
+    <!-- Confirm Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btnConfirm"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:text="Confirm"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:textAllCaps="false"
+        app:backgroundTint="#E53935"
+        app:cornerRadius="30dp"
+        android:layout_marginBottom="20dp"/>
+
+</LinearLayout>

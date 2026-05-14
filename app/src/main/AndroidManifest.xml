@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+    <!-- Device features -->
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" /> <!-- Permissions -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.VIBRATE" /> <!-- Storage: legacy support -->
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:targetApi="23" />
+    <uses-permission
+        android:name="android.permission.READ_EXTERNAL_STORAGE"
+        tools:targetApi="23" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:theme="@style/Theme.ShaktiSetu">
+        <activity
+            android:name=".TermsConditionsDialog"
+            android:exported="false" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" /> <!-- FileProvider for camera/capture best practice -->
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.shaktisetu.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true" /> <!-- Splash = LAUNCHER (start yahi se) -->
+        <activity
+            android:name=".SplashActivity"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+
+        </activity> <!-- Landing (login/welcome) -->
+<!--        <activity-->
+<!--            android:name=".LandingActivity"-->
+<!--            android:exported="false" /> &lt;!&ndash; Main (home) &ndash;&gt;-->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false" /> <!-- Settings -->
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" /> <!-- Fake Call -->
+        <activity
+            android:name=".FakeCallActivity"
+            android:exported="false" /> <!-- Incoming Call (showOnLockScreen) -->
+        <activity
+            android:name=".IncomingCallActivity"
+            android:exported="false"
+            android:showOnLockScreen="true"
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:turnScreenOn="true" /> <!-- Contacts -->
+        <activity
+            android:name=".ContactsActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" /> <!-- Add/Edit Contact -->
+        <activity
+            android:name=".AddEditContactActivity"
+            android:exported="false" /> <!-- Evidence -->
+        <activity
+            android:name=".EvidenceActivity"
+            android:exported="false"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" /> <!-- SOS Alert -->
+        <activity
+            android:name=".SosAlertActivity"
+            android:exported="false" /> <!-- Create PIN -->
+        <activity
+            android:name=".CreatePinActivity"
+            android:exported="false" /> <!-- Dismiss PIN -->
+        <activity
+            android:name=".DismissPinActivity"
+            android:exported="false" /> <!-- Sign In -->
+        <activity
+            android:name=".SignInActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="https://dfnuzyrwrdnuxqsbauzu.supabase.co/auth/v1/callback"
+                    android:scheme="com.example.shaktisetu" />
+            </intent-filter>
+        </activity> <!-- Sign Up -->
+        <activity
+            android:name=".SignUpActivity"
+            android:exported="false" /> <!-- Phone Login -->
+    </application>
+
+</manifest>
