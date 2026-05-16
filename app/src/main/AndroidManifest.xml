@@ -1,13 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
+
     <!-- Device features -->
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false" /> <!-- Permissions -->
+        android:required="false" />
+
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.SEND_SMS" />
@@ -15,7 +18,9 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
-    <uses-permission android:name="android.permission.VIBRATE" /> <!-- Storage: legacy support -->
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <!-- Storage: legacy support -->
     <uses-permission
         android:name="android.permission.WRITE_EXTERNAL_STORAGE"
         tools:targetApi="23" />
@@ -32,21 +37,29 @@
         android:theme="@style/Theme.ShaktiSetu">
         <activity
             android:name=".TermsConditionsDialog"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
         <activity
             android:name=".EditProfileActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
         <activity
             android:name=".ProfileActivity"
-            android:exported="false" /> <!-- FileProvider for camera/capture best practice -->
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
+
+        <!-- FileProvider for camera/capture best practice -->
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.shaktisetu.fileprovider"
             android:exported="false"
-            android:grantUriPermissions="true" /> <!-- Splash = LAUNCHER (start yahi se) -->
+            android:grantUriPermissions="true" />
+
+        <!-- Splash = LAUNCHER (start yahi se) -->
         <activity
             android:name=".SplashActivity"
-            android:exported="true">
+            android:exported="true"
+            android:hardwareAccelerated="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -54,50 +67,83 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
 
-        </activity> <!-- Landing (login/welcome) -->
+        </activity>
+
+        <!-- Landing (login/welcome) -->
 <!--        <activity-->
 <!--            android:name=".LandingActivity"-->
 <!--            android:exported="false" /> &lt;!&ndash; Main (home) &ndash;&gt;-->
         <activity
             android:name=".MainActivity"
-            android:exported="false" /> <!-- Settings -->
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
+
+        <!-- Settings -->
         <activity
             android:name=".SettingsActivity"
-            android:exported="false" /> <!-- Fake Call -->
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
+
+        <!-- Fake Call -->
         <activity
             android:name=".FakeCallActivity"
-            android:exported="false" /> <!-- Incoming Call (showOnLockScreen) -->
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
+
+        <!-- Incoming Call (showOnLockScreen) -->
         <activity
             android:name=".IncomingCallActivity"
             android:exported="false"
             android:showOnLockScreen="true"
             android:theme="@style/Theme.AppCompat.NoActionBar"
-            android:turnScreenOn="true" /> <!-- Contacts -->
+            android:turnScreenOn="true"
+            android:hardwareAccelerated="true"/>
+
+        <!-- Contacts -->
         <activity
             android:name=".ContactsActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" /> <!-- Add/Edit Contact -->
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:hardwareAccelerated="true"/>
+
+        <!-- Add/Edit Contact -->
         <activity
             android:name=".AddEditContactActivity"
-            android:exported="false" /> <!-- Evidence -->
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
+
+        <!-- Evidence -->
         <activity
             android:name=".EvidenceActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar" /> <!-- SOS Alert -->
+            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:hardwareAccelerated="true"/>
+
+        <!-- SOS Alert -->
         <activity
             android:name=".SosAlertActivity"
-            android:exported="false" /> <!-- Create PIN -->
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
+
+        <!-- Create PIN -->
         <activity
             android:name=".CreatePinActivity"
-            android:exported="false" /> <!-- Dismiss PIN -->
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
+
+        <!-- Dismiss PIN -->
         <activity
             android:name=".DismissPinActivity"
-            android:exported="false" /> <!-- Sign In -->
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
+
+        <!-- Sign In -->
         <activity
             android:name=".SignInActivity"
-            android:exported="true">
+            android:exported="true"
+            android:hardwareAccelerated="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
@@ -105,13 +151,26 @@
                 <category android:name="android.intent.category.BROWSABLE" />
 
                 <data
-                    android:host="https://dfnuzyrwrdnuxqsbauzu.supabase.co/auth/v1/callback"
-                    android:scheme="com.example.shaktisetu" />
+                    android:scheme="https"
+                    android:host="shaktisetu-18b97.firebaseapp.com"
+                    android:pathPrefix="/__/auth/callback" />
             </intent-filter>
-        </activity> <!-- Sign Up -->
+        </activity>
+
+        <!-- Sign Up -->
         <activity
             android:name=".SignUpActivity"
-            android:exported="false" /> <!-- Phone Login -->
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
+
+        <meta-data
+            android:name="android.max_aspect_ratio"
+            android:value="2.1" />
+
+        <!-- Enable high refresh rate -->
+        <meta-data
+            android:name="android.hardware.screen.orientation"
+            android:value="portrait" />
     </application>
 
 </manifest>

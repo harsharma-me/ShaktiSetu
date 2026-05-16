@@ -26,20 +26,20 @@
         <ImageView
             android:id="@+id/navEvidence"
             android:layout_width="0dp"
-            android:layout_height="24dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:src="@drawable/eye_scan_svgrepo_com"
             android:tint="#AAA4A7"
             android:contentDescription="Evidence"
             android:clickable="true"
             android:focusable="true"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"/>
 
         <!-- Contacts -->
         <ImageView
             android:id="@+id/navContacts"
             android:layout_width="0dp"
-            android:layout_height="24dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:src="@drawable/ic_nav_contacts"
             android:tint="#AAA4A7"
@@ -58,7 +58,7 @@
         <ImageView
             android:id="@+id/navCall"
             android:layout_width="0dp"
-            android:layout_height="24dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:src="@drawable/ic_nav_call"
             android:tint="#AAA4A7"
@@ -71,7 +71,7 @@
         <ImageView
             android:id="@+id/navSettings"
             android:layout_width="0dp"
-            android:layout_height="24dp"
+            android:layout_height="40dp"
             android:layout_weight="1"
             android:src="@drawable/ic_nav_settings"
             android:tint="#8B5872"
