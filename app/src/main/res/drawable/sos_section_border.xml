@@ -3,9 +3,9 @@
     android:shape="rectangle">
     <stroke
         android:width="2dp"
-        android:color="#FF2D55"
+        android:color="@color/text_action"
         android:dashWidth="8dp"
         android:dashGap="4dp" />
     <corners android:radius="16dp" />
-    <solid android:color="#F5F5F5" />
+    <solid android:color="@color/surface_card" />
 </shape>

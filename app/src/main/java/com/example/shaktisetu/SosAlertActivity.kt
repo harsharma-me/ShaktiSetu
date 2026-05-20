@@ -15,6 +15,7 @@ import android.media.MediaPlayer
 import android.media.MediaRecorder
 import android.media.RingtoneManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.Environment
@@ -23,12 +24,16 @@ import android.os.Looper
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.telephony.SmsManager
+import android.util.Log
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
+import com.example.shaktisetu.database.AppDatabase
+import kotlinx.coroutines.launch
 import androidx.camera.core.CameraSelector
 import androidx.camera.core.ImageCapture
 import androidx.camera.core.ImageCaptureException
@@ -405,89 +410,85 @@ class SosAlertActivity :
     // =========================
 
     private fun sendLocationSMS() {
+        lifecycleScope.launch {
+            try {
+                // Ensure contacts are loaded from DB if not already cached
+                if (cachedContacts.isEmpty()) {
+                    val db = AppDatabase.getDatabase(this@SosAlertActivity)
+                    val contacts = db.emergencyContactDao().getAllContacts()
+                    cachedContacts = contacts.map { it.contact_phone }
+                }
 
-        try {
+                if (cachedContacts.isEmpty()) {
+                    runOnUiThread {
+                        Toast.makeText(this@SosAlertActivity, "⚠️ No emergency contacts found!", Toast.LENGTH_SHORT).show()
+                    }
+                    return@launch
+                }
 
-            val locationLink =
+                if (ContextCompat.checkSelfPermission(this@SosAlertActivity, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) {
+                    runOnUiThread {
+                        Toast.makeText(this@SosAlertActivity, "❌ SMS Permission missing!", Toast.LENGTH_SHORT).show()
+                    }
+                    return@launch
+                }
 
-                if (
-                    currentLatitude != 0.0 &&
-                    currentLongitude != 0.0
-                ) {
-
+                val locationLink = if (currentLatitude != 0.0 && currentLongitude != 0.0) {
                     "https://maps.google.com/?q=$currentLatitude,$currentLongitude"
-
                 } else {
-
                     "Location unavailable"
                 }
 
-            val message =
-                """
+                val message = """
 🆘 EMERGENCY! I need help!
 
 📍 Location:
 $locationLink
 
 🕐 Time:
-${
-                    SimpleDateFormat(
-                        "hh:mm a",
-                        Locale.getDefault()
-                    ).format(Date())
-                }
+${SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())}
 
 - ShaktiSetu SOS
                 """.trimIndent()
 
-            if (
-
-                ContextCompat
-                    .checkSelfPermission(
-                        this,
-                        Manifest.permission.SEND_SMS
-                    )
-
-                == PackageManager.PERMISSION_GRANTED
-            ) {
-
-                val smsManager =
+                val smsManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    getSystemService(SmsManager::class.java)
+                } else {
+                    @Suppress("DEPRECATION")
                     SmsManager.getDefault()
+                }
 
+                var sentCount = 0
                 for (contact in cachedContacts) {
+                    if (contact.isBlank()) continue
+                    
+                    // Format number: remove spaces and add +91 if 10 digits
+                    val cleanedContact = contact.replace(Regex("[^0-9+]"), "")
+                    val formattedContact = if (cleanedContact.length == 10 && !cleanedContact.startsWith("+")) {
+                        "+91$cleanedContact"
+                    } else {
+                        cleanedContact
+                    }
 
                     try {
-
-                        val parts =
-                            smsManager.divideMessage(
-                                message
-                            )
-
-                        smsManager
-                            .sendMultipartTextMessage(
-                                contact,
-                                null,
-                                parts,
-                                null,
-                                null
-                            )
-
+                        val parts = smsManager.divideMessage(message)
+                        smsManager.sendMultipartTextMessage(formattedContact, null, parts, null, null)
+                        sentCount++
+                        Log.d("SOS_SMS", "Sent to: $formattedContact")
                     } catch (e: Exception) {
-
-                        e.printStackTrace()
+                        Log.e("SOS_SMS", "Failed to send to $formattedContact: ${e.message}")
                     }
                 }
 
-                Toast.makeText(
-                    this,
-                    "📱 SOS Sent",
-                    Toast.LENGTH_SHORT
-                ).show()
+                if (sentCount > 0) {
+                    runOnUiThread {
+                        Toast.makeText(this@SosAlertActivity, "📱 SOS Sent to $sentCount contacts", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-
-        } catch (e: Exception) {
-
-            e.printStackTrace()
         }
     }
 
@@ -496,21 +497,23 @@ ${
     // =========================
 
     private fun cacheEmergencyContacts() {
-
-        val sharedPref =
-            getSharedPreferences(
-                "ShaktiSetuPrefs",
-                MODE_PRIVATE
-            )
-
-        val saved =
-            sharedPref.getStringSet(
-                "cached_contacts",
-                emptySet()
-            ) ?: emptySet()
-
-        cachedContacts =
-            saved.toList()
+        lifecycleScope.launch {
+            try {
+                val db = AppDatabase.getDatabase(this@SosAlertActivity)
+                val contacts = db.emergencyContactDao().getAllContacts()
+                cachedContacts = contacts.map { it.contact_phone }
+                
+                if (cachedContacts.isEmpty()) {
+                    Toast.makeText(
+                        this@SosAlertActivity,
+                        "⚠️ No emergency contacts found!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
     }
 
     // =========================
@@ -1053,48 +1056,46 @@ ${
     }
 
     private fun sendFinalSMS() {
+        lifecycleScope.launch {
+            try {
+                if (cachedContacts.isEmpty()) {
+                    val db = AppDatabase.getDatabase(this@SosAlertActivity)
+                    cachedContacts = db.emergencyContactDao().getAllContacts().map { it.contact_phone }
+                }
 
-        try {
+                if (cachedContacts.isEmpty()) return@launch
 
-            val message =
-                "✅ I am safe now. Emergency dismissed.\n- ShaktiSetu"
+                if (ContextCompat.checkSelfPermission(this@SosAlertActivity, Manifest.permission.SEND_SMS) != PackageManager.PERMISSION_GRANTED) return@launch
 
-            if (
+                val message = "✅ I am safe now. Emergency dismissed.\n- ShaktiSetu"
 
-                ContextCompat
-                    .checkSelfPermission(
-                        this,
-                        Manifest.permission.SEND_SMS
-                    )
-
-                == PackageManager.PERMISSION_GRANTED
-            ) {
-
-                val smsManager =
+                val smsManager = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                    getSystemService(SmsManager::class.java)
+                } else {
+                    @Suppress("DEPRECATION")
                     SmsManager.getDefault()
+                }
 
                 for (contact in cachedContacts) {
+                    if (contact.isBlank()) continue
+
+                    // Format number: remove spaces and add +91 if 10 digits
+                    val cleanedContact = contact.replace(Regex("[^0-9+]"), "")
+                    val formattedContact = if (cleanedContact.length == 10 && !cleanedContact.startsWith("+")) {
+                        "+91$cleanedContact"
+                    } else {
+                        cleanedContact
+                    }
 
                     try {
-
-                        smsManager.sendTextMessage(
-                            contact,
-                            null,
-                            message,
-                            null,
-                            null
-                        )
-
+                        smsManager.sendTextMessage(formattedContact, null, message, null, null)
                     } catch (e: Exception) {
-
                         e.printStackTrace()
                     }
                 }
+            } catch (e: Exception) {
+                e.printStackTrace()
             }
-
-        } catch (e: Exception) {
-
-            e.printStackTrace()
         }
     }
 

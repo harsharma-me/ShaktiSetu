@@ -8,10 +8,12 @@ import android.os.Bundle
 import android.text.InputType
 import android.widget.EditText
 import android.widget.LinearLayout
+import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
 import com.google.firebase.auth.FirebaseAuth
 
@@ -85,6 +87,48 @@ class SettingsActivity : AppCompatActivity() {
             findViewById<LinearLayout>(
                 R.id.btnDeleteAccount
             )
+
+        val btnChangePin =
+            findViewById<LinearLayout>(
+                R.id.btnChangePin
+            )
+
+        // =========================
+        // CHANGE PIN
+        // =========================
+        btnChangePin.setOnClickListener {
+            showChangePinDialog()
+        }
+
+        // =========================
+        // THEME SELECTION
+        // =========================
+        val rgTheme = findViewById<RadioGroup>(R.id.rgTheme)
+        val currentTheme = sharedPreferences.getInt("theme_mode", AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
+        
+        when (currentTheme) {
+            AppCompatDelegate.MODE_NIGHT_NO -> rgTheme.check(R.id.rbLight)
+            AppCompatDelegate.MODE_NIGHT_YES -> rgTheme.check(R.id.rbDark)
+            else -> rgTheme.check(R.id.rbSystem)
+        }
+
+        rgTheme.setOnCheckedChangeListener { _, checkedId ->
+            val mode = when (checkedId) {
+                R.id.rbLight -> AppCompatDelegate.MODE_NIGHT_NO
+                R.id.rbDark -> AppCompatDelegate.MODE_NIGHT_YES
+                else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
+            }
+            
+            sharedPreferences.edit().putInt("theme_mode", mode).apply()
+            AppCompatDelegate.setDefaultNightMode(mode)
+            
+            val themeName = when (mode) {
+                AppCompatDelegate.MODE_NIGHT_NO -> "Light"
+                AppCompatDelegate.MODE_NIGHT_YES -> "Dark"
+                else -> "System"
+            }
+            Toast.makeText(this, "Theme set to $themeName", Toast.LENGTH_SHORT).show()
+        }
 
         // =========================
         // PROFILE
@@ -249,6 +293,29 @@ class SettingsActivity : AppCompatActivity() {
     // =========================
     // RESET PASSWORD
     // =========================
+
+    private fun showChangePinDialog() {
+        val input = EditText(this).apply {
+            hint = "Enter 4-digit PIN"
+            inputType = InputType.TYPE_CLASS_NUMBER or InputType.TYPE_NUMBER_VARIATION_PASSWORD
+            setPadding(32, 24, 32, 24)
+        }
+
+        AlertDialog.Builder(this, R.style.DialogTheme)
+            .setTitle("🔢 Change SOS PIN")
+            .setView(input)
+            .setPositiveButton("Save") { _, _ ->
+                val newPin = input.text.toString().trim()
+                if (newPin.length == 4) {
+                    sharedPreferences.edit().putString("user_pin", newPin).apply()
+                    Toast.makeText(this, "✅ PIN updated successfully", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(this, "❌ Please enter a 4-digit PIN", Toast.LENGTH_SHORT).show()
+                }
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
 
     private fun showResetPasswordDialog() {
 

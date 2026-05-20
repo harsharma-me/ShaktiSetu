@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F2EDED">
+    android:background="@color/background">
 
     <ScrollView
         android:layout_width="match_parent"
@@ -23,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Settings"
-                android:textColor="#000000"
+                android:textColor="@color/text_primary"
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="20dp" />
@@ -66,14 +67,53 @@
                         android:layout_weight="1"
                         android:layout_marginStart="12dp"
                         android:text="Account info"
-                        android:textColor="#000000"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="›"
-                        android:textColor="#CCCCCC"
+                        android:textColor="@color/text_light_gray"
+                        android:textSize="24sp" />
+                </LinearLayout>
+
+                <!-- Change SOS PIN -->
+                <LinearLayout
+                    android:id="@+id/btnChangePin"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginEnd="8dp"
+                    android:layout_marginBottom="4dp"
+                    android:background="@drawable/settings_item_bg"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:clickable="true"
+                    android:focusable="true">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="🔢"
+                        android:textSize="20sp" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_marginStart="12dp"
+                        android:text="Change SOS PIN"
+                        android:textColor="@color/text_primary"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="›"
+                        android:textColor="@color/text_light_gray"
                         android:textSize="24sp" />
                 </LinearLayout>
 
@@ -103,14 +143,14 @@
                         android:layout_weight="1"
                         android:layout_marginStart="12dp"
                         android:text="Change password"
-                        android:textColor="#000000"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="›"
-                        android:textColor="#CCCCCC"
+                        android:textColor="@color/text_light_gray"
                         android:textSize="24sp" />
                 </LinearLayout>
 
@@ -142,14 +182,14 @@
 <!--                        android:layout_weight="1"-->
 <!--                        android:layout_marginStart="12dp"-->
 <!--                        android:text="Contacts"-->
-<!--                        android:textColor="#000000"-->
+<!--                        android:textColor="@color/text_primary"-->
 <!--                        android:textSize="16sp" />-->
 
 <!--                    <TextView-->
 <!--                        android:layout_width="wrap_content"-->
 <!--                        android:layout_height="wrap_content"-->
 <!--                        android:text="›"-->
-<!--                        android:textColor="#CCCCCC"-->
+<!--                        android:textColor="@color/text_light_gray"-->
 <!--                        android:textSize="24sp" />-->
 <!--                </LinearLayout>-->
 
@@ -160,12 +200,17 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sensors and Automation"
-                android:textColor="#888888"
+                android:textColor="@color/text_secondary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
 
+            <!-- Theme Selection -->
+
             <!-- Shake Detection -->
+
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
@@ -200,7 +245,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Shake Detection"
-                        android:textColor="#000000"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp" />
 
                     <TextView
@@ -208,7 +253,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TEST SIMULATION"
-                        android:textColor="#FF2D55"
+                        android:textColor="@color/text_action"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:clickable="true"
@@ -219,7 +264,9 @@
                     android:id="@+id/switchShake"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="true" />
+                    android:checked="true"
+                    app:thumbTint="@color/text_brand"
+                    app:trackTint="@color/text_hint" />
             </LinearLayout>
 
             <!-- Voice Detection -->
@@ -257,7 +304,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Voice Detection"
-                        android:textColor="#000000"
+                        android:textColor="@color/text_primary"
                         android:textSize="16sp" />
 
                     <TextView
@@ -265,7 +312,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TEST SIMULATION"
-                        android:textColor="#FF2D55"
+                        android:textColor="@color/text_action"
                         android:textSize="12sp"
                         android:textStyle="bold"
                         android:clickable="true"
@@ -276,7 +323,64 @@
                     android:id="@+id/switchVoice"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:checked="false" />
+                    android:checked="false"
+                    app:thumbTint="@color/text_brand"
+                    app:trackTint="@color/text_hint" />
+            </LinearLayout>
+
+            <!-- Appearance -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:background="@drawable/settings_item_bg"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="8dp"
+                    android:text="Appearance"
+                    android:textColor="@color/text_primary"
+                    android:textSize="16sp" />
+
+                <RadioGroup
+                    android:id="@+id/rgTheme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbSystem"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/text_brand"
+                        android:text="System"
+                        android:textColor="@color/text_primary" />
+
+                    <RadioButton
+                        android:id="@+id/rbLight"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/text_brand"
+                        android:text="Light"
+                        android:textColor="@color/text_primary" />
+
+                    <RadioButton
+                        android:id="@+id/rbDark"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:buttonTint="@color/text_brand"
+                        android:text="Dark"
+                        android:textColor="@color/text_primary" />
+                </RadioGroup>
             </LinearLayout>
 
             <!-- ========== Privacy & Legal ========== -->
@@ -284,7 +388,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Privacy &amp; Legal"
-                android:textColor="#888888"
+                android:textColor="@color/text_secondary"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
@@ -314,11 +418,11 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:text="Terms of Services"
-                    android:textColor="#000000"
+                    android:textColor="@color/text_primary"
                     android:textSize="16sp" />
             </LinearLayout>
 
-            <!-- Delete Account -->
+            <!-- logout Account -->
             <LinearLayout
                 android:id="@+id/btnDeleteAccount"
                 android:layout_width="match_parent"
@@ -343,7 +447,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
                     android:text="Logout"
-                    android:textColor="#FF2D55"
+                    android:textColor="@color/text_action"
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
@@ -373,7 +477,7 @@
 <!--                    android:layout_height="wrap_content"-->
 <!--                    android:layout_marginStart="12dp"-->
 <!--                    android:text="Logout"-->
-<!--                    android:textColor="#FF2D55"-->
+<!--                    android:textColor="@color/text_action"-->
 <!--                    android:textSize="16sp"-->
 <!--                    android:textStyle="bold" />-->
 <!--            </LinearLayout>-->

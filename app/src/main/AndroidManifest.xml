@@ -104,7 +104,7 @@
             android:name=".ContactsActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/Theme.ShaktiSetu"
             android:hardwareAccelerated="true"/>
 
         <!-- Add/Edit Contact -->
@@ -118,7 +118,7 @@
             android:name=".EvidenceActivity"
             android:exported="false"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.NoActionBar"
+            android:theme="@style/Theme.ShaktiSetu"
             android:hardwareAccelerated="true"/>
 
         <!-- SOS Alert -->

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="92dp"
     android:layout_alignParentBottom="true"
@@ -29,11 +30,11 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:src="@drawable/eye_scan_svgrepo_com"
-            android:tint="#AAA4A7"
             android:contentDescription="Evidence"
             android:clickable="true"
             android:focusable="true"
-            android:scaleType="fitCenter"/>
+            android:scaleType="fitCenter"
+            app:tint="@color/text_hint" />
 
         <!-- Contacts -->
         <ImageView
@@ -42,11 +43,11 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:src="@drawable/ic_nav_contacts"
-            android:tint="#AAA4A7"
             android:contentDescription="Contacts"
             android:clickable="true"
             android:focusable="true"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            app:tint="@color/text_hint" />
 
         <!-- Center Space -->
         <View
@@ -61,11 +62,11 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:src="@drawable/ic_nav_call"
-            android:tint="#AAA4A7"
             android:contentDescription="Call"
             android:clickable="true"
             android:focusable="true"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            app:tint="@color/text_hint" />
 
         <!-- Settings -->
         <ImageView
@@ -74,11 +75,11 @@
             android:layout_height="40dp"
             android:layout_weight="1"
             android:src="@drawable/ic_nav_settings"
-            android:tint="#8B5872"
             android:contentDescription="Settings"
             android:clickable="true"
             android:focusable="true"
-            android:scaleType="fitCenter" />
+            android:scaleType="fitCenter"
+            app:tint="@color/nav_active" />
 
     </LinearLayout>
 
@@ -99,9 +100,9 @@
             android:layout_width="34dp"
             android:layout_height="34dp"
             android:src="@drawable/ic_nav_shield"
-            android:tint="#FFFFFF"
             android:scaleType="fitCenter"
-            android:contentDescription="Home" />
+            android:contentDescription="Home"
+            app:tint="#FFFFFF" />
 
     </LinearLayout>
 

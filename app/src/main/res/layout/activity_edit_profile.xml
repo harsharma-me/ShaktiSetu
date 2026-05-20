@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@android:color/white">
+    android:background="@color/background">
 
     <!-- Header with Back Button -->
     <LinearLayout
@@ -29,7 +30,7 @@
             android:text="Edit Profile"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
+            android:textColor="@color/text_primary"
             android:gravity="center" />
     </LinearLayout>
 
@@ -51,7 +52,7 @@
                 android:layout_height="wrap_content"
                 android:text="Name"
                 android:textStyle="bold"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp"
                 android:layout_marginBottom="8dp" />
 
@@ -62,8 +63,8 @@
                 android:hint="Enter your name"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
                 android:layout_marginBottom="16dp" />
 
             <!-- Email (Read-only) -->
@@ -72,7 +73,7 @@
                 android:layout_height="wrap_content"
                 android:text="Email"
                 android:textStyle="bold"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp"
                 android:layout_marginBottom="8dp" />
 
@@ -83,8 +84,8 @@
                 android:hint="Email"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
                 android:enabled="false"
                 android:layout_marginBottom="16dp" />
 
@@ -94,7 +95,7 @@
                 android:layout_height="wrap_content"
                 android:text="Phone"
                 android:textStyle="bold"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp"
                 android:layout_marginBottom="8dp" />
 
@@ -105,8 +106,8 @@
                 android:hint="Enter your phone number"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
                 android:inputType="phone"
                 android:layout_marginBottom="16dp" />
 
@@ -116,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:text="Address"
                 android:textStyle="bold"
-                android:textColor="@android:color/black"
+                android:textColor="@color/text_primary"
                 android:textSize="14sp"
                 android:layout_marginBottom="8dp" />
 
@@ -127,8 +128,8 @@
                 android:hint="Enter your address"
                 android:padding="12dp"
                 android:background="@drawable/edit_text_background"
-                android:textColor="@android:color/black"
-                android:textColorHint="@android:color/darker_gray"
+                android:textColor="@color/text_primary"
+                android:textColorHint="@color/text_hint"
                 android:gravity="top"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="16dp" />
@@ -144,8 +145,9 @@
         android:text="Update Profile"
         android:textSize="16sp"
         android:textStyle="bold"
-        android:textColor="@android:color/white"
-        android:background="@color/primary_color"
-        android:layout_marginTop="16dp" />
+        android:textColor="@color/white"
+        android:background="@drawable/btn_primary_bg"
+        app:backgroundTint="@color/primary_color"
+        android:layout_marginTop="16dp"/>
 
 </LinearLayout>

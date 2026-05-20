@@ -24,7 +24,7 @@
     <color name="bg_white">#FFFFFF</color>
     <color name="bg_light_gray">#F5F5F5</color>
     <color name="bg_dark_gray">#212121</color>
-
+    <color name="background">#F2EDED</color>
 
 
     <color name="bg_main">#F4EEEE</color>
@@ -32,10 +32,20 @@
     <color name="surface_card">#FFFFFF</color>
 
     <color name="text_primary">#1F1F1F</color>
-    <color name="text_secondary">#9B9B9B</color>
+    <color name="text_secondary">#757575</color>
+    <color name="text_hint">#9B9B9B</color>
+    <color name="text_brand">#7A3B3B</color>
+    <color name="text_action">#FF2D55</color>
 
     <color name="sos_red">#EA4B55</color>
     <color name="sos_outer">#F6D6D9</color>
+
+    <color name="bg_purple_icon">#F0E6FF</color>
+    <color name="bg_orange_icon">#FFF3E0</color>
+    <color name="bg_pink_icon">#FCE4EC</color>
+    <color name="bg_blue_icon">#E3F2FD</color>
+    <color name="bg_cyan_icon">#E0F7FA</color>
+    <color name="bg_red_icon_light">#FFEBEE</color>
 
     <color name="nav_active">#8C4B68</color>
     <color name="timer_unselected_text">#8B5872</color>

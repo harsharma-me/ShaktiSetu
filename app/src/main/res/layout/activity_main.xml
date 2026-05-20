@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F2EDED">
+    android:background="@color/background">
 
     <!-- Bottom Navigation -->
     <include layout="@layout/nav_bar_include" />
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/bdscript_regular"
             android:text="Shakti Setu"
-            android:textColor="#7A3B3B"
+            android:textColor="@color/text_brand"
             android:textSize="48sp" />
 
         <!-- Need Help? -->
@@ -33,7 +33,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
             android:text="Need Help?"
-            android:textColor="#222222"
+            android:textColor="@color/text_primary"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -42,7 +42,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Tap SOS Now"
-            android:textColor="#999999"
+            android:textColor="@color/text_hint"
             android:textSize="16sp" />
 
         <!-- SOS Button -->
@@ -75,7 +75,7 @@
                     android:text="SOS"
                     android:textSize="32sp"
                     android:textStyle="bold"
-                    android:textColor="#FFFFFF"/>
+                    android:textColor="@color/text_white"/>
             </LinearLayout>
         </FrameLayout>
 
@@ -120,7 +120,7 @@
                     android:text="Ambulance"
                     android:textSize="13sp"
                     android:textStyle="bold"
-                    android:textColor="#222222"
+                    android:textColor="@color/text_primary"
                     android:layout_marginTop="6dp"/>
             </LinearLayout>
 
@@ -155,7 +155,7 @@
                     android:text="Police"
                     android:textSize="13sp"
                     android:textStyle="bold"
-                    android:textColor="#222222"
+                    android:textColor="@color/text_primary"
                     android:layout_marginTop="6dp"/>
             </LinearLayout>
 
@@ -190,7 +190,7 @@
                     android:text="Women Safety"
                     android:textSize="13sp"
                     android:textStyle="bold"
-                    android:textColor="#222222"
+                    android:textColor="@color/text_primary"
                     android:layout_marginTop="6dp"/>
             </LinearLayout>
 
@@ -225,7 +225,7 @@
                     android:text="Fake"
                     android:textSize="13sp"
                     android:textStyle="bold"
-                    android:textColor="#222222"
+                    android:textColor="@color/text_primary"
                     android:layout_marginTop="6dp"/>
             </LinearLayout>
 
@@ -269,14 +269,14 @@
                     android:text="Location Sharing"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:textColor="#222222"/>
+                    android:textColor="@color/text_primary"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Allowed for 2 minutes"
                     android:textSize="11sp"
-                    android:textColor="#999999"/>
+                    android:textColor="@color/text_hint"/>
             </LinearLayout>
 
             <TextView
@@ -284,7 +284,7 @@
                 android:layout_height="wrap_content"
                 android:text="›"
                 android:textSize="26sp"
-                android:textColor="#CCCCCC"/>
+                android:textColor="@color/text_light_gray"/>
         </LinearLayout>
 
     </LinearLayout>

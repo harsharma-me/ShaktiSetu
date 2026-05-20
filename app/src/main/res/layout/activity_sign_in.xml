@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#EFE6E3">
+    android:background="@color/logo_bg">
 
     <!-- Logo Title -->
     <TextView
@@ -15,7 +15,7 @@
         android:text="Shakti Setu"
         android:textSize="76sp"
         android:fontFamily="@font/bdscript_regular"
-        android:textColor="#7A3B3B"
+        android:textColor="@color/text_brand"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:text="A Bridge to Safety"
         android:textSize="15sp"
-        android:textColor="#7A3B3B"
+        android:textColor="@color/text_brand"
         android:fontFamily="@font/inter_semibold"
         app:layout_constraintTop_toBottomOf="@id/tvTitle"
         app:layout_constraintStart_toStartOf="parent"
@@ -43,7 +43,7 @@
         android:hint="E-mail"
         android:background="@drawable/rounded_input"
         android:paddingStart="16dp"
-        android:textColorHint="#888888"
+        android:textColorHint="@color/text_hint"
         android:textColor="@color/black"
         android:gravity="center_vertical"
         app:layout_constraintTop_toBottomOf="@id/tvTagline"
@@ -61,7 +61,7 @@
         android:inputType="textPassword"
         android:background="@drawable/rounded_input"
         android:paddingStart="16dp"
-        android:textColorHint="#888888"
+        android:textColorHint="@color/text_hint"
         android:gravity="center_vertical"
         app:layout_constraintTop_toBottomOf="@id/etEmail"
         app:layout_constraintStart_toStartOf="@id/etEmail"
@@ -88,7 +88,7 @@
         android:layout_height="wrap_content"
         android:text="Forgot Password?"
         android:textSize="15sp"
-        android:textColor="#000000"
+        android:textColor="@color/text_brand"
         app:layout_constraintTop_toBottomOf="@id/btnContinue"
         app:layout_constraintEnd_toEndOf="@id/btnContinue"
         android:layout_marginTop="8dp"/>
@@ -106,7 +106,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="16dp"
         android:text="Don’t have an account? Sign Up"
-        android:textColor="#7A3B3B"
+        android:textColor="@color/text_brand"
         android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="@id/btnContinue"
         app:layout_constraintHorizontal_bias="0.49"
@@ -159,7 +159,7 @@
         android:layout_marginBottom="28dp"
         android:gravity="center"
         android:text="By clicking continue, you agree to our Terms of Service and Privacy Policy"
-        android:textColor="#7A3B3B"
+        android:textColor="@color/text_brand"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tvSignup"

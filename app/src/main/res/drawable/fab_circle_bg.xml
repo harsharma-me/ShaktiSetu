@@ -4,7 +4,7 @@
     <!-- Soft Outer Ring -->
     <item>
         <shape android:shape="oval">
-            <solid android:color="#EFE7EB"/>
+            <solid android:color="@color/sos_outer"/>
         </shape>
     </item>
 
@@ -16,7 +16,7 @@
         android:bottom="4dp">
 
         <shape android:shape="oval">
-            <solid android:color="#8B5872"/>
+            <solid android:color="@color/nav_active"/>
         </shape>
     </item>
 

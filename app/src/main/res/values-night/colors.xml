@@ -1,0 +1,42 @@
+<resources>
+    <!-- Dark Mode Palette - Improved Contrast -->
+    <color name="background">#121212</color> <!-- Material Dark Background -->
+    <color name="surface_card">#1E1E1E</color> <!-- Slightly lighter for cards -->
+    <color name="bg_main">#121212</color>
+    <color name="bg_white">#1E1E1E</color>
+
+    <!-- Text Colors (Higher Contrast) -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#BDBDBD</color>
+    <color name="text_hint">#8A8A8A</color> <!-- Lightened for visibility -->
+    <color name="text_brand">#FFB2BB</color> <!-- Slightly more saturated pink -->
+    <color name="text_action">#FF5277</color>
+    <color name="text_dark">#FFFFFF</color>
+    <color name="text_black">#FFFFFF</color>
+    <color name="text_light_gray">#AAAAAA</color> <!-- Fixed: was too dark -->
+
+    <!-- UI Elements -->
+    <color name="black">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="text_white">#FFFFFF</color>
+
+    <!-- Emergency/SOS Specific -->
+    <color name="sos_red">#FF4B55</color>
+    <color name="sos_outer">#3D2B2D</color>
+
+    <!-- Navigation and Icons -->
+    <color name="nav_active">#FFB2BB</color>
+    <color name="timer_unselected_text">#B08098</color>
+
+    <color name="bg_purple_icon">#2E2545</color>
+    <color name="bg_orange_icon">#453525</color>
+    <color name="bg_pink_icon">#452535</color>
+    <color name="bg_blue_icon">#253545</color>
+    <color name="bg_cyan_icon">#254545</color>
+    <color name="bg_red_icon_light">#452525</color>
+
+    <!-- Material Overrides -->
+    <color name="primary_color">#FFB2BB</color>
+    <color name="primary_dark_color">#000000</color>
+    <color name="accent_color">#FF5277</color>
+</resources>

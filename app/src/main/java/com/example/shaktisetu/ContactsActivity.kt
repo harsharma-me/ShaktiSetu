@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -53,6 +54,32 @@ class ContactsActivity : AppCompatActivity() {
     ) {
 
         super.onCreate(savedInstanceState)
+
+        // Set status and navigation bar color
+        window.statusBarColor = ContextCompat.getColor(this, R.color.background)
+        window.navigationBarColor = ContextCompat.getColor(this, R.color.background)
+
+        // Ensure icons are visible based on theme
+        val isDarkTheme = (resources.configuration.uiMode and android.content.res.Configuration.UI_MODE_NIGHT_MASK) == android.content.res.Configuration.UI_MODE_NIGHT_YES
+        val decorView = window.decorView
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.R) {
+            val controller = decorView.windowInsetsController
+            if (controller != null) {
+                val appearance = if (isDarkTheme) 0 else (android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS)
+                controller.setSystemBarsAppearance(appearance, android.view.WindowInsetsController.APPEARANCE_LIGHT_STATUS_BARS or android.view.WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS)
+            }
+        } else {
+            @Suppress("DEPRECATION")
+            var flags = decorView.systemUiVisibility
+            if (!isDarkTheme) {
+                flags = flags or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                flags = flags or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+            } else {
+                flags = flags and View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR.inv()
+                flags = flags and View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR.inv()
+            }
+            decorView.systemUiVisibility = flags
+        }
 
         setContentView(
             R.layout.activity_contacts

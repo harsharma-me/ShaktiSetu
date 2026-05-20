@@ -3,7 +3,7 @@
     <!-- Outer light ring -->
     <item>
         <shape android:shape="oval">
-            <solid android:color="#F5D0D0"/>
+            <solid android:color="@color/sos_outer"/>
             <size android:width="240dp" android:height="240dp"/>
         </shape>
     </item>
@@ -14,7 +14,7 @@
         android:right="15dp"
         android:bottom="15dp">
         <shape android:shape="oval">
-            <solid android:color="#E8494F"/>
+            <solid android:color="@color/sos_red"/>
             <size android:width="210dp" android:height="210dp"/>
         </shape>
     </item>

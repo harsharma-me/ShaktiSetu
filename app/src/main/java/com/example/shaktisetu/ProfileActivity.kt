@@ -27,9 +27,6 @@ class ProfileActivity : AppCompatActivity() {
     private lateinit var btnEditProfile:
             Button
 
-    private lateinit var btnLogout:
-            Button
-
     private lateinit var btnBack:
             ImageButton
 
@@ -86,10 +83,6 @@ class ProfileActivity : AppCompatActivity() {
 
         btnBack =
             findViewById(R.id.btnBack)
-
-        // Optional
-//        btnLogout =
-//            findViewById(R.id.btnLogout)
     }
 
     // Click Listeners
@@ -108,10 +101,6 @@ class ProfileActivity : AppCompatActivity() {
                     EditProfileActivity::class.java
                 )
             )
-        }
-
-        btnLogout.setOnClickListener {
-            showLogoutDialog()
         }
     }
 
@@ -156,58 +145,6 @@ class ProfileActivity : AppCompatActivity() {
         tvPhone.text = phone
 
         tvAddress.text = address
-    }
-
-    // Logout Dialog
-    private fun showLogoutDialog() {
-
-        AlertDialog.Builder(this)
-
-            .setTitle("Logout")
-
-            .setMessage(
-                "Are you sure you want to logout?"
-            )
-
-            .setPositiveButton("Logout") {
-                    _,
-                    _ ->
-
-                performLogout()
-            }
-
-            .setNegativeButton(
-                "Cancel",
-                null
-            )
-
-            .show()
-    }
-
-    // Logout
-    private fun performLogout() {
-
-        sharedPreferences.edit()
-
-            .clear()
-
-            .apply()
-
-        Toast.makeText(
-            this,
-            "✅ Logged out",
-            Toast.LENGTH_SHORT
-        ).show()
-
-        startActivity(
-
-            Intent(
-                this,
-                SignInActivity::class.java
-            )
-        )
-
-        finishAffinity()
     }
 
     override fun finish() {
