@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "933736652914",
+    "firebase_url": "https://shaktisetu-18b97-default-rtdb.firebaseio.com",
     "project_id": "shaktisetu-18b97",
     "storage_bucket": "shaktisetu-18b97.firebasestorage.app"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.shaktisetu"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "933736652914-1bj2nq19dm1qlvdps5qk9ub3t8adj2nr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.shaktisetu",
+            "certificate_hash": "0ff3032456dc1823b9f5f6c55a88a80d06d15cd8"
+          }
+        },
+        {
+          "client_id": "933736652914-bnl3knmdlikn0rbe8p2d8mbttrkj2i13.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyA8rirB71PKtvKFEVKhiIa0d63sRAWe0m4"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "933736652914-bnl3knmdlikn0rbe8p2d8mbttrkj2i13.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }

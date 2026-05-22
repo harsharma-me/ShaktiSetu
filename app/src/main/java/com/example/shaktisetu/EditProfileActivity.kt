@@ -1,12 +1,15 @@
 package com.example.shaktisetu
 
 import android.content.SharedPreferences
+import android.os.Build
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 
 class EditProfileActivity : AppCompatActivity() {
 
@@ -31,6 +34,9 @@ class EditProfileActivity : AppCompatActivity() {
     private lateinit var sharedPreferences:
             SharedPreferences
 
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+
     override fun onCreate(
         savedInstanceState: Bundle?
     ) {
@@ -46,6 +52,9 @@ class EditProfileActivity : AppCompatActivity() {
                 "ShaktiSetuPrefs",
                 MODE_PRIVATE
             )
+
+        auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         etName =
             findViewById(R.id.etName)
@@ -154,68 +163,54 @@ class EditProfileActivity : AppCompatActivity() {
         phone: String,
         address: String
     ) {
+        val uid = auth.currentUser?.uid ?: return
 
-        try {
+        btnUpdate.isEnabled = false
+        btnUpdate.text = "Updating..."
 
-            btnUpdate.isEnabled = false
+        val updates = hashMapOf<String, Any>(
+            "name" to name,
+            "phone" to phone,
+            "address" to address
+        )
 
-            btnUpdate.text =
-                "Updating..."
+        // 1. Update Firestore
+        db.collection("users").document(uid)
+            .update(updates)
+            .addOnSuccessListener {
+                // 2. Save Locally if Firestore update succeeds
+                sharedPreferences.edit()
+                    .putString("user_name", name)
+                    .putString("user_phone", phone)
+                    .putString("user_address", address)
+                    .apply()
 
-            // Save Locally
-            sharedPreferences.edit()
-
-                .putString(
-                    "user_name",
-                    name
-                )
-
-                .putString(
-                    "user_phone",
-                    phone
-                )
-
-                .putString(
-                    "user_address",
-                    address
-                )
-
-                .apply()
-
-            Toast.makeText(
-                this,
-                "✅ Profile Updated!",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            finish()
-
-        } catch (e: Exception) {
-
-            e.printStackTrace()
-
-            Toast.makeText(
-                this,
-                "❌ Failed to update profile",
-                Toast.LENGTH_SHORT
-            ).show()
-
-        } finally {
-
-            btnUpdate.isEnabled = true
-
-            btnUpdate.text =
-                "Update Profile"
-        }
+                Toast.makeText(this, "✅ Profile Updated!", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+            .addOnFailureListener { e ->
+                Toast.makeText(this, "❌ Update failed: ${e.message}", Toast.LENGTH_SHORT).show()
+                btnUpdate.isEnabled = true
+                btnUpdate.text = "Update Profile"
+            }
     }
 
     override fun finish() {
 
         super.finish()
 
-        overridePendingTransition(
-            R.anim.zoom_fade_in_back,
-            R.anim.zoom_fade_out_back
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(
+                OVERRIDE_TRANSITION_CLOSE,
+                R.anim.zoom_fade_in_back,
+                R.anim.zoom_fade_out_back
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            overridePendingTransition(
+                R.anim.zoom_fade_in_back,
+                R.anim.zoom_fade_out_back
+            )
+        }
     }
 }

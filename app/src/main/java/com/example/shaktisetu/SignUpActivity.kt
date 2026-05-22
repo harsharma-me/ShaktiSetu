@@ -8,8 +8,17 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.content.edit
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.auth.api.signin.GoogleSignIn
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions
+import com.google.android.gms.common.api.ApiException
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -18,6 +27,21 @@ class SignUpActivity : AppCompatActivity() {
     private lateinit var tvTermsLink: TextView
 
     private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+    private lateinit var googleSignInClient: GoogleSignInClient
+
+    private val googleSignInLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == RESULT_OK) {
+                val task = GoogleSignIn.getSignedInAccountFromIntent(result.data)
+                try {
+                    val account = task.getResult(ApiException::class.java)!!
+                    firebaseAuthWithGoogle(account.idToken!!)
+                } catch (e: ApiException) {
+                    showToast("Google sign in failed: ${e.message}")
+                }
+            }
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -26,6 +50,15 @@ class SignUpActivity : AppCompatActivity() {
         setContentView(R.layout.activity_sign_up)
 
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
+
+        // Configure Google Sign In
+        val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+            .requestIdToken(getString(R.string.default_web_client_id))
+            .requestEmail()
+            .build()
+
+        googleSignInClient = GoogleSignIn.getClient(this, gso)
 
         val etName =
             findViewById<EditText>(R.id.etName)
@@ -48,8 +81,22 @@ class SignUpActivity : AppCompatActivity() {
         val tvSignIn =
             findViewById<TextView>(R.id.tvSignIn)
 
+        val btnGoogle =
+            findViewById<Button>(R.id.btnGoogle)
+
         tvTermsLink =
             findViewById(R.id.tvTermsLink)
+
+        // Google Login
+        btnGoogle.setOnClickListener {
+            if (!termsAgreed) {
+                showToast("Please agree to Terms & Conditions first!")
+                tvTermsLink.setTextColor(Color.RED)
+                return@setOnClickListener
+            }
+            val signInIntent = googleSignInClient.signInIntent
+            googleSignInLauncher.launch(signInIntent)
+        }
 
         // Terms Dialog
         tvTermsLink.setOnClickListener {
@@ -180,7 +227,7 @@ class SignUpActivity : AppCompatActivity() {
                 !termsAgreed -> {
 
                     showToast(
-                        "Agree to Terms & Conditions"
+                        "Terms & Conditions"
                     )
 
                     tvTermsLink.setTextColor(
@@ -205,6 +252,65 @@ class SignUpActivity : AppCompatActivity() {
         tvSignIn.setOnClickListener {
             finish()
         }
+    }
+
+    // Google Auth
+    private fun firebaseAuthWithGoogle(idToken: String) {
+        auth.signInWithCredential(GoogleAuthProvider.getCredential(idToken, null))
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    val user = auth.currentUser
+                    val email = user?.email ?: ""
+                    val uid = user?.uid ?: ""
+                    val name = user?.displayName ?: "User"
+                    val phone = user?.phoneNumber ?: ""
+
+                    // For Google Sign-up, we immediately check/save user data
+                    checkAndSaveGoogleUser(name, email, phone, uid)
+                } else {
+                    showToast("❌ Google Authentication Failed.")
+                }
+            }
+    }
+
+    private fun checkAndSaveGoogleUser(name: String, email: String, phone: String, uid: String) {
+        db.collection("users").document(uid).get()
+            .addOnSuccessListener { document ->
+                if (!document.exists()) {
+                    // New user, save details
+                    saveUserData(name, email, phone, uid)
+                } else {
+                    // Already exists, just sync local prefs
+                    val sharedPref = getSharedPreferences("ShaktiSetuPrefs", MODE_PRIVATE)
+                    sharedPref.edit {
+                        putString("user_name", document.getString("name") ?: name)
+                        putString("user_email", email)
+                        putString("user_phone", document.getString("phone") ?: phone)
+                        putString("user_uid", uid)
+                        putBoolean("terms_agreed", true)
+                        putBoolean("is_logged_in", true)
+                    }
+                }
+
+                val sharedPref = getSharedPreferences("ShaktiSetuPrefs", MODE_PRIVATE)
+                val savedPin = sharedPref.getString("user_pin", "")
+                
+                showToast("✅ Login Successful!")
+                
+                val nextActivity = if (savedPin.isNullOrEmpty()) {
+                    CreatePinActivity::class.java
+                } else {
+                    MainActivity::class.java
+                }
+
+                startActivity(Intent(this, nextActivity).apply {
+                    putExtra("user_email", email)
+                })
+                finish()
+            }
+            .addOnFailureListener { e ->
+                showToast("Error checking user: ${e.message}")
+            }
     }
 
     // Firebase Signup
@@ -235,10 +341,13 @@ class SignUpActivity : AppCompatActivity() {
 
                 if (task.isSuccessful) {
 
+                    val userId = auth.currentUser?.uid ?: ""
+
                     saveUserData(
                         name,
                         email,
-                        phone
+                        phone,
+                        userId
                     )
 
                     showToast(
@@ -272,47 +381,50 @@ class SignUpActivity : AppCompatActivity() {
             }
     }
 
-    // Save User Data Locally
+    // Save User Data Locally & Firestore
     private fun saveUserData(
         name: String,
         email: String,
-        phone: String
+        phone: String,
+        uid: String
     ) {
 
+        // 1. Save to SharedPreferences (Local)
         val sharedPref =
             getSharedPreferences(
                 "ShaktiSetuPrefs",
                 MODE_PRIVATE
             )
 
-        sharedPref.edit()
+        sharedPref.edit {
+            putString("user_name", name)
+            putString("user_email", email)
+            putString("user_phone", phone)
+            putString("user_uid", uid)
+            putBoolean("terms_agreed", true)
+            putBoolean("is_logged_in", true)
+        }
 
-            .putString(
-                "user_name",
-                name
-            )
+        // 2. Save to Firestore (Cloud)
+        val userMap = hashMapOf(
+            "name" to name,
+            "email" to email,
+            "phone" to phone,
+            "uid" to uid,
+            "address" to "",
+            "terms_agreed" to true,
+            "terms_agreed_date" to FieldValue.serverTimestamp(),
+            "createdAt" to FieldValue.serverTimestamp()
+        )
 
-            .putString(
-                "user_email",
-                email
-            )
-
-            .putString(
-                "user_phone",
-                phone
-            )
-
-            .putBoolean(
-                "terms_agreed",
-                true
-            )
-
-            .putBoolean(
-                "is_logged_in",
-                true
-            )
-
-            .apply()
+        db.collection("users").document(uid)
+            .set(userMap)
+            .addOnSuccessListener {
+                // Success
+            }
+            .addOnFailureListener { e ->
+                showToast("Firestore Error: ${e.message}")
+            }
     }
 
     // Email Validation
@@ -349,11 +461,8 @@ class SignUpActivity : AppCompatActivity() {
                 )
 
                 tvTermsLink.text =
-                    "✅ I agree to Terms & Conditions"
+                    "Terms & Conditions"
 
-                showToast(
-                    "✅ Terms accepted!"
-                )
             }
 
         dialog.show()

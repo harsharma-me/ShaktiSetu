@@ -462,10 +462,15 @@ ${SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())}
                 for (contact in cachedContacts) {
                     if (contact.isBlank()) continue
                     
-                    // Format number: remove spaces and add +91 if 10 digits
+                    // Format number: remove spaces
                     val cleanedContact = contact.replace(Regex("[^0-9+]"), "")
+                    
+                    // If it's a 10-digit number without a country code, you might want to add a default one or just send as is.
+                    // However, to be robust, we should probably keep it as it was if it's already got a country code or is not 10 digits.
                     val formattedContact = if (cleanedContact.length == 10 && !cleanedContact.startsWith("+")) {
-                        "+91$cleanedContact"
+                        // Optional: you could still add +91 if you are sure about the locale, but better to let user handle it or be smart.
+                        // For now, I'll keep the logic but make it clearer.
+                        "+91$cleanedContact" 
                     } else {
                         cleanedContact
                     }
@@ -1079,7 +1084,7 @@ ${SimpleDateFormat("hh:mm a", Locale.getDefault()).format(Date())}
                 for (contact in cachedContacts) {
                     if (contact.isBlank()) continue
 
-                    // Format number: remove spaces and add +91 if 10 digits
+                    // Format number: remove spaces
                     val cleanedContact = contact.replace(Regex("[^0-9+]"), "")
                     val formattedContact = if (cleanedContact.length == 10 && !cleanedContact.startsWith("+")) {
                         "+91$cleanedContact"

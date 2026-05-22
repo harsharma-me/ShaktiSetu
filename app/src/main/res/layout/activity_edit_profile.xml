@@ -62,7 +62,7 @@
                 android:layout_height="48dp"
                 android:hint="Enter your name"
                 android:padding="12dp"
-                android:background="@drawable/edit_text_background"
+                android:background="@drawable/rounded_bg_white"
                 android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_hint"
                 android:layout_marginBottom="16dp" />
@@ -83,7 +83,7 @@
                 android:layout_height="48dp"
                 android:hint="Email"
                 android:padding="12dp"
-                android:background="@drawable/edit_text_background"
+                android:background="@drawable/rounded_bg_white"
                 android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_hint"
                 android:enabled="false"
@@ -105,7 +105,7 @@
                 android:layout_height="48dp"
                 android:hint="Enter your phone number"
                 android:padding="12dp"
-                android:background="@drawable/edit_text_background"
+                android:background="@drawable/rounded_bg_white"
                 android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_hint"
                 android:inputType="phone"
@@ -127,7 +127,7 @@
                 android:layout_height="100dp"
                 android:hint="Enter your address"
                 android:padding="12dp"
-                android:background="@drawable/edit_text_background"
+                android:background="@drawable/rounded_bg_white"
                 android:textColor="@color/text_primary"
                 android:textColorHint="@color/text_hint"
                 android:gravity="top"
@@ -147,7 +147,7 @@
         android:textStyle="bold"
         android:textColor="@color/white"
         android:background="@drawable/btn_primary_bg"
-        app:backgroundTint="@color/primary_color"
+        app:backgroundTint="@null"
         android:layout_marginTop="16dp"/>
 
 </LinearLayout>

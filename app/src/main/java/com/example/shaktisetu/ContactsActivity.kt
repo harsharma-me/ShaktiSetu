@@ -1,6 +1,7 @@
 package com.example.shaktisetu
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -307,10 +308,19 @@ class ContactsActivity : AppCompatActivity() {
 
         super.finish()
 
-        overridePendingTransition(
-            R.anim.zoom_fade_in_back,
-            R.anim.zoom_fade_out_back
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(
+                OVERRIDE_TRANSITION_CLOSE,
+                R.anim.zoom_fade_in_back,
+                R.anim.zoom_fade_out_back
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            overridePendingTransition(
+                R.anim.zoom_fade_in_back,
+                R.anim.zoom_fade_out_back
+            )
+        }
     }
 
     // Adapter

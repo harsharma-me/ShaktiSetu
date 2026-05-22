@@ -4,6 +4,7 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.text.InputType
 import android.widget.EditText
@@ -17,6 +18,9 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.appcompat.widget.SwitchCompat
 import com.google.firebase.auth.FirebaseAuth
 
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
+
 class SettingsActivity : AppCompatActivity() {
 
     private lateinit var sharedPreferences:
@@ -24,6 +28,8 @@ class SettingsActivity : AppCompatActivity() {
 
     private lateinit var auth:
             FirebaseAuth
+
+    private lateinit var db: FirebaseFirestore
 
     override fun onCreate(
         savedInstanceState: Bundle?
@@ -41,6 +47,7 @@ class SettingsActivity : AppCompatActivity() {
         )
 
         auth = FirebaseAuth.getInstance()
+        db = FirebaseFirestore.getInstance()
 
         sharedPreferences =
             getSharedPreferences(
@@ -85,7 +92,7 @@ class SettingsActivity : AppCompatActivity() {
 
         val btnLogout =
             findViewById<LinearLayout>(
-                R.id.btnDeleteAccount
+                R.id.btnLogout
             )
 
         val btnChangePin =
@@ -279,6 +286,15 @@ class SettingsActivity : AppCompatActivity() {
                     )
 
                     .apply()
+
+                val uid = auth.currentUser?.uid
+                if (uid != null) {
+                    db.collection("users").document(uid)
+                        .update(
+                            "terms_agreed", true,
+                            "terms_agreed_date", FieldValue.serverTimestamp()
+                        )
+                }
 
                 Toast.makeText(
                     this,
@@ -476,9 +492,18 @@ class SettingsActivity : AppCompatActivity() {
 
         super.finish()
 
-        overridePendingTransition(
-            R.anim.zoom_fade_in_back,
-            R.anim.zoom_fade_out_back
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(
+                OVERRIDE_TRANSITION_CLOSE,
+                R.anim.zoom_fade_in_back,
+                R.anim.zoom_fade_out_back
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            overridePendingTransition(
+                R.anim.zoom_fade_in_back,
+                R.anim.zoom_fade_out_back
+            )
+        }
     }
 }

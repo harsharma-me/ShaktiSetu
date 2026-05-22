@@ -5,6 +5,7 @@ import android.app.ActivityOptions
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.widget.FrameLayout
 import android.widget.LinearLayout
@@ -303,9 +304,18 @@ class MainActivity : AppCompatActivity() {
 
         super.finish()
 
-        overridePendingTransition(
-            R.anim.zoom_fade_in_back,
-            R.anim.zoom_fade_out_back
-        )
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            overrideActivityTransition(
+                OVERRIDE_TRANSITION_CLOSE,
+                R.anim.zoom_fade_in_back,
+                R.anim.zoom_fade_out_back
+            )
+        } else {
+            @Suppress("DEPRECATION")
+            overridePendingTransition(
+                R.anim.zoom_fade_in_back,
+                R.anim.zoom_fade_out_back
+            )
+        }
     }
 }

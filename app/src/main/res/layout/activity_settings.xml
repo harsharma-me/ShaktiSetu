@@ -425,7 +425,7 @@
 
             <!-- logout Account -->
             <LinearLayout
-                android:id="@+id/btnDeleteAccount"
+                android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
                 android:background="@drawable/settings_item_bg"

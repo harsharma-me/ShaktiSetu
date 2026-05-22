@@ -8,15 +8,12 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.OvershootInterpolator
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.lifecycleScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import android.os.Handler
-import android.os.Looper
 
 class SplashActivity : AppCompatActivity() {
 
@@ -48,16 +45,16 @@ class SplashActivity : AppCompatActivity() {
                 R.id.tvTagline
             )
 
-        val bottomSection =
-            findViewById<LinearLayout>(
-                R.id.bottomSection
+        val premiumLoader =
+            findViewById<View>(
+                R.id.premiumLoader
             )
 
         startAnimations(
             ivLogo,
             tvAppName,
             tvTagline,
-            bottomSection
+            premiumLoader
         )
 
         lifecycleScope.launch {
@@ -76,7 +73,7 @@ class SplashActivity : AppCompatActivity() {
         ivLogo: ImageView,
         tvAppName: TextView,
         tvTagline: TextView,
-        bottomSection: LinearLayout
+        premiumLoader: View
     ) {
 
         val logoScaleX =
@@ -175,7 +172,7 @@ class SplashActivity : AppCompatActivity() {
 
         val bottomAlpha =
             ObjectAnimator.ofFloat(
-                bottomSection,
+                premiumLoader,
                 View.ALPHA,
                 0f,
                 1f
@@ -217,14 +214,21 @@ class SplashActivity : AppCompatActivity() {
                 ""
             ) ?: ""
 
+        val userPin =
+            sharedPref.getString(
+                "user_pin",
+                ""
+            ) ?: ""
+
         val targetActivity =
 
             if (userEmail.isNotEmpty()) {
-
-                MainActivity::class.java
-
+                if (userPin.isEmpty()) {
+                    CreatePinActivity::class.java
+                } else {
+                    MainActivity::class.java
+                }
             } else {
-
                 SignInActivity::class.java
             }
 

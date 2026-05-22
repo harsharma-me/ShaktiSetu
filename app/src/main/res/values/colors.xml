@@ -1,4 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Auth Background Gradient -->
+    <color name="bg_gradient_start">#FFF8FA</color>
+    <color name="bg_gradient_center">#FBECEF</color>
+    <color name="bg_gradient_end">#F4DDE3</color>
+
+    <!-- Auth Input Fields -->
+    <color name="input_bg">#FFFFFF</color>
+    <color name="input_border">#E7DDE1</color>
+    <color name="input_hint">#8C7A80</color>
+    <color name="input_text">#1A1215</color>
+
+    <!-- Premium Cinematic Palette -->
+    <!-- Dark Theme Colors -->
+    <color name="cinematic_dark_bg_start">#050304</color>
+    <color name="cinematic_dark_bg_center">#12070C</color>
+    <color name="cinematic_dark_bg_end">#1A0B12</color>
+    <color name="cinematic_wine_glow">#3D1C22</color>
+
+    <!-- Light Theme Colors -->
+    <color name="cinematic_ivory">#F8F2F4</color>
+    <color name="cinematic_rose">#D4A5A5</color>
+    <color name="cinematic_dusty_pink">#E8C1C1</color>
+    <color name="cinematic_pink_gray">#8C7A80</color>
+    <color name="cinematic_luxury_cream">#FDF9FA</color>
+
+    <!-- Glow and Accents -->
+    <color name="cinematic_glow_soft">#40D4A5A5</color>
+    <color name="cinematic_accent_muted">#B88B8B</color>
+    <color name="cinematic_rose_accent">@color/cinematic_rose</color>
+
+    <!-- Backgrounds and Aliases -->
+    <color name="cinematic_bg_light">@color/cinematic_luxury_cream</color>
+    <color name="cinematic_bg_dark_start">@color/cinematic_dark_bg_start</color>
+    <color name="cinematic_bg_dark_center">@color/cinematic_dark_bg_center</color>
+    <color name="cinematic_bg_dark_end">@color/cinematic_dark_bg_end</color>
+
+    <!-- Legacy / Other Colors -->
     <color name="logo_bg">#FFF5F2</color>
     <color name="logo_text">#865369</color>
     <color name="bg_soft">#F4EDEA</color>
@@ -9,26 +47,21 @@
     <color name="text_light">#6E6E6E</color>
     <color name="black">#000000</color>
 
-    <!-- Primary Colors -->
     <color name="primary_color">#6200EE</color>
     <color name="primary_dark_color">#3700B3</color>
     <color name="accent_color">#03DAC6</color>
 
-    <!-- Text Colors -->
     <color name="text_black">#000000</color>
     <color name="text_white">#FFFFFF</color>
     <color name="text_gray">#808080</color>
     <color name="text_light_gray">#CCCCCC</color>
 
-    <!-- Background Colors -->
     <color name="bg_white">#FFFFFF</color>
     <color name="bg_light_gray">#F5F5F5</color>
     <color name="bg_dark_gray">#212121</color>
     <color name="background">#F2EDED</color>
 
-
     <color name="bg_main">#F4EEEE</color>
-
     <color name="surface_card">#FFFFFF</color>
 
     <color name="text_primary">#1F1F1F</color>
@@ -49,6 +82,4 @@
 
     <color name="nav_active">#8C4B68</color>
     <color name="timer_unselected_text">#8B5872</color>
-
-
 </resources>
