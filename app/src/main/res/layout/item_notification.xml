@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:layout_marginBottom="12dp"
+    android:background="@drawable/rounded_bg_white">
+
+    <TextView
+        android:id="@+id/tvNotificationTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Alert"
+        android:textColor="@color/text_primary"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="4dp" />
+
+    <TextView
+        android:id="@+id/tvNotificationBody"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Notification message content goes here."
+        android:textColor="@color/text_secondary"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp" />
+
+    <TextView
+        android:id="@+id/tvNotificationTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="12:30 PM"
+        android:textColor="@color/text_hint"
+        android:textSize="12sp" />
+
+</LinearLayout>
