@@ -12,126 +12,52 @@ import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 
+import androidx.activity.compose.setContent
+import com.example.shaktisetu.ui.screens.IncomingCallScreen
+import com.example.shaktisetu.ui.theme.ShaktiSetuTheme
+
 class IncomingCallActivity : AppCompatActivity() {
 
-    private var mediaPlayer:
-            MediaPlayer? = null
+    private var mediaPlayer: MediaPlayer? = null
+    private var vibrator: Vibrator? = null
 
-    private var vibrator:
-            Vibrator? = null
-
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
-
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(
-            R.layout.activity_incoming_call
-        )
+        val callerName = intent.getStringExtra("caller_name") ?: "Unknown"
+        val phoneNumber = intent.getStringExtra("phone_number") ?: "Mobile +91 82950 00000"
 
-        val callerName =
-            intent.getStringExtra(
-                "caller_name"
-            ) ?: "Unknown"
-
-        val tvIncomingAvatar =
-            findViewById<TextView>(
-                R.id.tvIncomingAvatar
-            )
-
-        val tvIncomingName =
-            findViewById<TextView>(
-                R.id.tvIncomingName
-            )
-
-        val tvIncomingNumber =
-            findViewById<TextView>(
-                R.id.tvIncomingNumber
-            )
-
-        val btnDecline =
-            findViewById<TextView>(
-                R.id.btnDecline
-            )
-
-        val btnAccept =
-            findViewById<LinearLayout>(
-                R.id.btnAccept
-            )
-
-        val btnAnswer =
-            findViewById<TextView>(
-                R.id.btnAnswer
-            )
-
-        val btnMessage =
-            findViewById<LinearLayout>(
-                R.id.btnMessage
-            )
-
-        // Caller Info
-        tvIncomingName.text =
-            callerName
-
-        tvIncomingAvatar.text =
-            callerName.first()
-                .uppercase()
-
-        tvIncomingNumber.text =
-            "Mobile +91 82950 00000"
+        setContent {
+            ShaktiSetuTheme {
+                IncomingCallScreen(
+                    callerName = callerName,
+                    phoneNumber = phoneNumber,
+                    onDecline = {
+                        stopEverything()
+                        finish()
+                    },
+                    onAccept = {
+                        answerCall(callerName)
+                    },
+                    onMessage = {
+                        stopEverything()
+                        Toast.makeText(this, "💬 Message sent!", Toast.LENGTH_SHORT).show()
+                        finish()
+                    }
+                )
+            }
+        }
 
         // Start Effects
         startRingtone()
-
         startVibration()
 
-        // Decline
-        btnDecline.setOnClickListener {
-
-            stopEverything()
-
-            finish()
-        }
-
-        // Accept
-        btnAccept.setOnClickListener {
-
-            answerCall(callerName)
-        }
-
-        // Answer Text
-        btnAnswer.setOnClickListener {
-
-            answerCall(callerName)
-        }
-
-        // Message
-        btnMessage.setOnClickListener {
-
-            stopEverything()
-
-            Toast.makeText(
-                this,
-                "💬 Message sent!",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            finish()
-        }
-
         // Block Back Press
-        onBackPressedDispatcher.addCallback(
-            this,
-
-            object : OnBackPressedCallback(true) {
-
-                override fun handleOnBackPressed() {
-
-                    // Block Back
-                }
+        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                // Block Back
             }
-        )
+        })
     }
 
     // Start Ringtone

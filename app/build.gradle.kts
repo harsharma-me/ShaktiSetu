@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.google.services)
@@ -43,6 +44,7 @@ android {
 
     buildFeatures {
         viewBinding = true
+        compose = true
     }
     kotlinOptions {
         jvmTarget = "11"
@@ -56,7 +58,19 @@ dependencies {
     implementation(libs.material)
 
     implementation(libs.androidx.activity)
+    implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.constraintlayout)
+
+    // Compose
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.ui)
+    implementation(libs.androidx.ui.graphics)
+    implementation(libs.androidx.ui.tooling.preview)
+    implementation(libs.androidx.material3)
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    implementation(libs.androidx.lifecycle.viewmodel.compose)
+    debugImplementation(libs.androidx.ui.tooling)
+    debugImplementation(libs.androidx.ui.test.manifest)
 
     implementation(libs.play.services.auth)
     implementation(libs.play.services.location)
@@ -76,6 +90,7 @@ dependencies {
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-messaging")
+    implementation("com.google.firebase:firebase-storage")
 
     // Serialization
     implementation(libs.kotlinx.serialization.json)
@@ -89,11 +104,14 @@ dependencies {
     // Image Loading
     implementation("com.squareup.picasso:picasso:2.8")
 
+    // OpenStreetMap
+    implementation(libs.osmdroid)
+
     testImplementation(libs.junit)
 
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
-    implementation("io.coil-kt:coil:2.7.0")
+    implementation("io.coil-kt:coil-compose:2.7.0")
     implementation("com.google.firebase:firebase-auth-ktx")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.4")
 

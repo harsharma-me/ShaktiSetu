@@ -3,12 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@drawable/bg_auth_gradient">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/navInclude"
+        android:layout_above="@id/navIncludeRoot"
         android:fillViewport="true">
 
         <LinearLayout
@@ -28,6 +28,44 @@
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="20dp" />
+
+            <!-- Profile Completeness (Moved from Profile) -->
+            <LinearLayout
+                android:id="@+id/layoutProfileCompleteness"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginBottom="24dp"
+                android:padding="16dp"
+                android:background="@drawable/rounded_bg_white">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Profile Completeness"
+                    android:textSize="12sp"
+                    android:textColor="@color/text_secondary"
+                    android:layout_marginBottom="4dp"/>
+
+                <ProgressBar
+                    android:id="@+id/settingsProgressBar"
+                    style="?android:attr/progressBarStyleHorizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp"
+                    android:progress="50"
+                    android:progressDrawable="@drawable/custom_progress_bar"
+                    android:layout_marginBottom="4dp"/>
+
+                <TextView
+                    android:id="@+id/tvProgressText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="50% Complete"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/text_brand"/>
+            </LinearLayout>
 
             <!-- ========== SOS Section ========== -->
             <LinearLayout
@@ -488,7 +526,7 @@
 
     <!-- Nav Bar -->
     <include
-        android:id="@+id/navInclude"
+        android:id="@+id/navIncludeRoot"
         layout="@layout/nav_bar_include" />
 
 </RelativeLayout>

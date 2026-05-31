@@ -4,6 +4,9 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Patterns
+import android.view.MotionEvent
+import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
@@ -20,11 +23,15 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.mutableStateOf
+import com.example.shaktisetu.ui.screens.SignUpScreen
+import com.example.shaktisetu.ui.theme.ShaktiSetuTheme
+
 class SignUpActivity : AppCompatActivity() {
 
-    private var termsAgreed = false
-
-    private lateinit var tvTermsLink: TextView
+    private val termsAgreed = mutableStateOf(false)
+    private val isLoading = mutableStateOf(false)
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
@@ -47,8 +54,6 @@ class SignUpActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
-        setContentView(R.layout.activity_sign_up)
-
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
@@ -60,197 +65,47 @@ class SignUpActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        val etName =
-            findViewById<EditText>(R.id.etName)
-
-        val etEmail =
-            findViewById<EditText>(R.id.etEmail)
-
-        val etPhone =
-            findViewById<EditText>(R.id.etPhone)
-
-        val etPassword =
-            findViewById<EditText>(R.id.etPassword)
-
-        val etConfirmPassword =
-            findViewById<EditText>(R.id.etConfirmPassword)
-
-        val btnSignUp =
-            findViewById<Button>(R.id.btnSignUp)
-
-        val tvSignIn =
-            findViewById<TextView>(R.id.tvSignIn)
-
-        val btnGoogle =
-            findViewById<Button>(R.id.btnGoogle)
-
-        tvTermsLink =
-            findViewById(R.id.tvTermsLink)
-
-        // Google Login
-        btnGoogle.setOnClickListener {
-            if (!termsAgreed) {
-                showToast("Please agree to Terms & Conditions first!")
-                tvTermsLink.setTextColor(Color.RED)
-                return@setOnClickListener
-            }
-            val signInIntent = googleSignInClient.signInIntent
-            googleSignInLauncher.launch(signInIntent)
-        }
-
-        // Terms Dialog
-        tvTermsLink.setOnClickListener {
-            showTermsDialog()
-        }
-
-        // Sign Up
-        btnSignUp.setOnClickListener {
-
-            val name =
-                etName.text
-                    .toString()
-                    .trim()
-
-            val email =
-                etEmail.text
-                    .toString()
-                    .trim()
-                    .lowercase()
-
-            val phone =
-                etPhone.text
-                    .toString()
-                    .trim()
-
-            val password =
-                etPassword.text
-                    .toString()
-                    .trim()
-
-            val confirmPassword =
-                etConfirmPassword.text
-                    .toString()
-                    .trim()
-
-            when {
-
-                name.isEmpty() -> {
-
-                    showToast(
-                        "Please enter your name!"
-                    )
-
-                    etName.requestFocus()
-                }
-
-                name.length < 3 -> {
-
-                    showToast(
-                        "Name must be at least 3 characters!"
-                    )
-
-                    etName.requestFocus()
-                }
-
-                email.isEmpty() -> {
-
-                    showToast(
-                        "Please enter your email!"
-                    )
-
-                    etEmail.requestFocus()
-                }
-
-                !isValidEmail(email) -> {
-
-                    showToast(
-                        "Enter valid email!"
-                    )
-
-                    etEmail.requestFocus()
-                }
-
-                phone.isEmpty() -> {
-
-                    showToast(
-                        "Please enter phone number!"
-                    )
-
-                    etPhone.requestFocus()
-                }
-
-                !isValidPhone(phone) -> {
-
-                    showToast(
-                        "Enter valid 10-digit number!"
-                    )
-
-                    etPhone.requestFocus()
-                }
-
-                password.isEmpty() -> {
-
-                    showToast(
-                        "Please enter password!"
-                    )
-
-                    etPassword.requestFocus()
-                }
-
-                password.length < 6 -> {
-
-                    showToast(
-                        "Password must be at least 6 characters!"
-                    )
-
-                    etPassword.requestFocus()
-                }
-
-                confirmPassword.isEmpty() -> {
-
-                    showToast(
-                        "Please confirm password!"
-                    )
-
-                    etConfirmPassword.requestFocus()
-                }
-
-                password != confirmPassword -> {
-
-                    showToast(
-                        "Passwords do not match!"
-                    )
-
-                    etConfirmPassword.requestFocus()
-                }
-
-                !termsAgreed -> {
-
-                    showToast(
-                        "Terms & Conditions"
-                    )
-
-                    tvTermsLink.setTextColor(
-                        Color.RED
-                    )
-                }
-
-                else -> {
-
-                    createFirebaseAccount(
-                        name,
-                        email,
-                        phone,
-                        password,
-                        btnSignUp
-                    )
-                }
+        setContent {
+            ShaktiSetuTheme {
+                SignUpScreen(
+                    onSignUpClick = { name, email, phone, password, confirmPassword ->
+                        validateAndSignUp(name, email, phone, password, confirmPassword)
+                    },
+                    onSignInClick = { finish() },
+                    onTermsClick = { showTermsDialog() },
+                    onGoogleSignUpClick = {
+                        if (!termsAgreed.value) {
+                            showToast("Please agree to Terms & Conditions first!")
+                        } else {
+                            isLoading.value = true
+                            val signInIntent = googleSignInClient.signInIntent
+                            googleSignInLauncher.launch(signInIntent)
+                        }
+                    },
+                    termsAgreed = termsAgreed.value,
+                    isLoading = isLoading.value
+                )
             }
         }
+    }
 
-        // Already Have Account
-        tvSignIn.setOnClickListener {
-            finish()
+    private fun validateAndSignUp(name: String, email: String, phone: String, password: String, confirmPassword: String) {
+        when {
+            name.isEmpty() -> showToast("Please enter your name!")
+            name.length < 3 -> showToast("Name must be at least 3 characters!")
+            email.isEmpty() -> showToast("Please enter your email!")
+            !isValidEmail(email) -> showToast("Enter valid email!")
+            phone.isEmpty() -> showToast("Please enter phone number!")
+            !isValidPhone(phone) -> showToast("Enter valid 10-digit number!")
+            password.isEmpty() -> showToast("Please enter password!")
+            password.length < 6 -> showToast("Password must be at least 6 characters!")
+            confirmPassword.isEmpty() -> showToast("Please confirm password!")
+            password != confirmPassword -> showToast("Passwords do not match!")
+            !termsAgreed.value -> showToast("Please agree to Terms & Conditions")
+            else -> {
+                isLoading.value = true
+                createFirebaseAccount(name, email, phone, password)
+            }
         }
     }
 
@@ -318,14 +173,8 @@ class SignUpActivity : AppCompatActivity() {
         name: String,
         email: String,
         phone: String,
-        password: String,
-        button: Button
+        password: String
     ) {
-
-        button.isEnabled = false
-
-        button.text =
-            "Creating Account..."
 
         auth.createUserWithEmailAndPassword(
             email,
@@ -334,10 +183,7 @@ class SignUpActivity : AppCompatActivity() {
 
             .addOnCompleteListener { task ->
 
-                button.isEnabled = true
-
-                button.text =
-                    "CREATE ACCOUNT"
+                isLoading.value = false
 
                 if (task.isSuccessful) {
 
@@ -454,14 +300,7 @@ class SignUpActivity : AppCompatActivity() {
         val dialog =
             TermsConditionsDialog(this) {
 
-                termsAgreed = true
-
-                tvTermsLink.setTextColor(
-                    Color.parseColor("#4CAF50")
-                )
-
-                tvTermsLink.text =
-                    "Terms & Conditions"
+                termsAgreed.value = true
 
             }
 
@@ -479,4 +318,5 @@ class SignUpActivity : AppCompatActivity() {
             Toast.LENGTH_SHORT
         ).show()
     }
+
 }

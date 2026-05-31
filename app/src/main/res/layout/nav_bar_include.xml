@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navIncludeRoot"
     android:layout_width="match_parent"
     android:layout_height="92dp"
     android:layout_alignParentBottom="true"
     android:clipChildren="false"
-    android:clipToPadding="false">
+    android:clipToPadding="false"
+    android:transitionName="bottom_nav">
 
     <!-- Navigation Background -->
     <LinearLayout

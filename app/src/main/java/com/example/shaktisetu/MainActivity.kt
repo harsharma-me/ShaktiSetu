@@ -7,6 +7,11 @@ import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
+import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
+import android.animation.ObjectAnimator
+import android.animation.AnimatorSet
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.Toast
@@ -15,17 +20,36 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
+import com.google.firebase.messaging.FirebaseMessaging
+import androidx.activity.compose.setContent
+import com.example.shaktisetu.ui.theme.ShaktiSetuTheme
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.SharedPreferences
+import androidx.core.app.NotificationCompat
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var fusedLocationClient:
             FusedLocationProviderClient
 
+    private lateinit var sharedPrefs: SharedPreferences
+
     private var savedLat = 0.0
 
     private var savedLng = 0.0
 
-    // Permission Launcher
+    // Permission Launchers
+    private val notificationPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (!isGranted) {
+                Toast.makeText(this, "Notification permission denied. You won't receive alerts.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     private val locationPermissionLauncher =
 
         registerForActivityResult(
@@ -61,91 +85,65 @@ class MainActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
-        setContentView(
-            R.layout.activity_main
-        )
+        setContent {
+            ShaktiSetuTheme {
+                MainScreen(
+                    onNotificationClick = { openScreen(NotificationActivity::class.java) },
+                    onSOSClick = { openSOSScreen() },
+                    onAmbulanceClick = { dialNumber("108") },
+                    onPoliceClick = { dialNumber("100") },
+                    onWomenSafetyClick = { dialNumber("1091") },
+                    onFakeCallClick = { openScreen(FakeCallActivity::class.java) },
+                    onTabClick = { tab ->
+                        when (tab) {
+                            "home" -> { /* Already here */ }
+                            "evidence" -> openScreen(EvidenceActivity::class.java)
+                            "contacts" -> openScreen(ContactsActivity::class.java)
+                            "call" -> openScreen(FakeCallActivity::class.java)
+                            "settings" -> openScreen(SettingsActivity::class.java)
+                        }
+                    }
+                )
+            }
+        }
 
-        BottomNavHelper.setup(
-            this,
-            "home"
-        )
+        sharedPrefs = getSharedPreferences("ShaktiSetuPrefs", MODE_PRIVATE)
 
         fusedLocationClient =
             LocationServices
                 .getFusedLocationProviderClient(this)
 
-        initializeViews()
-
+        saveFcmToken()
+        listenForBroadcasts()
+        requestNotificationPermission()
         requestLocationPermission()
     }
 
-    // Initialize Views
-    private fun initializeViews() {
-
-        val btnSOS =
-            findViewById<FrameLayout>(
-                R.id.btnSOS
-            )
-
-        val cardAmbulance =
-            findViewById<LinearLayout>(
-                R.id.cardAmbulance
-            )
-
-        val cardPolice =
-            findViewById<LinearLayout>(
-                R.id.cardPolice
-            )
-
-        val cardWomenSafety =
-            findViewById<LinearLayout>(
-                R.id.cardWomenSafety
-            )
-
-        val cardFakeCall =
-            findViewById<LinearLayout>(
-                R.id.cardFakeCall
-            )
-
-        val locationBar =
-            findViewById<LinearLayout>(
-                R.id.locationBar
-            )
-
-        // SOS
-        btnSOS.setOnClickListener {
-            openSOSScreen()
+    private fun requestNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
         }
+    }
 
-        // Emergency Calls
-        cardAmbulance.setOnClickListener {
-            dialNumber("108")
-        }
+    // Compose migration: Views are no longer used in setContent
+    private fun initializeViews() {}
+    private fun startPulseAnimation() {}
 
-        cardPolice.setOnClickListener {
-            dialNumber("100")
-        }
-
-        cardWomenSafety.setOnClickListener {
-            dialNumber("1091")
-        }
-
-        // Fake Call
-        cardFakeCall.setOnClickListener {
-
-            openScreen(
-                FakeCallActivity::class.java
-            )
-        }
-
-        // Location
-        locationBar.setOnClickListener {
-
-            Toast.makeText(
-                this,
-                "📍 Live location sharing coming soon",
-                Toast.LENGTH_SHORT
-            ).show()
+    private fun saveFcmToken() {
+        val user = FirebaseAuth.getInstance().currentUser ?: return
+        FirebaseMessaging.getInstance().token.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                val token = task.result
+                val db = FirebaseFirestore.getInstance()
+                val data = hashMapOf("fcmToken" to token)
+                db.collection("users").document(user.uid)
+                    .set(data, com.google.firebase.firestore.SetOptions.merge())
+                    .addOnSuccessListener {
+                        Log.d("FCM", "Token updated: $token")
+                    }
+            }
         }
     }
 
@@ -285,24 +283,95 @@ class MainActivity : AppCompatActivity() {
     private fun startAnimatedActivity(
         intent: Intent
     ) {
+        val options = ActivityOptions.makeSceneTransitionAnimation(this)
+        startActivity(intent, options.toBundle())
+    }
 
-        val options =
-            ActivityOptions
-                .makeCustomAnimation(
-                    this,
-                    R.anim.zoom_fade_in,
-                    R.anim.zoom_fade_out
-                )
+    private fun listenForBroadcasts() {
+        val db = FirebaseFirestore.getInstance()
+        // appStartTime is used to ignore notifications sent before the app was opened
+        val appStartTime = System.currentTimeMillis() / 1000
+        Log.d("MainActivity", "Listening for notifications...")
+        
+        db.collection("notifications")
+            .orderBy("timestamp", Query.Direction.DESCENDING)
+            .limit(1)
+            .addSnapshotListener { snapshot, e ->
+                if (e != null) {
+                    Log.e("MainActivity", "Firestore error: ${e.message}")
+                    return@addSnapshotListener
+                }
 
-        startActivity(
-            intent,
-            options.toBundle()
-        )
+                if (snapshot != null && !snapshot.isEmpty) {
+                    val doc = snapshot.documents[0]
+                    val title = doc.getString("title") ?: "Alert"
+                    val body = doc.getString("body") ?: ""
+                    val timestamp = doc.getTimestamp("timestamp")
+
+                    // Only show if the notification is new (allow 10s buffer for server delay)
+                    if (timestamp != null && timestamp.seconds > (appStartTime - 10)) {
+                        val target = doc.getString("target") ?: "all"
+                        val targetUid = doc.getString("uid")
+                        val currentUser = FirebaseAuth.getInstance().currentUser
+
+                        var shouldShow = false
+                        if (target == "all") {
+                            shouldShow = true
+                        } else if (target == "specific" && targetUid != null && currentUser != null) {
+                            if (currentUser.uid == targetUid) {
+                                shouldShow = true
+                            }
+                        } else if (target == "emergency") {
+                            // Check if the user is currently in an SOS state
+                            val isSosActive = sharedPrefs.getBoolean("sos_active", false)
+                            if (isSosActive) {
+                                shouldShow = true
+                            }
+                        }
+                        
+                        if (shouldShow) {
+                            Log.d("MainActivity", "New notification received: $title")
+                            
+                            // Show a Toast so we know the data arrived even if notification fails
+                            runOnUiThread {
+                                Toast.makeText(this, "📢 $title: $body", Toast.LENGTH_LONG).show()
+                            }
+                            
+                            showLocalNotification(title, body)
+                        }
+                    }
+                }
+            }
+    }
+
+    private fun showLocalNotification(title: String, body: String) {
+        val channelId = "emergency_broadcasts"
+        val notificationManager = getSystemService(NOTIFICATION_SERVICE) as NotificationManager
+
+        val channel = NotificationChannel(
+            channelId, "Safety Broadcasts",
+            NotificationManager.IMPORTANCE_HIGH
+        ).apply {
+            description = "Emergency alerts from admin"
+            enableLights(true)
+            enableVibration(true)
+        }
+        notificationManager.createNotificationChannel(channel)
+
+        val builder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.drawable.ic_sos_shield)
+            .setContentTitle(title)
+            .setContentText(body)
+            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setAutoCancel(true)
+            .setDefaults(NotificationCompat.DEFAULT_ALL)
+
+        notificationManager.notify(System.currentTimeMillis().toInt(), builder.build())
     }
 
     override fun finish() {
-
         super.finish()
+        if (BottomNavHelper.isNavigatingTabs) return
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             overrideActivityTransition(

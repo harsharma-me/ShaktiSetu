@@ -2,7 +2,9 @@ package com.example.shaktisetu
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MotionEvent
 import android.view.View
+import android.view.animation.AccelerateDecelerateInterpolator
 import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
@@ -20,12 +22,17 @@ import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.mutableStateOf
+import com.example.shaktisetu.ui.screens.SignInScreen
+import com.example.shaktisetu.ui.theme.ShaktiSetuTheme
+
 class SignInActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var db: FirebaseFirestore
     private lateinit var googleSignInClient: GoogleSignInClient
-    private lateinit var loadingOverlay: FrameLayout
+    private val isLoading = mutableStateOf(false)
 
     private val googleSignInLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -49,13 +56,8 @@ class SignInActivity : AppCompatActivity() {
 
         super.onCreate(savedInstanceState)
 
-        setContentView(
-            R.layout.activity_sign_in
-        )
-
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
-        loadingOverlay = findViewById(R.id.loadingOverlay)
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -65,97 +67,31 @@ class SignInActivity : AppCompatActivity() {
 
         googleSignInClient = GoogleSignIn.getClient(this, gso)
 
-        val etEmail =
-            findViewById<EditText>(
-                R.id.etEmail
-            )
-
-        val etPassword =
-            findViewById<EditText>(
-                R.id.etPassword
-            )
-
-        val btnContinue =
-            findViewById<Button>(
-                R.id.btnContinue
-            )
-
-        val tvForgot =
-            findViewById<TextView>(
-                R.id.tvForgot
-            )
-
-        val tvSignup =
-            findViewById<TextView>(
-                R.id.tvSignup
-            )
-
-        val btnGoogle =
-            findViewById<Button>(
-                R.id.btnGoogle
-            )
-
-        // Google Login
-        btnGoogle.setOnClickListener {
-            toggleLoading(true)
-            val signInIntent = googleSignInClient.signInIntent
-            googleSignInLauncher.launch(signInIntent)
-        }
-
-        // Login
-        btnContinue.setOnClickListener {
-
-            val email =
-                etEmail.text
-                    .toString()
-                    .trim()
-                    .lowercase()
-
-            val password =
-                etPassword.text
-                    .toString()
-                    .trim()
-
-            if (
-                email.isEmpty() ||
-                password.isEmpty()
-            ) {
-
-                Toast.makeText(
-                    this,
-                    "Please fill all fields!",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                return@setOnClickListener
-            }
-
-            toggleLoading(true)
-
-            signInUser(
-                email,
-                password
-            )
-        }
-
-        // Signup
-        tvSignup.setOnClickListener {
-
-            startActivity(
-
-                Intent(
-                    this,
-                    SignUpActivity::class.java
+        setContent {
+            ShaktiSetuTheme {
+                SignInScreen(
+                    onSignInClick = { email, password ->
+                        if (email.isEmpty() || password.isEmpty()) {
+                            Toast.makeText(this, "Please fill all fields!", Toast.LENGTH_SHORT).show()
+                        } else {
+                            toggleLoading(true)
+                            signInUser(email.trim().lowercase(), password.trim())
+                        }
+                    },
+                    onSignUpClick = {
+                        startActivity(Intent(this, SignUpActivity::class.java))
+                    },
+                    onForgotPasswordClick = { email ->
+                        showForgotPassword(email.trim())
+                    },
+                    onGoogleSignInClick = {
+                        toggleLoading(true)
+                        val signInIntent = googleSignInClient.signInIntent
+                        googleSignInLauncher.launch(signInIntent)
+                    },
+                    isLoading = isLoading.value
                 )
-            )
-        }
-
-        // Forgot Password
-        tvForgot.setOnClickListener {
-
-            showForgotPassword(
-                etEmail.text.toString().trim()
-            )
+            }
         }
     }
 
@@ -204,7 +140,7 @@ class SignInActivity : AppCompatActivity() {
     }
 
     private fun toggleLoading(show: Boolean) {
-        loadingOverlay.visibility = if (show) View.VISIBLE else View.GONE
+        isLoading.value = show
     }
 
     private fun checkIfUserExistsInFirestore(email: String) {
@@ -339,34 +275,16 @@ class SignInActivity : AppCompatActivity() {
     ) {
 
         if (email.isEmpty()) {
-
-            Toast.makeText(
-                this,
-                "Enter email first",
-                Toast.LENGTH_SHORT
-            ).show()
-
+            Toast.makeText(this, "Enter email first", Toast.LENGTH_SHORT).show()
             return
         }
 
         auth.sendPasswordResetEmail(email)
-
             .addOnSuccessListener {
-
-                Toast.makeText(
-                    this,
-                    "📩 Reset email sent",
-                    Toast.LENGTH_LONG
-                ).show()
+                Toast.makeText(this, "📩 Reset email sent", Toast.LENGTH_LONG).show()
             }
-
             .addOnFailureListener {
-
-                Toast.makeText(
-                    this,
-                    "❌ Failed to send reset email",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(this, "❌ Failed to send reset email", Toast.LENGTH_SHORT).show()
             }
     }
 }

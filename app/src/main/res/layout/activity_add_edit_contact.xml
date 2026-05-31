@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/bg_auth_gradient"
     android:orientation="vertical">
 
     <!-- Top Bar -->
@@ -62,10 +63,10 @@
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:hint="e.g. Harsh Sharma"
-            android:textColorHint="#AAAAAA"
-            android:textColor="#000000"
+            android:textColorHint="@color/input_hint"
+            android:textColor="@color/input_text"
             android:textSize="15sp"
-            android:background="@drawable/input_field_bg"
+            android:background="@drawable/rounded_input"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:inputType="textPersonName"
@@ -87,10 +88,10 @@
             android:layout_width="match_parent"
             android:layout_height="52dp"
             android:hint="+91 00000 00000"
-            android:textColorHint="#AAAAAA"
-            android:textColor="#000000"
+            android:textColorHint="@color/input_hint"
+            android:textColor="@color/input_text"
             android:textSize="15sp"
-            android:background="@drawable/input_field_bg"
+            android:background="@drawable/rounded_input"
             android:paddingStart="16dp"
             android:paddingEnd="16dp"
             android:inputType="phone"
@@ -111,7 +112,7 @@
             android:id="@+id/spinnerRelation"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:background="@drawable/spinner_bg"
+            android:background="@drawable/rounded_input"
             android:paddingStart="12dp"
             android:paddingEnd="12dp" />
 
@@ -119,7 +120,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/info_box_bg"
+            android:background="@null"
             android:orientation="horizontal"
             android:gravity="center_vertical"
             android:padding="14dp"
@@ -137,7 +138,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="This contact will receive an SMS with your live location link whenever you trigger the SOS alarm."
-                android:textColor="#1A53B0"
+                android:textColor="@color/text_primary"
                 android:textSize="13sp"
                 android:lineSpacingExtra="3dp" />
         </LinearLayout>
@@ -153,6 +154,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/black_button"
+        app:backgroundTint="@null"
         android:text="Confirm"
         android:textColor="@color/background"
         android:textSize="18sp"

@@ -2,12 +2,12 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@drawable/bg_auth_gradient">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@id/navInclude"
+        android:layout_above="@id/navIncludeRoot"
         android:fillViewport="true">
 
         <LinearLayout
@@ -107,7 +107,7 @@
 
     <!-- Nav Bar -->
     <include
-        android:id="@+id/navInclude"
+        android:id="@+id/navIncludeRoot"
         layout="@layout/nav_bar_include" />
 
 </RelativeLayout>

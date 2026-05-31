@@ -13,7 +13,7 @@
     <!-- Dark Mode Palette - Improved Contrast -->
     <color name="background">#121212</color>
     <color name="logo_bg">#1A1215</color> <!-- Dark version of the pinkish bg -->
-    <color name="surface_card">#1E1E1E</color>
+    <color name="surface_card">#1F1A1D</color>
     <color name="bg_main">#121212</color>
     <color name="bg_white">#1E1E1E</color>
 
@@ -31,6 +31,7 @@
     <color name="black">#000000</color> <!-- Real Black -->
     <color name="white">#FFFFFF</color>
     <color name="text_white">#FFFFFF</color>
+    <color name="keyboard">#ffffff</color>
 
     <!-- Emergency/SOS Specific -->
     <color name="sos_red">#FF4B55</color>
@@ -51,4 +52,7 @@
     <color name="primary_color">#FFB2BB</color>
     <color name="primary_dark_color">#000000</color>
     <color name="accent_color">#FF5277</color>
+
+
+    <color name="black_btn">#FFFFFF</color>
 </resources>

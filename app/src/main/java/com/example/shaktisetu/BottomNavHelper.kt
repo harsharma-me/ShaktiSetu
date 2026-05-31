@@ -3,11 +3,15 @@ package com.example.shaktisetu
 import android.app.Activity
 import android.app.ActivityOptions
 import android.content.Intent
+import android.os.Build
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.graphics.toColorInt
 
 object BottomNavHelper {
+
+    // Flag to suppress activity transitions during tab switches
+    var isNavigatingTabs = false
 
     fun setup(
         activity: Activity,
@@ -132,28 +136,48 @@ object BottomNavHelper {
         }
     }
 
+    fun handleTabClick(activity: Activity, tab: String) {
+        val targetClass = when (tab) {
+            "evidence" -> EvidenceActivity::class.java
+            "contacts" -> ContactsActivity::class.java
+            "home" -> MainActivity::class.java
+            "call" -> FakeCallActivity::class.java
+            "settings" -> SettingsActivity::class.java
+            else -> null
+        }
+        targetClass?.let { navigate(activity, it) }
+    }
+
     private fun navigate(
         activity: Activity,
         targetClass: Class<*>
     ) {
+        isNavigatingTabs = true
+        val intent = Intent(activity, targetClass)
 
-        val intent = Intent(
-            activity,
-            targetClass
-        )
-
-        val options =
-            ActivityOptions.makeCustomAnimation(
+        // Find the bottom nav root to use as shared element
+        val navRoot = activity.findViewById<android.view.View>(R.id.navIncludeRoot)
+        
+        val options = if (navRoot != null) {
+            ActivityOptions.makeSceneTransitionAnimation(
                 activity,
-                R.anim.zoom_fade_in,
-                R.anim.zoom_fade_out
+                android.util.Pair(navRoot, "bottom_nav")
             )
-
-        activity.startActivity(
-            intent,
-            options.toBundle()
-        )
-
-        activity.finish()
+        } else {
+            ActivityOptions.makeCustomAnimation(activity, R.anim.zoom_fade_in, R.anim.zoom_fade_out)
+        }
+        
+        activity.startActivity(intent, options.toBundle())
+        
+        // Don't finish() immediately to allow transition to play
+        // But for tab navigation, we usually want to finish the old activity to keep stack clean
+        // If we finish(), the transition might be cut short unless handled carefully.
+        // For now, let's keep finish() but use a delay or just accept the shared element behavior.
+        activity.window.decorView.postDelayed({
+            if (!activity.isFinishing && !activity.isDestroyed) {
+                activity.finish()
+            }
+            isNavigatingTabs = false
+        }, 400)
     }
 }

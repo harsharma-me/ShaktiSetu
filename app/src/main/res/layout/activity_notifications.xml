@@ -10,7 +10,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="20dp"
-        android:layout_above="@id/navInclude">
+        android:layout_above="@id/navIncludeRoot">
 
         <ImageButton
             android:id="@+id/btnBack"
@@ -50,7 +50,7 @@
     </LinearLayout>
 
     <include
-        android:id="@+id/navInclude"
+        android:id="@+id/navIncludeRoot"
         layout="@layout/nav_bar_include" />
 
 </RelativeLayout>

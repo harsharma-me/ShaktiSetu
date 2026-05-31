@@ -1,172 +1,54 @@
 package com.example.shaktisetu
 
-import android.content.SharedPreferences
 import android.os.Build
 import android.os.Bundle
-import android.widget.Button
-import android.widget.EditText
-import android.widget.ImageButton
 import android.widget.Toast
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import com.example.shaktisetu.ui.screens.EditProfileScreen
+import com.example.shaktisetu.ui.theme.ShaktiSetuTheme
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class EditProfileActivity : AppCompatActivity() {
 
-    private lateinit var etName:
-            EditText
+    private var isUpdating by mutableStateOf(false)
 
-    private lateinit var etEmail:
-            EditText
-
-    private lateinit var etPhone:
-            EditText
-
-    private lateinit var etAddress:
-            EditText
-
-    private lateinit var btnUpdate:
-            Button
-
-    private lateinit var btnBack:
-            ImageButton
-
-    private lateinit var sharedPreferences:
-            SharedPreferences
-
-    private lateinit var auth: FirebaseAuth
-    private lateinit var db: FirebaseFirestore
-
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
-
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(
-            R.layout.activity_edit_profile
-        )
+        val sharedPreferences = getSharedPreferences("ShaktiSetuPrefs", MODE_PRIVATE)
+        val initialName = sharedPreferences.getString("user_name", "User") ?: "User"
+        val initialEmail = sharedPreferences.getString("user_email", "user@example.com") ?: "user@example.com"
+        val initialPhone = sharedPreferences.getString("user_phone", "") ?: ""
+        val initialAddress = sharedPreferences.getString("user_address", "") ?: ""
 
-        sharedPreferences =
-            getSharedPreferences(
-                "ShaktiSetuPrefs",
-                MODE_PRIVATE
-            )
-
-        auth = FirebaseAuth.getInstance()
-        db = FirebaseFirestore.getInstance()
-
-        etName =
-            findViewById(R.id.etName)
-
-        etEmail =
-            findViewById(R.id.etEmail)
-
-        etPhone =
-            findViewById(R.id.etPhone)
-
-        etAddress =
-            findViewById(R.id.etAddress)
-
-        btnUpdate =
-            findViewById(R.id.btnUpdate)
-
-        btnBack =
-            findViewById(R.id.btnBack)
-
-        loadProfileData()
-
-        // Back
-        btnBack.setOnClickListener {
-            finish()
-        }
-
-        // Update
-        btnUpdate.setOnClickListener {
-
-            val name =
-                etName.text
-                    .toString()
-                    .trim()
-
-            val phone =
-                etPhone.text
-                    .toString()
-                    .trim()
-
-            val address =
-                etAddress.text
-                    .toString()
-                    .trim()
-
-            if (
-                name.isEmpty() ||
-                phone.isEmpty()
-            ) {
-
-                Toast.makeText(
-                    this,
-                    "Please fill required fields",
-                    Toast.LENGTH_SHORT
-                ).show()
-
-                return@setOnClickListener
+        setContent {
+            ShaktiSetuTheme {
+                EditProfileScreen(
+                    initialName = initialName,
+                    initialEmail = initialEmail,
+                    initialPhone = initialPhone,
+                    initialAddress = initialAddress,
+                    isUpdating = isUpdating,
+                    onBackClick = { finish() },
+                    onUpdateClick = { name, phone, address ->
+                        updateProfile(name, phone, address)
+                    }
+                )
             }
-
-            updateProfile(
-                name,
-                phone,
-                address
-            )
         }
     }
 
-    // Load Profile
-    private fun loadProfileData() {
-
-        val name =
-            sharedPreferences.getString(
-                "user_name",
-                "User"
-            ) ?: "User"
-
-        val email =
-            sharedPreferences.getString(
-                "user_email",
-                "user@example.com"
-            ) ?: "user@example.com"
-
-        val phone =
-            sharedPreferences.getString(
-                "user_phone",
-                ""
-            ) ?: ""
-
-        val address =
-            sharedPreferences.getString(
-                "user_address",
-                ""
-            ) ?: ""
-
-        etName.setText(name)
-
-        etEmail.setText(email)
-
-        etPhone.setText(phone)
-
-        etAddress.setText(address)
-    }
-
-    // Update Profile
-    private fun updateProfile(
-        name: String,
-        phone: String,
-        address: String
-    ) {
+    private fun updateProfile(name: String, phone: String, address: String) {
+        val auth = FirebaseAuth.getInstance()
+        val db = FirebaseFirestore.getInstance()
         val uid = auth.currentUser?.uid ?: return
 
-        btnUpdate.isEnabled = false
-        btnUpdate.text = "Updating..."
+        isUpdating = true
 
         val updates = hashMapOf<String, Any>(
             "name" to name,
@@ -174,12 +56,10 @@ class EditProfileActivity : AppCompatActivity() {
             "address" to address
         )
 
-        // 1. Update Firestore
         db.collection("users").document(uid)
             .update(updates)
             .addOnSuccessListener {
-                // 2. Save Locally if Firestore update succeeds
-                sharedPreferences.edit()
+                getSharedPreferences("ShaktiSetuPrefs", MODE_PRIVATE).edit()
                     .putString("user_name", name)
                     .putString("user_phone", phone)
                     .putString("user_address", address)
@@ -190,15 +70,12 @@ class EditProfileActivity : AppCompatActivity() {
             }
             .addOnFailureListener { e ->
                 Toast.makeText(this, "❌ Update failed: ${e.message}", Toast.LENGTH_SHORT).show()
-                btnUpdate.isEnabled = true
-                btnUpdate.text = "Update Profile"
+                isUpdating = false
             }
     }
 
     override fun finish() {
-
         super.finish()
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             overrideActivityTransition(
                 OVERRIDE_TRANSITION_CLOSE,

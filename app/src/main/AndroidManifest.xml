@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.shaktisetu"
     xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Device features -->
@@ -19,6 +20,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <!-- Storage: legacy support -->
     <uses-permission
@@ -28,6 +31,22 @@
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         tools:targetApi="23" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <queries>
+        <package android:name="com.google.android.gms" />
+        <package android:name="com.android.vending" />
+        <package android:name="com.google.android.apps.maps" />
+        <intent>
+            <action android:name="com.google.android.gms.auth.service.START" />
+        </intent>
+        <intent>
+            <action android:name="com.google.android.gms.location.service.START" />
+        </intent>
+        <intent>
+            <action android:name="com.google.android.gms.auth.api.signin.SERVICE_CONFIG_UPDATED" />
+        </intent>
+    </queries>
 
     <application
         android:allowBackup="true"
@@ -41,6 +60,10 @@
             android:hardwareAccelerated="true"/>
         <activity
             android:name=".EditProfileActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
+        <activity
+            android:name=".NotificationActivity"
             android:exported="false"
             android:hardwareAccelerated="true"/>
         <activity
@@ -87,7 +110,7 @@
         <!-- Fake Call -->
         <activity
             android:name=".FakeCallActivity"
-            android:exported="false"
+            android:exported="true"
             android:hardwareAccelerated="true"/>
 
         <!-- Incoming Call (showOnLockScreen) -->
@@ -163,6 +186,21 @@
             android:exported="false"
             android:hardwareAccelerated="true"/>
 
+        <!-- Track Location Activity -->
+        <activity
+            android:name=".TrackLocationActivity"
+            android:exported="true"
+            android:hardwareAccelerated="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:scheme="shaktisetu"
+                    android:host="track" />
+            </intent-filter>
+        </activity>
+
         <meta-data
             android:name="android.max_aspect_ratio"
             android:value="2.1" />
@@ -171,6 +209,22 @@
         <meta-data
             android:name="android.hardware.screen.orientation"
             android:value="portrait" />
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyA8rirB71PKtvKFEVKhiIa0d63sRAWe0m4" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

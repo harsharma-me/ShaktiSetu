@@ -13,22 +13,27 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint as OsmGeoPoint
 import org.osmdroid.views.overlay.Marker
 
+import org.osmdroid.views.MapView
+import androidx.activity.compose.setContent
+import androidx.compose.runtime.mutableStateOf
+import com.example.shaktisetu.ui.screens.TrackLocationScreen
+import com.example.shaktisetu.ui.theme.ShaktiSetuTheme
+
 class TrackLocationActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityTrackLocationBinding
     private val db = FirebaseFirestore.getInstance()
     private var marker: Marker? = null
     private var userUid: String? = null
+    private var mapView: MapView? = null
+
+    private val statusText = mutableStateOf("Initializing tracking...")
+    private val isLoading = mutableStateOf(true)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // OSMDroid configuration
         Configuration.getInstance().load(this, PreferenceManager.getDefaultSharedPreferences(this))
         
-        binding = ActivityTrackLocationBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
         userUid = intent.getStringExtra("user_uid") ?: intent.data?.getQueryParameter("uid")
 
         if (userUid == null) {
@@ -37,26 +42,38 @@ class TrackLocationActivity : AppCompatActivity() {
             return
         }
 
-        setupMap()
+        setContent {
+            ShaktiSetuTheme {
+                TrackLocationScreen(
+                    statusText = statusText.value,
+                    isLoading = isLoading.value,
+                    onMapReady = { mv ->
+                        mapView = mv
+                        setupMap(mv)
+                    }
+                )
+            }
+        }
+
         startTracking()
     }
 
-    private fun setupMap() {
-        binding.mapView.setTileSource(TileSourceFactory.MAPNIK)
-        binding.mapView.setMultiTouchControls(true)
-        binding.mapView.controller.setZoom(17.0)
+    private fun setupMap(mv: MapView) {
+        mv.setTileSource(TileSourceFactory.MAPNIK)
+        mv.setMultiTouchControls(true)
+        mv.controller.setZoom(17.0)
         
-        marker = Marker(binding.mapView)
+        marker = Marker(mv)
         marker?.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
         marker?.title = "Current Location"
-        binding.mapView.overlays.add(marker)
+        mv.overlays.add(marker)
     }
 
     private fun startTracking() {
         db.collection("live_sos").document(userUid!!)
             .addSnapshotListener { snapshot, e ->
                 if (e != null) {
-                    binding.statusText.text = "Error tracking location"
+                    statusText.value = "Error tracking location"
                     return@addSnapshotListener
                 }
 
@@ -64,12 +81,12 @@ class TrackLocationActivity : AppCompatActivity() {
                     val geoPoint = snapshot.getGeoPoint("location")
                     if (geoPoint != null) {
                         updateMarker(geoPoint)
-                        binding.progressBar.visibility = View.GONE
-                        binding.statusText.text = "Tracking Live Location"
+                        isLoading.value = false
+                        statusText.value = "Tracking Live Location"
                     }
                 } else {
-                    binding.statusText.text = "SOS Event Ended"
-                    binding.progressBar.visibility = View.GONE
+                    statusText.value = "SOS Event Ended"
+                    isLoading.value = false
                 }
             }
     }
@@ -77,17 +94,17 @@ class TrackLocationActivity : AppCompatActivity() {
     private fun updateMarker(geoPoint: GeoPoint) {
         val osmPoint = OsmGeoPoint(geoPoint.latitude, geoPoint.longitude)
         marker?.position = osmPoint
-        binding.mapView.controller.animateTo(osmPoint)
-        binding.mapView.invalidate()
+        mapView?.controller?.animateTo(osmPoint)
+        mapView?.invalidate()
     }
 
     override fun onResume() {
         super.onResume()
-        binding.mapView.onResume()
+        mapView?.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        binding.mapView.onPause()
+        mapView?.onPause()
     }
 }

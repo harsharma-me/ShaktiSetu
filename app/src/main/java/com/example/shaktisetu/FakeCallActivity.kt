@@ -7,275 +7,92 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
+import com.example.shaktisetu.ui.screens.FakeCallScreen
 
 class FakeCallActivity : AppCompatActivity() {
 
-    private var selectedDelay: Long = 5000
+    private var selectedDelay by mutableStateOf(5000L)
+    private var callerName by mutableStateOf("Harsh")
+    private var phoneNumber by mutableStateOf("+91 82950 00000")
 
-    private var callerName = "Harsh"
-
-    private lateinit var timerButtons:
-            List<TextView>
-
-    override fun onCreate(
-        savedInstanceState: Bundle?
-    ) {
-
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        setContentView(
-            R.layout.activity_fake_call
-        )
-
-        BottomNavHelper.setup(
-            this,
-            "call"
-        )
-
-        val btnBack =
-            findViewById<ImageView>(
-                R.id.btnBack
+        setContent {
+            FakeCallScreen(
+                callerName = callerName,
+                phoneNumber = phoneNumber,
+                selectedDelay = selectedDelay,
+                onCallerNameClick = { showCallerEditDialog() },
+                onDelaySelect = { selectedDelay = it },
+                onScheduleClick = { scheduleFakeCall() },
+                onTabClick = { tab -> BottomNavHelper.handleTabClick(this, tab) }
             )
-
-        val tvCallerAvatar =
-            findViewById<TextView>(
-                R.id.tvCallerAvatar
-            )
-
-        val tvCallerName =
-            findViewById<TextView>(
-                R.id.tvCallerName
-            )
-
-        val btnEditCaller =
-            findViewById<LinearLayout>(
-                R.id.btnEditCaller
-            )
-
-        val btn5s =
-            findViewById<TextView>(
-                R.id.btn5s
-            )
-
-        val btn10s =
-            findViewById<TextView>(
-                R.id.btn10s
-            )
-
-        val btn30s =
-            findViewById<TextView>(
-                R.id.btn30s
-            )
-
-        val btn60s =
-            findViewById<TextView>(
-                R.id.btn60s
-            )
-
-        val ringtoneRow =
-            findViewById<LinearLayout>(
-                R.id.ringtoneRow
-            )
-
-        val btnScheduleCall =
-            findViewById<Button>(
-                R.id.btnScheduleCall
-            )
-
-        timerButtons = listOf(
-            btn5s,
-            btn10s,
-            btn30s,
-            btn60s
-        )
-
-        val timerValues = listOf(
-            5000L,
-            10000L,
-            30000L,
-            60000L
-        )
-
-        // Default Selection
-        updateSelectedTimer(btn5s)
-
-        // Back
-        btnBack.setOnClickListener {
-            finish()
-        }
-
-        // Edit Caller
-        btnEditCaller.setOnClickListener {
-
-            showCallerNameDialog(
-                tvCallerName,
-                tvCallerAvatar
-            )
-        }
-
-        // Timer Selection
-        timerButtons.forEachIndexed {
-                index,
-                button ->
-
-            button.setOnClickListener {
-
-                selectedDelay =
-                    timerValues[index]
-
-                updateSelectedTimer(button)
-            }
-        }
-
-        // Ringtone
-        ringtoneRow.setOnClickListener {
-
-            Toast.makeText(
-                this,
-                "🎵 Custom ringtone coming soon",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
-
-        // Schedule Call
-        btnScheduleCall.setOnClickListener {
-
-            Toast.makeText(
-                this,
-                "📞 Fake call scheduled",
-                Toast.LENGTH_SHORT
-            ).show()
-
-            Handler(
-                Looper.getMainLooper()
-            ).postDelayed({
-
-                openIncomingCall()
-
-            }, selectedDelay)
         }
     }
 
-    // Caller Dialog
-    private fun showCallerNameDialog(
-        tvCallerName: TextView,
-        tvCallerAvatar: TextView
-    ) {
+    private fun showCallerEditDialog() {
+        val layout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            setPadding(60, 40, 60, 0)
+        }
 
-        val editText = EditText(this)
+        val etName = EditText(this).apply {
+            setText(callerName)
+            hint = "Caller Name"
+        }
+        val etPhone = EditText(this).apply {
+            setText(phoneNumber)
+            hint = "Phone Number"
+        }
 
-        editText.setText(callerName)
-
-        editText.hint = "Enter caller name"
+        layout.addView(etName)
+        layout.addView(etPhone)
 
         AlertDialog.Builder(this)
-
-            .setTitle("Edit Caller")
-
-            .setView(editText)
-
-            .setPositiveButton("Save") {
-                    _,
-                    _ ->
-
-                val newName =
-                    editText.text
-                        .toString()
-                        .trim()
-
-                if (newName.isNotEmpty()) {
-
-                    callerName = newName
-
-                    tvCallerName.text =
-                        callerName
-
-                    tvCallerAvatar.text =
-                        callerName.first()
-                            .uppercase()
-                }
+            .setTitle("Edit Caller Identity")
+            .setView(layout)
+            .setPositiveButton("Save") { _, _ ->
+                val newName = etName.text.toString().trim()
+                val newPhone = etPhone.text.toString().trim()
+                if (newName.isNotEmpty()) callerName = newName
+                if (newPhone.isNotEmpty()) phoneNumber = newPhone
             }
-
-            .setNegativeButton(
-                "Cancel",
-                null
-            )
-
+            .setNegativeButton("Cancel", null)
             .show()
     }
 
-    // Update Timer UI
-    private fun updateSelectedTimer(
-        selectedButton: TextView
-    ) {
+    private fun scheduleFakeCall() {
+        Toast.makeText(this, "📞 Fake call scheduled in ${selectedDelay/1000}s", Toast.LENGTH_SHORT).show()
 
-        timerButtons.forEach { button ->
-
-            button.setBackgroundResource(
-                R.drawable
-                    .timer_btn_unselected
-            )
-
-            button.setTextColor(
-
-                ContextCompat.getColor(
-                    this,
-                    R.color.timer_unselected_text
-                )
-            )
-        }
-
-        selectedButton.setBackgroundResource(
-            R.drawable.timer_btn_selected
-        )
-
-        selectedButton.setTextColor(
-
-            ContextCompat.getColor(
-                this,
-                android.R.color.white
-            )
-        )
+        Handler(Looper.getMainLooper()).postDelayed({
+            openIncomingCall()
+        }, selectedDelay)
     }
 
-    // Open Incoming Call
     private fun openIncomingCall() {
+        val intent = Intent(this, IncomingCallActivity::class.java).apply {
+            putExtra("caller_name", callerName)
+            putExtra("phone_number", phoneNumber)
+        }
 
-        val intent = Intent(
-            this,
-            IncomingCallActivity::class.java
+        val options = ActivityOptions.makeCustomAnimation(
+            this, R.anim.zoom_fade_in, R.anim.zoom_fade_out
         )
-
-        intent.putExtra(
-            "caller_name",
-            callerName
-        )
-
-        val options =
-            ActivityOptions
-                .makeCustomAnimation(
-                    this,
-                    R.anim.zoom_fade_in,
-                    R.anim.zoom_fade_out
-                )
-
-        startActivity(
-            intent,
-            options.toBundle()
-        )
+        startActivity(intent, options.toBundle())
     }
 
     override fun finish() {
-
         super.finish()
+        if (BottomNavHelper.isNavigatingTabs) return
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
             overrideActivityTransition(

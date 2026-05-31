@@ -2,24 +2,26 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2F3D35">
+    android:background="@color/cinematic_dark_bg">
 
     <!-- Top Section -->
     <LinearLayout
         android:id="@+id/topSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="80dp"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <!-- Call via SIM1 -->
+        <!-- Status -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Call via SIM1 from"
-            android:textColor="#A8B5AA"
-            android:textSize="16sp" />
+            android:text="Incoming Call"
+            android:textColor="#E0E0E0"
+            android:textSize="14sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.2" />
 
         <!-- Caller Name -->
         <TextView
@@ -83,7 +85,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="Message"
-            android:textColor="#3D4F42"
+            android:textColor="#FFFFFF"
             android:textSize="15sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -111,7 +113,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Decline"
-            android:textColor="#3D4F42"
+            android:textColor="#FFFFFF"
             android:textSize="17sp"
             android:textStyle="bold"
             android:clickable="true"
@@ -132,6 +134,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="📞"
+                android:textColor="#FFFFFF"
                 android:textSize="26sp" />
         </LinearLayout>
 
@@ -143,7 +146,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:text="Answer"
-            android:textColor="#3D4F42"
+            android:textColor="#FFFFFF"
             android:textSize="17sp"
             android:textStyle="bold"
             android:clickable="true"

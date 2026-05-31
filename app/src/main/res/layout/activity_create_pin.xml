@@ -5,7 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center_horizontal"
-    android:background="@color/background"
+    android:background="@drawable/bg_auth_gradient"
     android:padding="24dp">
 
     <!-- Logo Title -->
@@ -54,51 +54,51 @@
             android:id="@+id/btn1"
             style="@style/PinButton"
             android:text="1"
-            android:textColor="@color/black"/>
+            android:textColor="@color/keyboard"/>
         <TextView
             android:id="@+id/btn2"
             style="@style/PinButton"
             android:text="2"
-            android:textColor="@color/black"/>
+            android:textColor="@color/keyboard"/>
         <TextView
             android:id="@+id/btn3"
             style="@style/PinButton"
             android:text="3"
-            android:textColor="@color/black"/>
+            android:textColor="@color/keyboard"/>
 
         <!-- Row 2 -->
         <TextView
             android:id="@+id/btn4"
             style="@style/PinButton"
             android:text="4"
-            android:textColor="@color/black"/>
+            android:textColor="@color/keyboard"/>
         <TextView
             android:id="@+id/btn5"
             style="@style/PinButton"
             android:text="5"
-            android:textColor="@color/black"/>
+            android:textColor="@color/keyboard"/>
         <TextView
             android:id="@+id/btn6"
             style="@style/PinButton"
             android:text="6"
-            android:textColor="@color/black"/>
+            android:textColor="@color/keyboard"/>
 
         <!-- Row 3 -->
         <TextView
             android:id="@+id/btn7"
             style="@style/PinButton"
             android:text="7"
-            android:textColor="@color/black"/>
+            android:textColor="@color/keyboard"/>
         <TextView
             android:id="@+id/btn8"
             style="@style/PinButton"
             android:text="8"
-            android:textColor="@color/black"/>
+            android:textColor="@color/keyboard"/>
         <TextView
             android:id="@+id/btn9"
             style="@style/PinButton"
             android:text="9"
-            android:textColor="@color/black"/>
+            android:textColor="@color/keyboard"/>
 
         <!-- Row 4 -->
         <Space
@@ -108,13 +108,13 @@
             android:id="@+id/btn0"
             style="@style/PinButton"
             android:text="0"
-            android:textColor="@color/black"/>
+            android:textColor="@color/keyboard"/>
         <TextView
             android:id="@+id/btnBackspace"
             style="@style/PinButton"
             android:text="⌫"
             android:textSize="24sp"
-            android:textColor="@color/black"
+            android:textColor="@color/keyboard"
             />
 
     </GridLayout>

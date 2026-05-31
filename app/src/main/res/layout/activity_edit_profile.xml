@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@color/background">
+    android:background="@drawable/bg_auth_gradient">
 
     <!-- Header with Back Button -->
     <LinearLayout
@@ -62,9 +62,9 @@
                 android:layout_height="48dp"
                 android:hint="Enter your name"
                 android:padding="12dp"
-                android:background="@drawable/rounded_bg_white"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_hint"
+                android:background="@drawable/rounded_input"
+                android:textColor="@color/input_text"
+                android:textColorHint="@color/input_hint"
                 android:layout_marginBottom="16dp" />
 
             <!-- Email (Read-only) -->
@@ -83,9 +83,9 @@
                 android:layout_height="48dp"
                 android:hint="Email"
                 android:padding="12dp"
-                android:background="@drawable/rounded_bg_white"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_hint"
+                android:background="@drawable/rounded_input"
+                android:textColor="@color/input_text"
+                android:textColorHint="@color/input_hint"
                 android:enabled="false"
                 android:layout_marginBottom="16dp" />
 
@@ -105,9 +105,9 @@
                 android:layout_height="48dp"
                 android:hint="Enter your phone number"
                 android:padding="12dp"
-                android:background="@drawable/rounded_bg_white"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_hint"
+                android:background="@drawable/rounded_input"
+                android:textColor="@color/input_text"
+                android:textColorHint="@color/input_hint"
                 android:inputType="phone"
                 android:layout_marginBottom="16dp" />
 
@@ -127,9 +127,9 @@
                 android:layout_height="100dp"
                 android:hint="Enter your address"
                 android:padding="12dp"
-                android:background="@drawable/rounded_bg_white"
-                android:textColor="@color/text_primary"
-                android:textColorHint="@color/text_hint"
+                android:background="@drawable/rounded_input"
+                android:textColor="@color/input_text"
+                android:textColorHint="@color/input_hint"
                 android:gravity="top"
                 android:inputType="textMultiLine"
                 android:layout_marginBottom="16dp" />

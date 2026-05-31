@@ -4,17 +4,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@drawable/bg_auth_gradient">
+
+    <!-- Notification Icon -->
+    <ImageButton
+        android:id="@+id/btnNotification"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        android:contentDescription="Notifications"
+        android:padding="10dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/ic_notification_bell"
+        app:tint="@color/text_brand" />
 
     <!-- Bottom Navigation -->
-    <include layout="@layout/nav_bar_include" />
+    <include
+        android:id="@+id/navIncludeRoot"
+        layout="@layout/nav_bar_include" />
 
     <!-- Main Content -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_above="@id/navIncludeRoot"
         android:gravity="center_horizontal"
+        android:orientation="vertical"
         android:paddingHorizontal="20dp"
         android:paddingTop="10dp">
 
@@ -32,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
-            android:text="Need Help?"
+            android:text="You’re Safe Here"
             android:textColor="@color/text_primary"
             android:textSize="24sp"
             android:textStyle="bold" />
@@ -41,42 +59,59 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tap SOS Now"
+            android:text="Instant support when every second matters"
             android:textColor="@color/text_hint"
             android:textSize="16sp" />
 
-        <!-- SOS Button -->
+        <!-- SOS Button Section -->
         <FrameLayout
-            android:id="@+id/btnSOS"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/sos_button_bg"
-            android:elevation="3dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:foreground="?attr/selectableItemBackground">
+            android:layout_width="280dp"
+            android:layout_height="280dp"
+            android:layout_marginTop="10dp">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:layout_gravity="center">
+            <!-- Breathing Pulse View -->
+            <View
+                android:id="@+id/sosPulse"
+                android:layout_width="220dp"
+                android:layout_height="220dp"
+                android:layout_gravity="center"
+                android:alpha="0.3"
+                android:background="@drawable/sos_pulse_circle"
+                android:backgroundTint="@color/sos_red" />
 
-                <ImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:src="@drawable/ic_sos_shield"/>
+            <!-- Main SOS Button -->
+            <FrameLayout
+                android:id="@+id/btnSOS"
+                android:layout_width="230dp"
+                android:layout_height="230dp"
+                android:layout_gravity="center"
+                android:background="@drawable/sos_button_bg"
+                android:clickable="true"
+                android:elevation="4dp"
+                android:focusable="true"
+                android:foreground="?attr/selectableItemBackground">
 
-                <TextView
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SOS"
-                    android:textSize="32sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_white"/>
-            </LinearLayout>
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:src="@drawable/ic_sos_shield" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="SOS"
+                        android:textColor="@color/text_white"
+                        android:textSize="24sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+            </FrameLayout>
         </FrameLayout>
 
         <!-- Quick Action Grid -->
@@ -94,34 +129,35 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:gravity="center"
                 android:background="@drawable/card_bg"
-                android:padding="10dp"
-                android:elevation="3dp"
-
                 android:clickable="true"
-                android:focusable="true">
+                android:elevation="3dp"
+                android:focusable="true"
+                android:gravity="center"
+
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <FrameLayout
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="@drawable/icon_bg_purple">
+
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_ambulance"/>
+                        android:src="@drawable/ic_ambulance" />
                 </FrameLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:text="Ambulance"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
                     android:textColor="@color/text_primary"
-                    android:layout_marginTop="6dp"/>
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- Police Card -->
@@ -130,33 +166,34 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:gravity="center"
                 android:background="@drawable/card_bg"
-                android:padding="10dp"
                 android:clickable="true"
                 android:elevation="3dp"
-                android:focusable="true">
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <FrameLayout
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="@drawable/icon_bg_orange">
+
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_police"/>
+                        android:src="@drawable/ic_police" />
                 </FrameLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:text="Police"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
                     android:textColor="@color/text_primary"
-                    android:layout_marginTop="6dp"/>
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- Women Safety Card -->
@@ -165,33 +202,34 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:gravity="center"
                 android:background="@drawable/card_bg"
-                android:padding="10dp"
                 android:clickable="true"
                 android:elevation="3dp"
-                android:focusable="true">
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <FrameLayout
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="@drawable/icon_bg_pink">
+
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_women_safety"/>
+                        android:src="@drawable/ic_women_safety" />
                 </FrameLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:text="Women Safety"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
                     android:textColor="@color/text_primary"
-                    android:layout_marginTop="6dp"/>
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <!-- Fake Call Card -->
@@ -200,92 +238,38 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:layout_columnWeight="1"
-                android:orientation="vertical"
-                android:gravity="center"
                 android:background="@drawable/card_bg"
-                android:padding="10dp"
                 android:clickable="true"
                 android:elevation="3dp"
-                android:focusable="true">
+                android:focusable="true"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="10dp">
 
                 <FrameLayout
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:background="@drawable/icon_bg_blue">
+
                     <ImageView
                         android:layout_width="22dp"
                         android:layout_height="22dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_fake_call"/>
+                        android:src="@drawable/ic_fake_call" />
                 </FrameLayout>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp"
                     android:text="Fake"
-                    android:textSize="13sp"
-                    android:textStyle="bold"
                     android:textColor="@color/text_primary"
-                    android:layout_marginTop="6dp"/>
+                    android:textSize="13sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
         </GridLayout>
 
-        <!-- Location Sharing Bar -->
-        <LinearLayout
-            android:id="@+id/locationBar"
-            android:layout_width="match_parent"
-            android:layout_height="55dp"
-            android:layout_marginTop="12dp"
-            android:background="@drawable/location_bar_bg"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:clickable="true"
-            android:elevation="3dp"
-            android:focusable="true">
-
-            <FrameLayout
-                android:layout_width="38dp"
-                android:layout_height="38dp"
-                android:background="@drawable/icon_bg_red_light">
-                <ImageView
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_location_arrow"/>
-            </FrameLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical"
-                android:layout_marginStart="12dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Location Sharing"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_primary"/>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Allowed for 2 minutes"
-                    android:textSize="11sp"
-                    android:textColor="@color/text_hint"/>
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="›"
-                android:textSize="26sp"
-                android:textColor="@color/text_light_gray"/>
-        </LinearLayout>
 
     </LinearLayout>
 

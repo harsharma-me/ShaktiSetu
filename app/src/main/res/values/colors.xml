@@ -13,12 +13,16 @@
 
     <!-- Premium Cinematic Palette -->
     <!-- Dark Theme Colors -->
+    <color name="cinematic_dark_bg">#050304</color>
+    <color name="cinematic_dark_primary">#C94C63</color>
     <color name="cinematic_dark_bg_start">#050304</color>
     <color name="cinematic_dark_bg_center">#12070C</color>
     <color name="cinematic_dark_bg_end">#1A0B12</color>
     <color name="cinematic_wine_glow">#3D1C22</color>
 
     <!-- Light Theme Colors -->
+    <color name="cinematic_light_bg">#F7F2F4</color>
+    <color name="cinematic_light_primary">#B6455B</color>
     <color name="cinematic_ivory">#F8F2F4</color>
     <color name="cinematic_rose">#D4A5A5</color>
     <color name="cinematic_dusty_pink">#E8C1C1</color>
@@ -62,7 +66,7 @@
     <color name="background">#F2EDED</color>
 
     <color name="bg_main">#F4EEEE</color>
-    <color name="surface_card">#FFFFFF</color>
+    <color name="surface_card">#FCF8F9</color>
 
     <color name="text_primary">#1F1F1F</color>
     <color name="text_secondary">#757575</color>
@@ -71,8 +75,7 @@
     <color name="text_action">#FF2D55</color>
 
     <color name="sos_red">#EA4B55</color>
-    <color name="sos_outer">#F6D6D9</color>
-
+    <color name="sos_outer">#22D15F76</color>
     <color name="bg_purple_icon">#F0E6FF</color>
     <color name="bg_orange_icon">#FFF3E0</color>
     <color name="bg_pink_icon">#FCE4EC</color>
@@ -82,4 +85,11 @@
 
     <color name="nav_active">#8C4B68</color>
     <color name="timer_unselected_text">#8B5872</color>
+
+
+    <color name="black_btn">#000000</color>
+    <color name="keyboard">#000000</color>
+
+
+
 </resources>
