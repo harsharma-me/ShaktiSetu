@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_auth_gradient">
-
-    <!-- Top Section -->
-    <LinearLayout
+<LinearLayout
         android:id="@+id/topSection"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,9 +12,7 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:paddingTop="20dp">
-
-        <!-- Title -->
-        <TextView
+<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Contacts"
@@ -25,16 +21,12 @@
             android:textStyle="bold"
             android:layout_marginBottom="16dp" />
     </LinearLayout>
-
-    <!-- Back button (hidden — nav handles it) -->
-    <ImageView
+<ImageView
         android:id="@+id/btnBack"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:visibility="gone" />
-
-    <!-- Contacts List -->
-    <androidx.recyclerview.widget.RecyclerView
+<androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvContacts"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -45,9 +37,7 @@
         android:paddingTop="4dp"
         android:paddingBottom="8dp"
         android:clipToPadding="false" />
-
-    <!-- Empty State -->
-    <TextView
+<TextView
         android:id="@+id/tvNoContacts"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -56,17 +46,13 @@
         android:textColor="@color/text_hint"
         android:textSize="16sp"
         android:visibility="gone" />
-
-    <!-- Bottom: Add Button + Nav -->
-    <LinearLayout
+<LinearLayout
         android:id="@+id/bottomBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:orientation="vertical">
-
-        <!-- Add New Member Button -->
-        <Button
+<Button
             android:id="@+id/btnAddMember"
             android:layout_width="match_parent"
             android:layout_height="56dp"
@@ -80,9 +66,7 @@
             android:textSize="16sp"
             android:textAllCaps="false"
             android:textStyle="bold" />
-
-        <!-- Nav Bar -->
-        <include
+<include
             android:id="@+id/navIncludeRoot"
             layout="@layout/nav_bar_include" />
     </LinearLayout>

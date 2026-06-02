@@ -48,19 +48,15 @@ class IncomingCallActivity : AppCompatActivity() {
             }
         }
 
-        // Start Effects
         startRingtone()
         startVibration()
 
-        // Block Back Press
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                // Block Back
             }
         })
     }
 
-    // Start Ringtone
     private fun startRingtone() {
 
         try {
@@ -89,7 +85,6 @@ class IncomingCallActivity : AppCompatActivity() {
         }
     }
 
-    // Start Vibration
     private fun startVibration() {
 
         try {
@@ -137,7 +132,6 @@ class IncomingCallActivity : AppCompatActivity() {
         }
     }
 
-    // Answer Call
     private fun answerCall(
         callerName: String
     ) {
@@ -153,7 +147,6 @@ class IncomingCallActivity : AppCompatActivity() {
         finish()
     }
 
-    // Stop Everything
     private fun stopEverything() {
 
         try {

@@ -33,9 +33,6 @@ class TermsConditionsDialog(
         initializeViews()
     }
 
-    // =========================
-    // WINDOW SETUP
-    // =========================
 
     private fun setupDialogWindow() {
 
@@ -59,9 +56,6 @@ class TermsConditionsDialog(
         setCancelable(false)
     }
 
-    // =========================
-    // INITIALIZE
-    // =========================
 
     private fun initializeViews() {
 
@@ -114,9 +108,6 @@ class TermsConditionsDialog(
         }
     }
 
-    // =========================
-    // TERMS CONTENT
-    // =========================
 
     private fun loadTermsContent():
             String {

@@ -4,17 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#D42A2A">
-
-    <!-- Top Content -->
-    <LinearLayout
+<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:gravity="center_horizontal"
         android:paddingHorizontal="24dp">
-
-        <!-- Logo Title -->
-        <TextView
+<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Shakti Setu"
@@ -22,16 +18,12 @@
             android:fontFamily="@font/bdscript_regular"
             android:textColor="#FFFFFF"
             android:layout_marginTop="40dp"/>
-
-        <!-- Warning Icon -->
-        <ImageView
+<ImageView
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:src="@drawable/ic_warning_triangle"
             android:layout_marginTop="20dp"/>
-
-        <!-- Alert Active Text -->
-        <TextView
+<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Alert Active"
@@ -39,15 +31,11 @@
             android:textStyle="bold|italic"
             android:textColor="#FFFFFF"
             android:layout_marginTop="8dp"/>
-
-        <!-- Spacer -->
-        <View
+<View
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"/>
-
-        <!-- Countdown Timer -->
-        <TextView
+<TextView
             android:id="@+id/tvCountdown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -55,15 +43,11 @@
             android:textSize="120sp"
             android:textStyle="bold|italic"
             android:textColor="#FFFFFF"/>
-
-        <!-- Spacer -->
-        <View
+<View
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"/>
-
-        <!-- Mute Siren Button -->
-        <LinearLayout
+<LinearLayout
             android:id="@+id/btnMuteSiren"
             android:layout_width="match_parent"
             android:layout_height="55dp"
@@ -87,9 +71,7 @@
                 android:textColor="#FFFFFF"
                 android:layout_marginStart="10dp"/>
         </LinearLayout>
-
-        <!-- Dismiss Emergency Button -->
-        <TextView
+<TextView
             android:id="@+id/btnDismiss"
             android:layout_width="match_parent"
             android:layout_height="55dp"

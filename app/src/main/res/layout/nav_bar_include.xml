@@ -8,9 +8,7 @@
     android:clipChildren="false"
     android:clipToPadding="false"
     android:transitionName="bottom_nav">
-
-    <!-- Navigation Background -->
-    <LinearLayout
+<LinearLayout
         android:id="@+id/navBarBg"
         android:layout_width="match_parent"
         android:layout_height="68dp"
@@ -24,9 +22,7 @@
         android:orientation="horizontal"
         android:paddingStart="18dp"
         android:paddingEnd="18dp">
-
-        <!-- Evidence -->
-        <ImageView
+<ImageView
             android:id="@+id/navEvidence"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -37,9 +33,7 @@
             android:focusable="true"
             android:scaleType="fitCenter"
             app:tint="@color/text_hint" />
-
-        <!-- Contacts -->
-        <ImageView
+<ImageView
             android:id="@+id/navContacts"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -50,15 +44,11 @@
             android:focusable="true"
             android:scaleType="fitCenter"
             app:tint="@color/text_hint" />
-
-        <!-- Center Space -->
-        <View
+<View
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_weight="1.2" />
-
-        <!-- Call -->
-        <ImageView
+<ImageView
             android:id="@+id/navCall"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -69,9 +59,7 @@
             android:focusable="true"
             android:scaleType="fitCenter"
             app:tint="@color/text_hint" />
-
-        <!-- Settings -->
-        <ImageView
+<ImageView
             android:id="@+id/navSettings"
             android:layout_width="0dp"
             android:layout_height="40dp"
@@ -84,9 +72,7 @@
             app:tint="@color/nav_active" />
 
     </LinearLayout>
-
-    <!-- Floating Center Button -->
-    <LinearLayout
+<LinearLayout
         android:id="@+id/navHomeFab"
         android:layout_width="72dp"
         android:layout_height="72dp"

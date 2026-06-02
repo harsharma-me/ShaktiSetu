@@ -69,7 +69,6 @@ fun SignUpScreen(
         ) {
             Spacer(modifier = Modifier.height(30.dp))
 
-            // Logo Section
             Box(contentAlignment = Alignment.Center) {
                 Box(
                     modifier = Modifier
@@ -110,7 +109,6 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Input Fields
             SignUpTextField(value = name, onValueChange = { name = it }, placeholder = stringResource(R.string.full_name_hint))
             Spacer(modifier = Modifier.height(12.dp))
             SignUpTextField(value = email, onValueChange = { email = it }, placeholder = stringResource(R.string.email_hint), keyboardType = KeyboardType.Email)
@@ -123,7 +121,6 @@ fun SignUpScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Terms
             Text(
                 text = if (termsAgreed) "Terms & Conditions Agreed" else stringResource(R.string.agree_to_terms),
                 color = if (termsAgreed) Color(0xFF4CAF50) else Color.Red,

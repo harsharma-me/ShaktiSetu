@@ -59,7 +59,6 @@ class SignInActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -95,7 +94,6 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    // Sign In
     private fun signInUser(
         email: String,
         password: String
@@ -123,7 +121,6 @@ class SignInActivity : AppCompatActivity() {
             }
     }
 
-    // Google Auth
     private fun firebaseAuthWithGoogle(idToken: String) {
         val credential = GoogleAuthProvider.getCredential(idToken, null)
         auth.signInWithCredential(credential)
@@ -152,10 +149,8 @@ class SignInActivity : AppCompatActivity() {
         db.collection("users").document(uid).get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
-                    // User exists, just fetch data
                     fetchAndSaveUserData(email)
                 } else {
-                    // New user from Google, create profile
                     val user = auth.currentUser
                     val name = user?.displayName ?: "User"
                     val phone = user?.phoneNumber ?: ""
@@ -174,7 +169,6 @@ class SignInActivity : AppCompatActivity() {
                     db.collection("users").document(uid)
                         .set(userMap)
                         .addOnSuccessListener {
-                            // After creating profile, go to PIN creation
                             saveLocalDataAndNavigate(email, uid, name, phone, "")
                         }
                         .addOnFailureListener {
@@ -189,7 +183,6 @@ class SignInActivity : AppCompatActivity() {
             }
     }
 
-    // Fetch User Data from Firestore
     private fun fetchAndSaveUserData(email: String) {
         val uid = auth.currentUser?.uid ?: run {
             toggleLoading(false)
@@ -244,7 +237,6 @@ class SignInActivity : AppCompatActivity() {
                 finish()
             }
             .addOnFailureListener {
-                // Fallback to local if fetch fails
                 sharedPref.edit {
                     putString("user_name", name)
                     putString("user_phone", phone)
@@ -269,7 +261,6 @@ class SignInActivity : AppCompatActivity() {
             }
     }
 
-    // Forgot Password
     private fun showForgotPassword(
         email: String
     ) {

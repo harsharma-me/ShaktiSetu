@@ -74,7 +74,6 @@ fun SOSPulseButton(
         modifier = modifier.size(200.dp),
         contentAlignment = Alignment.Center
     ) {
-        // Multi-layered Pulse Effect
         Box(
             modifier = Modifier
                 .size(140.dp)
@@ -90,7 +89,6 @@ fun SOSPulseButton(
                 .background(SosRed.copy(alpha = 0.5f), CircleShape)
         )
 
-        // Main Button with Premium Styling
         Box(
             modifier = Modifier
                 .size(140.dp)

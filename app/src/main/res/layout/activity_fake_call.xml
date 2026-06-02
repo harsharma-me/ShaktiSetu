@@ -18,16 +18,12 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:paddingTop="20dp">
-
-            <!-- Back button (hidden) -->
-            <ImageView
+<ImageView
                 android:id="@+id/btnBack"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:visibility="gone" />
-
-            <!-- Title -->
-            <TextView
+<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Fake Call"
@@ -35,9 +31,7 @@
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="20dp" />
-
-            <!-- Caller Card -->
-            <LinearLayout
+<LinearLayout
                 android:id="@+id/callerCard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -46,9 +40,7 @@
                 android:orientation="horizontal"
                 android:padding="16dp"
                 android:layout_marginBottom="16dp">
-
-                <!-- Avatar -->
-                <TextView
+<TextView
                     android:id="@+id/tvCallerAvatar"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -58,9 +50,7 @@
                     android:textColor="@color/text_white"
                     android:textSize="22sp"
                     android:textStyle="bold" />
-
-                <!-- Name Section -->
-                <LinearLayout
+<LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -83,9 +73,7 @@
                         android:textSize="20sp"
                         android:textStyle="bold" />
                 </LinearLayout>
-
-                <!-- Edit Button -->
-                <LinearLayout
+<LinearLayout
                     android:id="@+id/btnEditCaller"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -103,9 +91,7 @@
                         android:textSize="14sp" />
                 </LinearLayout>
             </LinearLayout>
-
-            <!-- Timer Buttons -->
-            <LinearLayout
+<LinearLayout
                 android:id="@+id/timerRow"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -164,9 +150,7 @@
                     android:textSize="16sp"
                     android:textStyle="bold" />
             </LinearLayout>
-
-            <!-- Ringtone Row -->
-            <LinearLayout
+<LinearLayout
                 android:id="@+id/ringtoneRow"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
@@ -202,9 +186,7 @@
                     android:textColor="@color/text_hint"
                     android:textSize="24sp" />
             </LinearLayout>
-
-            <!-- Schedule Call Button -->
-            <Button
+<Button
                 android:id="@+id/btnScheduleCall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -218,9 +200,7 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <!-- Nav Bar -->
-    <include
+<include
         android:id="@+id/navIncludeRoot"
         layout="@layout/nav_bar_include" />
 

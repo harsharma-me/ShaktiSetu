@@ -6,9 +6,7 @@
     android:orientation="vertical"
     android:padding="16dp"
     android:background="@drawable/bg_auth_gradient">
-
-    <!-- Header with Back Button -->
-    <LinearLayout
+<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -33,9 +31,7 @@
             android:textColor="@color/text_primary"
             android:gravity="center" />
     </LinearLayout>
-
-    <!-- Scrollable Content -->
-    <ScrollView
+<ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
@@ -45,9 +41,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingBottom="16dp">
-
-            <!-- Name -->
-            <TextView
+<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Name"
@@ -66,9 +60,7 @@
                 android:textColor="@color/input_text"
                 android:textColorHint="@color/input_hint"
                 android:layout_marginBottom="16dp" />
-
-            <!-- Email (Read-only) -->
-            <TextView
+<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Email"
@@ -88,9 +80,7 @@
                 android:textColorHint="@color/input_hint"
                 android:enabled="false"
                 android:layout_marginBottom="16dp" />
-
-            <!-- Phone -->
-            <TextView
+<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Phone"
@@ -110,9 +100,7 @@
                 android:textColorHint="@color/input_hint"
                 android:inputType="phone"
                 android:layout_marginBottom="16dp" />
-
-            <!-- Address -->
-            <TextView
+<TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Address"
@@ -136,9 +124,7 @@
 
         </LinearLayout>
     </ScrollView>
-
-    <!-- Update Button -->
-    <Button
+<Button
         android:id="@+id/btnUpdate"
         android:layout_width="match_parent"
         android:layout_height="48dp"

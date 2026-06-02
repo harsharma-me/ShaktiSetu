@@ -1,47 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Auth Background Gradient -->
-    <color name="bg_gradient_start">#FFF8FA</color>
+<color name="bg_gradient_start">#FFF8FA</color>
     <color name="bg_gradient_center">#FBECEF</color>
     <color name="bg_gradient_end">#F4DDE3</color>
-
-    <!-- Auth Input Fields -->
-    <color name="input_bg">#FFFFFF</color>
+<color name="input_bg">#FFFFFF</color>
     <color name="input_border">#E7DDE1</color>
     <color name="input_hint">#8C7A80</color>
     <color name="input_text">#1A1215</color>
 
-    <!-- Premium Cinematic Palette -->
-    <!-- Dark Theme Colors -->
-    <color name="cinematic_dark_bg">#050304</color>
+<color name="cinematic_dark_bg">#050304</color>
     <color name="cinematic_dark_primary">#C94C63</color>
     <color name="cinematic_dark_bg_start">#050304</color>
     <color name="cinematic_dark_bg_center">#12070C</color>
     <color name="cinematic_dark_bg_end">#1A0B12</color>
     <color name="cinematic_wine_glow">#3D1C22</color>
-
-    <!-- Light Theme Colors -->
-    <color name="cinematic_light_bg">#F7F2F4</color>
+<color name="cinematic_light_bg">#F7F2F4</color>
     <color name="cinematic_light_primary">#B6455B</color>
     <color name="cinematic_ivory">#F8F2F4</color>
     <color name="cinematic_rose">#D4A5A5</color>
     <color name="cinematic_dusty_pink">#E8C1C1</color>
     <color name="cinematic_pink_gray">#8C7A80</color>
     <color name="cinematic_luxury_cream">#FDF9FA</color>
-
-    <!-- Glow and Accents -->
-    <color name="cinematic_glow_soft">#40D4A5A5</color>
+<color name="cinematic_glow_soft">#40D4A5A5</color>
     <color name="cinematic_accent_muted">#B88B8B</color>
     <color name="cinematic_rose_accent">@color/cinematic_rose</color>
-
-    <!-- Backgrounds and Aliases -->
-    <color name="cinematic_bg_light">@color/cinematic_luxury_cream</color>
+<color name="cinematic_bg_light">@color/cinematic_luxury_cream</color>
     <color name="cinematic_bg_dark_start">@color/cinematic_dark_bg_start</color>
     <color name="cinematic_bg_dark_center">@color/cinematic_dark_bg_center</color>
     <color name="cinematic_bg_dark_end">@color/cinematic_dark_bg_end</color>
-
-    <!-- Legacy / Other Colors -->
-    <color name="logo_bg">#FFF5F2</color>
+<color name="logo_bg">#FFF5F2</color>
     <color name="logo_text">#865369</color>
     <color name="bg_soft">#F4EDEA</color>
     <color name="primary_red">#E53935</color>
@@ -86,10 +73,7 @@
     <color name="nav_active">#8C4B68</color>
     <color name="timer_unselected_text">#8B5872</color>
 
-
     <color name="black_btn">#000000</color>
     <color name="keyboard">#000000</color>
-
-
 
 </resources>

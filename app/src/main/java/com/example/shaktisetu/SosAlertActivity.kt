@@ -63,49 +63,38 @@ class SosAlertActivity :
     private var isSosActiveState by mutableStateOf(false)
     private var isMutedState by mutableStateOf(false)
 
-    // Audio
     private var mediaPlayer: MediaPlayer? = null
     private var vibrator: Vibrator? = null
 
-    // Countdown
     private var countDownTimer: CountDownTimer? = null
 
-    // Recording
     private var mediaRecorder: MediaRecorder? = null
     private var isRecording = false
     private var audioFilePath = ""
 
-    // Camera
     private var imageCapture: ImageCapture? = null
 
-    // Location
     private var currentLatitude = 0.0
     private var currentLongitude = 0.0
 
-    // Shake Detection
     private var sensorManager: SensorManager? = null
     private var acceleration = 0f
     private var currentAcceleration = 0f
     private var lastAcceleration = 0f
     private var shakeTriggered = false
 
-    // State
     private var sosActive = false
 
-    // User
     private var userEmail = ""
     private var userUid = ""
     private var userPin = ""
 
-    // Firebase
     private lateinit var db: FirebaseFirestore
     private lateinit var storage: FirebaseStorage
 
-    // SMS Loop
     private var locationHandler: Handler? = null
     private var locationRunnable: Runnable? = null
 
-    // Cached Contacts
     private var cachedContacts: List<String> = emptyList()
 
     companion object {
@@ -114,7 +103,6 @@ class SosAlertActivity :
         private const val LOCATION_SMS_INTERVAL = 60000L
     }
 
-    // PIN Launcher
     private val dismissLauncher =
         registerForActivityResult(
             ActivityResultContracts.StartActivityForResult()
@@ -143,14 +131,12 @@ class SosAlertActivity :
             )
         }
 
-        // User Email
         val sharedPref = getSharedPreferences("ShaktiSetuPrefs", MODE_PRIVATE)
         userEmail = intent.getStringExtra("user_email") ?: sharedPref.getString("user_email", "") ?: ""
         userUid = sharedPref.getString("user_uid", "") ?: ""
         db = FirebaseFirestore.getInstance()
         storage = FirebaseStorage.getInstance()
 
-        // Prefetched Location
         val passedLat = intent.getDoubleExtra("latitude", 0.0)
         val passedLng = intent.getDoubleExtra("longitude", 0.0)
 
@@ -173,7 +159,6 @@ class SosAlertActivity :
         startAudioRecording()
         setupShakeDetection()
 
-        // Back Press
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 if (sosActive) {
@@ -185,7 +170,6 @@ class SosAlertActivity :
             }
         })
 
-        // Countdown
         sharedPref.edit().putBoolean("sos_active", true).apply()
 
         countDownTimer = object : CountDownTimer(10000, 1000) {

@@ -61,7 +61,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.constraintlayout)
 
-    // Compose
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.graphics)
@@ -79,32 +78,26 @@ dependencies {
     implementation(libs.room.ktx)
 
     ksp(libs.room.compiler)
-    // Firebase BOM
     implementation(
         platform(
             "com.google.firebase:firebase-bom:33.1.2"
         )
     )
 
-    // Firebase
     implementation("com.google.firebase:firebase-auth")
     implementation("com.google.firebase:firebase-firestore")
     implementation("com.google.firebase:firebase-messaging")
     implementation("com.google.firebase:firebase-storage")
 
-    // Serialization
     implementation(libs.kotlinx.serialization.json)
 
-    // CameraX
     implementation("androidx.camera:camera-core:1.3.1")
     implementation("androidx.camera:camera-camera2:1.3.1")
     implementation("androidx.camera:camera-lifecycle:1.3.1")
     implementation(libs.guava)
 
-    // Image Loading
     implementation("com.squareup.picasso:picasso:2.8")
 
-    // OpenStreetMap
     implementation(libs.osmdroid)
 
     testImplementation(libs.junit)

@@ -57,7 +57,6 @@ class SignUpActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         db = FirebaseFirestore.getInstance()
 
-        // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
@@ -109,7 +108,6 @@ class SignUpActivity : AppCompatActivity() {
         }
     }
 
-    // Google Auth
     private fun firebaseAuthWithGoogle(idToken: String) {
         auth.signInWithCredential(GoogleAuthProvider.getCredential(idToken, null))
             .addOnCompleteListener(this) { task ->
@@ -120,7 +118,6 @@ class SignUpActivity : AppCompatActivity() {
                     val name = user?.displayName ?: "User"
                     val phone = user?.phoneNumber ?: ""
 
-                    // For Google Sign-up, we immediately check/save user data
                     checkAndSaveGoogleUser(name, email, phone, uid)
                 } else {
                     showToast("❌ Google Authentication Failed.")
@@ -132,10 +129,8 @@ class SignUpActivity : AppCompatActivity() {
         db.collection("users").document(uid).get()
             .addOnSuccessListener { document ->
                 if (!document.exists()) {
-                    // New user, save details
                     saveUserData(name, email, phone, uid)
                 } else {
-                    // Already exists, just sync local prefs
                     val sharedPref = getSharedPreferences("ShaktiSetuPrefs", MODE_PRIVATE)
                     sharedPref.edit {
                         putString("user_name", document.getString("name") ?: name)
@@ -168,7 +163,6 @@ class SignUpActivity : AppCompatActivity() {
             }
     }
 
-    // Firebase Signup
     private fun createFirebaseAccount(
         name: String,
         email: String,
@@ -227,7 +221,6 @@ class SignUpActivity : AppCompatActivity() {
             }
     }
 
-    // Save User Data Locally & Firestore
     private fun saveUserData(
         name: String,
         email: String,
@@ -235,7 +228,6 @@ class SignUpActivity : AppCompatActivity() {
         uid: String
     ) {
 
-        // 1. Save to SharedPreferences (Local)
         val sharedPref =
             getSharedPreferences(
                 "ShaktiSetuPrefs",
@@ -251,7 +243,6 @@ class SignUpActivity : AppCompatActivity() {
             putBoolean("is_logged_in", true)
         }
 
-        // 2. Save to Firestore (Cloud)
         val userMap = hashMapOf(
             "name" to name,
             "email" to email,
@@ -266,14 +257,12 @@ class SignUpActivity : AppCompatActivity() {
         db.collection("users").document(uid)
             .set(userMap)
             .addOnSuccessListener {
-                // Success
             }
             .addOnFailureListener { e ->
                 showToast("Firestore Error: ${e.message}")
             }
     }
 
-    // Email Validation
     private fun isValidEmail(
         email: String
     ): Boolean {
@@ -283,7 +272,6 @@ class SignUpActivity : AppCompatActivity() {
             .matches()
     }
 
-    // Phone Validation
     private fun isValidPhone(
         phone: String
     ): Boolean {
@@ -294,7 +282,6 @@ class SignUpActivity : AppCompatActivity() {
                 }
     }
 
-    // Terms Dialog
     private fun showTermsDialog() {
 
         val dialog =
@@ -307,7 +294,6 @@ class SignUpActivity : AppCompatActivity() {
         dialog.show()
     }
 
-    // Toast Helper
     private fun showToast(
         message: String
     ) {

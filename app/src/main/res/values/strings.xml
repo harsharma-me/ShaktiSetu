@@ -1,11 +1,9 @@
 <resources>
     <string name="app_name">ShaktiSetu</string>
-    <!-- Replace with your actual Web Client ID from Firebase Console -->
-    <string name="default_web_client_id">933736652914-bnl3knmdlikn0rbe8p2d8mbttrkj2i13.apps.googleusercontent.com</string>
+<string name="default_web_client_id">933736652914-bnl3knmdlikn0rbe8p2d8mbttrkj2i13.apps.googleusercontent.com</string>
 
     <string name="agree_to_terms">I agree to Terms &amp; Conditions</string>
-    <!-- Sign In Screen -->
-    <string name="sign_in_title">Shakti Setu</string>
+<string name="sign_in_title">Shakti Setu</string>
     <string name="tagline">A Bridge to Safety</string>
     <string name="login_account_subtitle">Login into account</string>
     <string name="email_hint">E-mail</string>
@@ -15,9 +13,7 @@
     <string name="no_account">Don’t have an account? Sign Up</string>
     <string name="google_sign_in">Continue with Google</string>
     <string name="terms_privacy_agreement">By clicking continue, you agree to our Terms of Service and Privacy Policy</string>
-
-    <!-- Sign Up Screen -->
-    <string name="create_account_title">ShaktiSetu</string>
+<string name="create_account_title">ShaktiSetu</string>
     <string name="create_account_subtitle">Create account</string>
     <string name="full_name_hint">Full Name</string>
     <string name="phone_hint">Phone Number</string>
@@ -26,9 +22,7 @@
     <string name="terms_and_conditions">Terms and Conditions</string>
     <string name="create_account_button">CREATE ACCOUNT</string>
     <string name="already_have_account">Already have an account? Sign In</string>
-
-    <!-- Profile Screen -->
-    <string name="profile_completeness">Profile Completeness</string>
+<string name="profile_completeness">Profile Completeness</string>
     <string name="progress_text_format">%1$d%% Complete</string>
     <string name="notifications">Notifications</string>
     <string name="latest_updates">Latest Updates</string>

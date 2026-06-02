@@ -18,9 +18,7 @@
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:paddingTop="20dp">
-
-            <!-- Title -->
-            <TextView
+<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Settings"
@@ -28,9 +26,7 @@
                 android:textSize="28sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="20dp" />
-
-            <!-- Profile Completeness (Moved from Profile) -->
-            <LinearLayout
+<LinearLayout
                 android:id="@+id/layoutProfileCompleteness"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -66,19 +62,14 @@
                     android:textStyle="bold"
                     android:textColor="@color/text_brand"/>
             </LinearLayout>
-
-            <!-- ========== SOS Section ========== -->
-            <LinearLayout
+<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/sos_section_border"
                 android:orientation="vertical"
                 android:padding="4dp"
                 android:layout_marginBottom="24dp">
-
-
-                <!-- Timer -->
-                <LinearLayout
+<LinearLayout
                     android:id="@+id/btninfo"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -115,9 +106,7 @@
                         android:textColor="@color/text_light_gray"
                         android:textSize="24sp" />
                 </LinearLayout>
-
-                <!-- Change SOS PIN -->
-                <LinearLayout
+<LinearLayout
                     android:id="@+id/btnChangePin"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -154,9 +143,7 @@
                         android:textColor="@color/text_light_gray"
                         android:textSize="24sp" />
                 </LinearLayout>
-
-                <!-- Change Password -->
-                <LinearLayout
+<LinearLayout
                     android:id="@+id/btnChangePassword"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
@@ -192,49 +179,8 @@
                         android:textSize="24sp" />
                 </LinearLayout>
 
-                <!-- Contacts -->
-<!--                <LinearLayout-->
-<!--                    android:id="@+id/btnContacts"-->
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="56dp"-->
-<!--                    android:layout_marginStart="8dp"-->
-<!--                    android:layout_marginEnd="8dp"-->
-<!--                    android:layout_marginBottom="8dp"-->
-<!--                    android:background="@drawable/settings_item_bg"-->
-<!--                    android:gravity="center_vertical"-->
-<!--                    android:orientation="horizontal"-->
-<!--                    android:paddingStart="16dp"-->
-<!--                    android:paddingEnd="16dp"-->
-<!--                    android:clickable="true"-->
-<!--                    android:focusable="true">-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="📃"-->
-<!--                        android:textSize="20sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:layout_marginStart="12dp"-->
-<!--                        android:text="Contacts"-->
-<!--                        android:textColor="@color/text_primary"-->
-<!--                        android:textSize="16sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:text="›"-->
-<!--                        android:textColor="@color/text_light_gray"-->
-<!--                        android:textSize="24sp" />-->
-<!--                </LinearLayout>-->
-
-            </LinearLayout>
-
-            <!-- ========== Sensors and Automation ========== -->
-            <TextView
+</LinearLayout>
+<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sensors and Automation"
@@ -243,13 +189,7 @@
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
 
-            <!-- Theme Selection -->
-
-            <!-- Shake Detection -->
-
-
-
-            <LinearLayout
+<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:background="@drawable/settings_item_bg"
@@ -306,9 +246,7 @@
                     app:thumbTint="@color/text_brand"
                     app:trackTint="@color/text_hint" />
             </LinearLayout>
-
-            <!-- Voice Detection -->
-            <LinearLayout
+<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="72dp"
                 android:background="@drawable/settings_item_bg"
@@ -365,9 +303,7 @@
                     app:thumbTint="@color/text_brand"
                     app:trackTint="@color/text_hint" />
             </LinearLayout>
-
-            <!-- Appearance -->
-            <TextView
+<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Appearance"
@@ -421,9 +357,7 @@
                         android:textColor="@color/text_primary" />
                 </RadioGroup>
             </LinearLayout>
-
-            <!-- ========== Privacy & Legal ========== -->
-            <TextView
+<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Privacy &amp; Legal"
@@ -431,9 +365,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
-
-            <!-- Terms of Services -->
-            <LinearLayout
+<LinearLayout
                 android:id="@+id/btnTerms"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
@@ -460,9 +392,7 @@
                     android:textColor="@color/text_primary"
                     android:textSize="16sp" />
             </LinearLayout>
-
-            <!-- logout Account -->
-            <LinearLayout
+<LinearLayout
                 android:id="@+id/btnLogout"
                 android:layout_width="match_parent"
                 android:layout_height="52dp"
@@ -491,41 +421,9 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
-
-<!--            <LinearLayout-->
-<!--                android:id="@+id/btnDeleteAccount"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="52dp"-->
-<!--                android:layout_marginBottom="20dp"-->
-<!--                android:background="@drawable/settings_item_bg"-->
-<!--                android:clickable="true"-->
-<!--                android:focusable="true"-->
-<!--                android:gravity="center_vertical"-->
-<!--                android:orientation="horizontal"-->
-<!--                android:paddingStart="16dp"-->
-<!--                android:paddingEnd="16dp">-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="🗑️"-->
-<!--                    android:textSize="18sp" />-->
-
-<!--                <TextView-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:layout_marginStart="12dp"-->
-<!--                    android:text="Logout"-->
-<!--                    android:textColor="@color/text_action"-->
-<!--                    android:textSize="16sp"-->
-<!--                    android:textStyle="bold" />-->
-<!--            </LinearLayout>-->
-
-        </LinearLayout>
+</LinearLayout>
     </ScrollView>
-
-    <!-- Nav Bar -->
-    <include
+<include
         android:id="@+id/navIncludeRoot"
         layout="@layout/nav_bar_include" />
 

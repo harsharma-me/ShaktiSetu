@@ -34,7 +34,6 @@ fun SosAlertScreen(
 ) {
     val bdScriptFont = FontFamily(Font(R.font.bdscript_regular))
     
-    // Background Pulse Animation for SOS Active state
     val infiniteTransition = rememberInfiniteTransition(label = "sos_pulse")
     val pulseScale by infiniteTransition.animateFloat(
         initialValue = 1f,
@@ -67,7 +66,6 @@ fun SosAlertScreen(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Header
             Text(
                 text = "Shakti Setu",
                 fontFamily = bdScriptFont,
@@ -78,7 +76,6 @@ fun SosAlertScreen(
 
             Spacer(modifier = Modifier.height(20.dp))
 
-            // Warning Icon with Pulse
             Box(contentAlignment = Alignment.Center) {
                 if (isSosActive) {
                     Box(
@@ -107,7 +104,6 @@ fun SosAlertScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Countdown or Active Symbol
             if (!isSosActive) {
                 Text(
                     text = countdown.toString(),
@@ -126,7 +122,6 @@ fun SosAlertScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Mute Button
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -155,7 +150,6 @@ fun SosAlertScreen(
 
             Spacer(modifier = Modifier.height(12.dp))
 
-            // Dismiss Button
             Box(
                 modifier = Modifier
                     .fillMaxWidth()

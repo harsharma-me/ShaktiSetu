@@ -67,7 +67,6 @@ fun AddEditContactScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Form Fields
             Text("Full Name", fontSize = 14.sp, fontWeight = FontWeight.Bold, color = BrandText.copy(alpha = 0.6f))
             Spacer(modifier = Modifier.height(8.dp))
             OutlinedTextField(

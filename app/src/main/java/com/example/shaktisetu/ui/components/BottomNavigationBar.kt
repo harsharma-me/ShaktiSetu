@@ -35,14 +35,13 @@ fun BottomNavigationBar(
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(100.dp), // Reduced container height
+            .height(100.dp), 
         contentAlignment = Alignment.BottomCenter
     ) {
-        // --- Floating Glassy Container ---
         Box(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 20.dp, end = 20.dp, bottom = 12.dp) // Adjusted bottom padding
+                .padding(start = 20.dp, end = 20.dp, bottom = 12.dp) 
                 .height(64.dp)
                 .shadow(
                     elevation = 25.dp,
@@ -85,7 +84,6 @@ fun BottomNavigationBar(
                     onClick = { onTabClick("contacts") }
                 )
                 
-                // Gap for central FAB
                 Spacer(modifier = Modifier.width(64.dp))
 
                 NavItem(
@@ -101,7 +99,6 @@ fun BottomNavigationBar(
             }
         }
 
-        // --- Premium Center Shield (SOS) ---
         val interactionSource = remember { MutableInteractionSource() }
         val isPressed by interactionSource.collectIsPressedAsState()
         val scale by animateFloatAsState(if (isPressed) 0.88f else 1f, label = "scale")
@@ -112,7 +109,6 @@ fun BottomNavigationBar(
                 .size(80.dp),
             contentAlignment = Alignment.Center
         ) {
-            // Pulsing Glow behind the Shield
             Box(
                 modifier = Modifier
                     .size(64.dp)
@@ -133,9 +129,9 @@ fun BottomNavigationBar(
                     .background(
                         Brush.radialGradient(
                             colors = listOf(
-                                Color(0xFFFF6B6B), // Lighter Red
-                                Color(0xFFEA4B55), // Brand Red
-                                Color(0xFFB71C1C)  // Darker Red
+                                Color(0xFFFF6B6B), 
+                                Color(0xFFEA4B55), 
+                                Color(0xFFB71C1C)  
                             )
                         )
                     )
@@ -147,7 +143,6 @@ fun BottomNavigationBar(
                     ),
                 contentAlignment = Alignment.Center
             ) {
-                // Glassy Reflection on top of Shield
                 Box(
                     modifier = Modifier
                         .fillMaxSize()
@@ -206,7 +201,6 @@ private fun NavItem(
             )
             if (isActive) {
                 Spacer(modifier = Modifier.height(6.dp))
-                // Soft glow dot for active state
                 Box(
                     modifier = Modifier
                         .size(5.dp)

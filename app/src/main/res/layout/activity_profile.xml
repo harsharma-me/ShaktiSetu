@@ -26,9 +26,7 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="15dp"
                 android:src="@drawable/ic_back_arrow" />
-
-            <!-- Profile Header -->
-            <LinearLayout
+<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -36,10 +34,7 @@
                 android:layout_marginBottom="20dp"
                 android:padding="20dp"
                 android:background="@drawable/rounded_bg_white">
-
-
-                <!-- Name -->
-                <TextView
+<TextView
                     android:id="@+id/tvName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -48,9 +43,7 @@
                     android:textSize="22sp"
                     android:textStyle="bold"
                     android:layout_marginBottom="8dp" />
-
-                <!-- Email -->
-                <TextView
+<TextView
                     android:id="@+id/tvEmail"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -59,9 +52,7 @@
                     android:textSize="14sp" />
 
             </LinearLayout>
-
-            <!-- Info Section -->
-            <TextView
+<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Contact Information"
@@ -69,9 +60,7 @@
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp" />
-
-            <!-- Phone -->
-            <LinearLayout
+<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -96,9 +85,7 @@
                     android:textSize="14sp" />
 
             </LinearLayout>
-
-            <!-- Address -->
-            <LinearLayout
+<LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -123,9 +110,7 @@
                     android:textSize="14sp" />
 
             </LinearLayout>
-
-            <!-- Action Buttons -->
-            <Button
+<Button
                 android:id="@+id/btnEditProfile"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -137,34 +122,10 @@
                 app:backgroundTint="@null"
                 android:layout_marginBottom="12dp" />
 
-<!--            <Button-->
-<!--                android:id="@+id/btnChangePassword"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="48dp"-->
-<!--                android:text="Change Password"-->
-<!--                android:textColor="#FFFFFF"-->
-<!--                android:textSize="16sp"-->
-<!--                android:textStyle="bold"-->
-<!--                android:background="@drawable/btn_secondary_bg"-->
-<!--                android:layout_marginBottom="12dp" />-->
-
-<!--            <Button-->
-<!--                android:id="@+id/btnSettings"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="48dp"-->
-<!--                android:text="Settings"-->
-<!--                android:textColor="#FFFFFF"-->
-<!--                android:textSize="16sp"-->
-<!--                android:textStyle="bold"-->
-<!--                android:background="@drawable/btn_secondary_bg"-->
-<!--                android:layout_marginBottom="12dp" />-->
-
-        </LinearLayout>
+</LinearLayout>
 
     </ScrollView>
-
-    <!-- Nav Bar -->
-    <include
+<include
         android:id="@+id/navIncludeRoot"
         layout="@layout/nav_bar_include" />
 

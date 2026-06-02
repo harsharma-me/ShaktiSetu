@@ -17,7 +17,6 @@ val BgEnd = Color(0xFFF4DDE3)
 val NavActive = Color(0xFF8C4B68)
 val NavInactive = Color(0xFFAAA4A7)
 
-// Cinematic Theme Colors
 val CinematicDarkBg = Color(0xFF050304)
 val CinematicRose = Color(0xFFD4A5A5)
 val CinematicAccentMuted = Color(0xFFB88B8B)

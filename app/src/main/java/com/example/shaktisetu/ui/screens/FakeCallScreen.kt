@@ -85,7 +85,6 @@ fun FakeCallScreen(
 
                 Spacer(modifier = Modifier.height(48.dp))
 
-                // Caller Profile Card - Refined
                 Surface(
                     modifier = Modifier
                         .fillMaxWidth()

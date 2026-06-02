@@ -10,7 +10,6 @@ import androidx.core.graphics.toColorInt
 
 object BottomNavHelper {
 
-    // Flag to suppress activity transitions during tab switches
     var isNavigatingTabs = false
 
     fun setup(
@@ -43,14 +42,12 @@ object BottomNavHelper {
                 R.id.navSettings
             )
 
-        // New Premium Color Palette
         val activeColor =
             "#8B5872".toColorInt()
 
         val inactiveColor =
             "#AAA4A7".toColorInt()
 
-        // Active States
         navEvidence.setColorFilter(
             if (activeTab == "evidence")
                 activeColor
@@ -79,7 +76,6 @@ object BottomNavHelper {
                 inactiveColor
         )
 
-        // Navigation
         navEvidence.setOnClickListener {
 
             if (activeTab != "evidence") {
@@ -155,7 +151,6 @@ object BottomNavHelper {
         isNavigatingTabs = true
         val intent = Intent(activity, targetClass)
 
-        // Find the bottom nav root to use as shared element
         val navRoot = activity.findViewById<android.view.View>(R.id.navIncludeRoot)
         
         val options = if (navRoot != null) {
@@ -169,10 +164,6 @@ object BottomNavHelper {
         
         activity.startActivity(intent, options.toBundle())
         
-        // Don't finish() immediately to allow transition to play
-        // But for tab navigation, we usually want to finish the old activity to keep stack clean
-        // If we finish(), the transition might be cut short unless handled carefully.
-        // For now, let's keep finish() but use a delay or just accept the shared element behavior.
         activity.window.decorView.postDelayed({
             if (!activity.isFinishing && !activity.isDestroyed) {
                 activity.finish()

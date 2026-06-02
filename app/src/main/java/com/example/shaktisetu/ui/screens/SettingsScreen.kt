@@ -63,7 +63,6 @@ fun SettingsScreen(
                     )
                 }
 
-                // Profile Progress Card
                 if (profileProgress < 100) {
                     item {
                         ProfileProgressCard(profileProgress, onClick = { onActionClick("profile") })
@@ -241,7 +240,7 @@ fun ActionSettingItem(title: String, icon: Int, onClick: () -> Unit) {
         Spacer(modifier = Modifier.width(16.dp))
         Text(text = title, fontWeight = FontWeight.Medium, modifier = Modifier.weight(1f))
         Icon(
-            painter = painterResource(id = R.drawable.ic_back_arrow), // Reuse as forward arrow
+            painter = painterResource(id = R.drawable.ic_back_arrow), 
             contentDescription = null,
             tint = Color.Gray,
             modifier = Modifier.size(16.dp).rotate(180f)

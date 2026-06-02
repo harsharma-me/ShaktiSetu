@@ -70,7 +70,7 @@ fun EvidenceScreen(
                     
                     IconButton(onClick = onDeleteAll) {
                         Icon(
-                            painter = painterResource(id = R.drawable.ic_delete_contact), // Reusing delete icon
+                            painter = painterResource(id = R.drawable.ic_delete_contact), 
                             contentDescription = "Delete All",
                             tint = Color.Red.copy(alpha = 0.7f)
                         )
@@ -79,7 +79,6 @@ fun EvidenceScreen(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                // Photos Section
                 Text(
                     text = "Captured Photos",
                     fontSize = 18.sp,
@@ -103,7 +102,6 @@ fun EvidenceScreen(
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                // Audio Section
                 Text(
                     text = "Audio Recordings",
                     fontSize = 18.sp,
@@ -193,7 +191,7 @@ fun AudioEvidenceCard(file: File, onPlay: (File) -> Unit) {
         }
         
         Icon(
-            painter = painterResource(id = R.drawable.ic_location_arrow), // Reusing as play icon
+            painter = painterResource(id = R.drawable.ic_location_arrow), 
             contentDescription = null,
             tint = BrandText,
             modifier = Modifier.size(20.dp)

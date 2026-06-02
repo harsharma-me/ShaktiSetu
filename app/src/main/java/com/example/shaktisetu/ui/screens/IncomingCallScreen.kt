@@ -37,7 +37,6 @@ fun IncomingCallScreen(
             .fillMaxSize()
             .background(darkBg)
     ) {
-        // Top Info Section
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -70,7 +69,6 @@ fun IncomingCallScreen(
             )
         }
 
-        // Central Avatar
         Box(
             modifier = Modifier
                 .size(200.dp)
@@ -87,7 +85,6 @@ fun IncomingCallScreen(
             )
         }
 
-        // Bottom Section
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -95,7 +92,6 @@ fun IncomingCallScreen(
                 .padding(bottom = 40.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            // Message Button
             Surface(
                 modifier = Modifier
                     .clip(RoundedCornerShape(22.dp))
@@ -120,7 +116,6 @@ fun IncomingCallScreen(
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            // Call Action Bar
             Surface(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -134,7 +129,6 @@ fun IncomingCallScreen(
                     modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
                     verticalAlignment = Alignment.CenterVertically
                 ) {
-                    // Decline
                     Box(
                         modifier = Modifier
                             .weight(1f)
@@ -150,7 +144,6 @@ fun IncomingCallScreen(
                         )
                     }
 
-                    // Accept FAB
                     Box(
                         modifier = Modifier
                             .size(width = 87.dp, height = 64.dp)
@@ -162,7 +155,6 @@ fun IncomingCallScreen(
                         Text(text = "📞", fontSize = 26.sp, color = Color.White)
                     }
 
-                    // Answer
                     Box(
                         modifier = Modifier
                             .weight(1f)

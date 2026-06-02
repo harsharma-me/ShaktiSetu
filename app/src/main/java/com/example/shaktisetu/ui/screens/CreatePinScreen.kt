@@ -38,7 +38,6 @@ fun CreatePinScreen(
             .fillMaxSize()
             .background(CinematicDarkBg)
     ) {
-        // Ambient Glow
         Box(
             modifier = Modifier
                 .size(400.dp)
@@ -86,7 +85,6 @@ fun CreatePinScreen(
 
             Spacer(modifier = Modifier.height(60.dp))
 
-            // PIN Display
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -104,7 +102,6 @@ fun CreatePinScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Numeric Keypad
             val keys = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "backspace")
             LazyVerticalGrid(
                 columns = GridCells.Fixed(3),
@@ -122,7 +119,7 @@ fun CreatePinScreen(
                                 modifier = Modifier.size(64.dp)
                             ) {
                                 Icon(
-                                    painter = painterResource(id = R.drawable.ic_back_arrow), // Replace with actual backspace icon if available
+                                    painter = painterResource(id = R.drawable.ic_back_arrow), 
                                     contentDescription = "Backspace",
                                     tint = CinematicRose,
                                     modifier = Modifier.size(32.dp)

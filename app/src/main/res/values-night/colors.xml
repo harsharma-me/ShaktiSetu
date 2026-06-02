@@ -1,24 +1,17 @@
 <resources>
-    <!--    auth-background-gradient-->
-    <color name="bg_gradient_start">#0D0709</color>
+<color name="bg_gradient_start">#0D0709</color>
     <color name="bg_gradient_center">#1B0F14</color>
     <color name="bg_gradient_end">#2A141C</color>
-
-    <!--    auth-inputfield-color-->
-    <color name="input_bg">#1F1A1D</color>
+<color name="input_bg">#1F1A1D</color>
     <color name="input_border">#33252C</color>
     <color name="input_hint">#7D666D</color>
     <color name="input_text">#FFFFFF</color>
-
-    <!-- Dark Mode Palette - Improved Contrast -->
-    <color name="background">#121212</color>
-    <color name="logo_bg">#1A1215</color> <!-- Dark version of the pinkish bg -->
-    <color name="surface_card">#1F1A1D</color>
+<color name="background">#121212</color>
+    <color name="logo_bg">#1A1215</color>
+<color name="surface_card">#1F1A1D</color>
     <color name="bg_main">#121212</color>
     <color name="bg_white">#1E1E1E</color>
-
-    <!-- Text Colors (Higher Contrast) -->
-    <color name="text_primary">#FFFFFF</color>
+<color name="text_primary">#FFFFFF</color>
     <color name="text_secondary">#BDBDBD</color>
     <color name="text_hint">#8A8A8A</color>
     <color name="text_brand">#FFB2BB</color>
@@ -26,19 +19,13 @@
     <color name="text_dark">#FFFFFF</color>
     <color name="text_black">#FFFFFF</color>
     <color name="text_light_gray">#AAAAAA</color>
-
-    <!-- UI Elements -->
-    <color name="black">#000000</color> <!-- Real Black -->
-    <color name="white">#FFFFFF</color>
+<color name="black">#000000</color>
+<color name="white">#FFFFFF</color>
     <color name="text_white">#FFFFFF</color>
     <color name="keyboard">#ffffff</color>
-
-    <!-- Emergency/SOS Specific -->
-    <color name="sos_red">#FF4B55</color>
+<color name="sos_red">#FF4B55</color>
     <color name="sos_outer">#3D2B2D</color>
-
-    <!-- Navigation and Icons -->
-    <color name="nav_active">#FFB2BB</color>
+<color name="nav_active">#FFB2BB</color>
     <color name="timer_unselected_text">#B08098</color>
 
     <color name="bg_purple_icon">#2E2545</color>
@@ -47,12 +34,9 @@
     <color name="bg_blue_icon">#253545</color>
     <color name="bg_cyan_icon">#254545</color>
     <color name="bg_red_icon_light">#452525</color>
-
-    <!-- Material Overrides -->
-    <color name="primary_color">#FFB2BB</color>
+<color name="primary_color">#FFB2BB</color>
     <color name="primary_dark_color">#000000</color>
     <color name="accent_color">#FF5277</color>
-
 
     <color name="black_btn">#FFFFFF</color>
 </resources>

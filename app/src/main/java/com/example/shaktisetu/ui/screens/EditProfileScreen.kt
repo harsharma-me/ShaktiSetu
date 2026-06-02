@@ -66,7 +66,6 @@ fun EditProfileScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Form
             EditField(label = "Full Name", value = name, onValueChange = { name = it })
             Spacer(modifier = Modifier.height(20.dp))
             EditField(label = "Email Address", value = initialEmail, onValueChange = {}, enabled = false)

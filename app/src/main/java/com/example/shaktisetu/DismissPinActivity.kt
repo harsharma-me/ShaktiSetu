@@ -23,7 +23,6 @@ class DismissPinActivity : AppCompatActivity() {
             }
         }
 
-        // Block Back Press
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 Toast.makeText(this@DismissPinActivity, "🔒 Enter PIN to dismiss SOS!", Toast.LENGTH_SHORT).show()

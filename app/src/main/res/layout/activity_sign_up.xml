@@ -11,23 +11,17 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:padding="20dp">
-
-        <!-- Logo Title -->
-        <FrameLayout
+<FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_marginTop="20dp">
-
-            <!-- Ambient glow -->
-            <View
+<View
                 android:layout_width="140dp"
                 android:layout_height="140dp"
                 android:layout_gravity="center"
                 android:background="@drawable/bg_logo_glow"/>
-
-            <!-- Text logo -->
-            <TextView
+<TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/create_account_title"
@@ -42,10 +36,7 @@
                 android:shadowRadius="12"/>
 
         </FrameLayout>
-
-
-        <!-- Subtitle -->
-        <TextView
+<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/create_account_subtitle"
@@ -55,7 +46,6 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:letterSpacing="-0.01"/>
-
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
@@ -69,9 +59,7 @@
             app:boxStrokeWidthFocused="0dp">
 
         </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Full Name -->
-        <EditText
+<EditText
             android:id="@+id/etName"
             android:layout_width="match_parent"
             android:layout_height="52dp"
@@ -86,9 +74,7 @@
             android:alpha="0.94"
             android:layout_marginBottom="16dp"
             android:drawablePadding="8dp"/>
-
-        <!-- Email -->
-        <EditText
+<EditText
             android:id="@+id/etEmail"
             android:layout_width="match_parent"
             android:layout_height="52dp"
@@ -103,9 +89,7 @@
             android:alpha="0.94"
             android:layout_marginBottom="16dp"
             android:drawablePadding="8dp"/>
-
-        <!-- Phone Number -->
-        <EditText
+<EditText
             android:id="@+id/etPhone"
             android:layout_width="match_parent"
             android:layout_height="52dp"
@@ -120,9 +104,7 @@
             android:alpha="0.94"
             android:layout_marginBottom="16dp"
             android:drawablePadding="8dp"/>
-
-        <!-- Password -->
-        <EditText
+<EditText
             android:id="@+id/etPassword"
             android:layout_width="match_parent"
             android:layout_height="52dp"
@@ -137,9 +119,7 @@
             android:alpha="0.94"
             android:layout_marginBottom="16dp"
             android:drawablePadding="8dp"/>
-
-        <!-- Confirm Password -->
-        <EditText
+<EditText
             android:id="@+id/etConfirmPassword"
             android:layout_width="match_parent"
             android:layout_height="52dp"
@@ -154,9 +134,7 @@
             android:alpha="0.94"
             android:layout_marginBottom="24dp"
             android:drawablePadding="8dp"/>
-
-        <!-- Terms and Conditions -->
-        <LinearLayout
+<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -185,9 +163,7 @@
                 android:background="?attr/selectableItemBackground"
                 android:paddingHorizontal="4dp" />
         </LinearLayout>
-
-        <!-- Continue Button -->
-        <Button
+<Button
             android:id="@+id/btnSignUp"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -201,9 +177,7 @@
             android:elevation="4dp"
             android:letterSpacing="0.03"
             android:layout_marginTop="8dp"/>
-
-        <!-- Already have account -->
-        <TextView
+<TextView
             android:id="@+id/tvSignIn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

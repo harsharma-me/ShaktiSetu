@@ -35,7 +35,6 @@ fun SplashScreen(onAnimationFinished: () -> Unit) {
     val bdScript = FontFamily(Font(R.font.bdscript_regular))
     val interSemiBold = FontFamily(Font(R.font.inter_semibold))
 
-    // Animation States
     val scale = remember { Animatable(0.7f) }
     val alphaLogo = remember { Animatable(0f) }
     val alphaText = remember { Animatable(0f) }
@@ -45,7 +44,6 @@ fun SplashScreen(onAnimationFinished: () -> Unit) {
     val alphaLoader = remember { Animatable(0f) }
 
     LaunchedEffect(Unit) {
-        // Logo Animation
         launch {
             scale.animateTo(
                 targetValue = 1f,
@@ -59,7 +57,6 @@ fun SplashScreen(onAnimationFinished: () -> Unit) {
             )
         }
 
-        // App Name Animation
         delay(300)
         launch {
             alphaText.animateTo(
@@ -74,8 +71,7 @@ fun SplashScreen(onAnimationFinished: () -> Unit) {
             )
         }
 
-        // Tagline Animation
-        delay(250) // Relative to App Name start
+        delay(250) 
         launch {
             alphaTagline.animateTo(
                 targetValue = 1f,
@@ -89,7 +85,6 @@ fun SplashScreen(onAnimationFinished: () -> Unit) {
             )
         }
 
-        // Loader Animation
         delay(300)
         launch {
             alphaLoader.animateTo(
@@ -98,7 +93,7 @@ fun SplashScreen(onAnimationFinished: () -> Unit) {
             )
         }
 
-        delay(1200) // Total delay to match 2200ms approx
+        delay(1200) 
         onAnimationFinished()
     }
 
@@ -107,7 +102,6 @@ fun SplashScreen(onAnimationFinished: () -> Unit) {
             .fillMaxSize()
             .background(cinematicDarkBg)
     ) {
-        // Ambient Glow
         Box(
             modifier = Modifier
                 .size(450.dp)
@@ -164,7 +158,6 @@ fun SplashScreen(onAnimationFinished: () -> Unit) {
             )
         }
 
-        // Loader
         CircularProgressIndicator(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
@@ -182,7 +175,6 @@ private fun overshootInterpolator() = tween<Float>(
     easing = { OvershootInterpolator(1.3f).getInterpolation(it) }
 )
 
-// Helper class for OvershootInterpolator in Compose
 class OvershootInterpolator(private val tension: Float = 2f) {
     fun getInterpolation(input: Float): Float {
         var t = input

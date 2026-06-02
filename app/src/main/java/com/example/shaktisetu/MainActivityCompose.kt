@@ -68,7 +68,6 @@ fun MainScreen(
                     ),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                // --- Top Header ---
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -130,14 +129,12 @@ fun MainScreen(
                     )
                 }
 
-                // --- Central SOS Button ---
                 Box(
                     modifier = Modifier
                         .weight(1.3f)
                         .fillMaxWidth(),
                     contentAlignment = Alignment.Center
                 ) {
-                    // Refined background glow
                     Box(
                         modifier = Modifier
                             .size(240.dp)
@@ -166,7 +163,6 @@ fun MainScreen(
                     }
                 }
 
-                // --- Quick Help Section ---
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -196,7 +192,6 @@ fun MainScreen(
                         )
                     }
 
-                    // Row 1
                     Row(modifier = Modifier.fillMaxWidth()) {
                         QuickActionCard(
                             title = "Ambulance",
@@ -215,7 +210,6 @@ fun MainScreen(
                         )
                     }
 
-                    // Row 2
                     Row(modifier = Modifier.fillMaxWidth()) {
                         QuickActionCard(
                             title = "Women Safety",

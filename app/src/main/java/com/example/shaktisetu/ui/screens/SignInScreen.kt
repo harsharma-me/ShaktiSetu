@@ -65,9 +65,7 @@ fun SignInScreen(
         ) {
             Spacer(modifier = Modifier.height(50.dp))
 
-            // Logo Section
             Box(contentAlignment = Alignment.Center) {
-                // Ambient glow (simplified as a box with radial gradient or just color)
                 Box(
                     modifier = Modifier
                         .size(140.dp)
@@ -109,7 +107,6 @@ fun SignInScreen(
 
             Spacer(modifier = Modifier.height(25.dp))
 
-            // Input Fields
             OutlinedTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -193,7 +190,6 @@ fun SignInScreen(
 
             Spacer(modifier = Modifier.height(15.dp))
 
-            // Google Sign In Button
             Button(
                 onClick = onGoogleSignInClick,
                 modifier = Modifier

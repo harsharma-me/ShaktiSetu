@@ -5,9 +5,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/bg_auth_gradient"
     android:orientation="vertical">
-
-    <!-- Top Bar -->
-    <LinearLayout
+<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
@@ -36,9 +34,7 @@
             android:textSize="28sp"
             android:textStyle="bold" />
     </LinearLayout>
-
-    <!-- Form -->
-    <LinearLayout
+<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
@@ -46,9 +42,7 @@
         android:paddingStart="20dp"
         android:paddingEnd="20dp"
         android:paddingTop="12dp">
-
-        <!-- Full Name -->
-        <TextView
+<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="FULL NAME"
@@ -71,9 +65,7 @@
             android:paddingEnd="16dp"
             android:inputType="textPersonName"
             android:maxLines="1" />
-
-        <!-- Mobile Number -->
-        <TextView
+<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="MOBILE NUMBER"
@@ -96,9 +88,7 @@
             android:paddingEnd="16dp"
             android:inputType="phone"
             android:maxLines="1" />
-
-        <!-- Relationship -->
-        <TextView
+<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="RELATIONSHIP"
@@ -115,9 +105,7 @@
             android:background="@drawable/rounded_input"
             android:paddingStart="12dp"
             android:paddingEnd="12dp" />
-
-        <!-- Info Box -->
-        <LinearLayout
+<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@null"
@@ -144,9 +132,7 @@
         </LinearLayout>
 
     </LinearLayout>
-
-    <!-- Confirm Button -->
-    <Button
+<Button
         android:id="@+id/btnConfirm"
         android:layout_width="match_parent"
         android:layout_height="56dp"

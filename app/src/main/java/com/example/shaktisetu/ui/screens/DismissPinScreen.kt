@@ -38,7 +38,6 @@ fun DismissPinScreen(
             .fillMaxSize()
             .background(CinematicDarkBg)
     ) {
-        // Ambient Glow
         Box(
             modifier = Modifier
                 .size(400.dp)
@@ -59,7 +58,7 @@ fun DismissPinScreen(
             Spacer(modifier = Modifier.height(60.dp))
 
             Icon(
-                painter = painterResource(id = R.drawable.ic_sos_shield), // Changed from ic_sos to ic_sos_shield
+                painter = painterResource(id = R.drawable.ic_sos_shield), 
                 contentDescription = "Lock",
                 tint = SosRed,
                 modifier = Modifier.size(64.dp)
@@ -85,7 +84,6 @@ fun DismissPinScreen(
 
             Spacer(modifier = Modifier.height(60.dp))
 
-            // PIN Display
             Row(
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 verticalAlignment = Alignment.CenterVertically
@@ -103,7 +101,6 @@ fun DismissPinScreen(
 
             Spacer(modifier = Modifier.weight(1f))
 
-            // Numeric Keypad
             val keys = listOf("1", "2", "3", "4", "5", "6", "7", "8", "9", "", "0", "backspace")
             LazyVerticalGrid(
                 columns = GridCells.Fixed(3),

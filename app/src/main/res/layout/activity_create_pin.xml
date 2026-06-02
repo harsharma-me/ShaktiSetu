@@ -8,11 +8,7 @@
     android:background="@drawable/bg_auth_gradient"
     android:padding="24dp">
 
-    <!-- Logo Title -->
-
-
-    <!-- Subtitle -->
-    <TextView
+<TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Create Password"
@@ -21,16 +17,12 @@
         android:fontFamily="@font/inter_semibold"
         android:textColor="#222222"
         android:layout_marginTop="8dp"/>
-
-    <!-- Shield Icon -->
-    <ImageView
+<ImageView
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:src="@drawable/ic_shield"
         android:layout_marginTop="30dp"/>
-
-    <!-- PIN Display Box -->
-    <TextView
+<TextView
         android:id="@+id/tvPinDisplay"
         android:layout_width="250dp"
         android:layout_height="55dp"
@@ -40,17 +32,13 @@
         android:textColor="#222222"
         android:letterSpacing="0.5"
         android:layout_marginTop="30dp"/>
-
-    <!-- Number Pad -->
-    <GridLayout
+<GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:columnCount="3"
         android:layout_marginTop="30dp"
         android:useDefaultMargins="true">
-
-        <!-- Row 1 -->
-        <TextView
+<TextView
             android:id="@+id/btn1"
             style="@style/PinButton"
             android:text="1"
@@ -65,9 +53,7 @@
             style="@style/PinButton"
             android:text="3"
             android:textColor="@color/keyboard"/>
-
-        <!-- Row 2 -->
-        <TextView
+<TextView
             android:id="@+id/btn4"
             style="@style/PinButton"
             android:text="4"
@@ -82,9 +68,7 @@
             style="@style/PinButton"
             android:text="6"
             android:textColor="@color/keyboard"/>
-
-        <!-- Row 3 -->
-        <TextView
+<TextView
             android:id="@+id/btn7"
             style="@style/PinButton"
             android:text="7"
@@ -99,9 +83,7 @@
             style="@style/PinButton"
             android:text="9"
             android:textColor="@color/keyboard"/>
-
-        <!-- Row 4 -->
-        <Space
+<Space
             android:layout_width="80dp"
             android:layout_height="80dp"/>
         <TextView
@@ -118,17 +100,12 @@
             />
 
     </GridLayout>
-
-    <!-- Spacer -->
-    <View
+<View
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
 
-    <!-- Confirm Button -->
-    <!-- Confirm Button -->
-    <!-- Confirm Button -->
-    <com.google.android.material.button.MaterialButton
+<com.google.android.material.button.MaterialButton
         android:id="@+id/btnConfirm"
         android:layout_width="match_parent"
         android:layout_height="55dp"

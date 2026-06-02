@@ -42,7 +42,6 @@ class MainActivity : AppCompatActivity() {
 
     private var savedLng = 0.0
 
-    // Permission Launchers
     private val notificationPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
             if (!isGranted) {
@@ -96,7 +95,7 @@ class MainActivity : AppCompatActivity() {
                     onFakeCallClick = { openScreen(FakeCallActivity::class.java) },
                     onTabClick = { tab ->
                         when (tab) {
-                            "home" -> { /* Already here */ }
+                            "home" -> Unit
                             "evidence" -> openScreen(EvidenceActivity::class.java)
                             "contacts" -> openScreen(ContactsActivity::class.java)
                             "call" -> openScreen(FakeCallActivity::class.java)
@@ -127,7 +126,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Compose migration: Views are no longer used in setContent
     private fun initializeViews() {}
     private fun startPulseAnimation() {}
 
@@ -147,7 +145,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Permission
     private fun requestLocationPermission() {
 
         val granted =
@@ -177,7 +174,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Fetch Location
     private fun fetchLocation() {
 
         try {
@@ -213,7 +209,6 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Open SOS
     private fun openSOSScreen() {
 
         val sharedPref =
@@ -251,7 +246,6 @@ class MainActivity : AppCompatActivity() {
         startAnimatedActivity(intent)
     }
 
-    // Dial Number
     private fun dialNumber(
         number: String
     ) {
@@ -266,7 +260,6 @@ class MainActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
-    // Open Screen
     private fun openScreen(
         target: Class<*>
     ) {
@@ -279,7 +272,6 @@ class MainActivity : AppCompatActivity() {
         startAnimatedActivity(intent)
     }
 
-    // Shared Animation
     private fun startAnimatedActivity(
         intent: Intent
     ) {
@@ -289,7 +281,6 @@ class MainActivity : AppCompatActivity() {
 
     private fun listenForBroadcasts() {
         val db = FirebaseFirestore.getInstance()
-        // appStartTime is used to ignore notifications sent before the app was opened
         val appStartTime = System.currentTimeMillis() / 1000
         Log.d("MainActivity", "Listening for notifications...")
         
@@ -308,7 +299,6 @@ class MainActivity : AppCompatActivity() {
                     val body = doc.getString("body") ?: ""
                     val timestamp = doc.getTimestamp("timestamp")
 
-                    // Only show if the notification is new (allow 10s buffer for server delay)
                     if (timestamp != null && timestamp.seconds > (appStartTime - 10)) {
                         val target = doc.getString("target") ?: "all"
                         val targetUid = doc.getString("uid")
@@ -322,7 +312,6 @@ class MainActivity : AppCompatActivity() {
                                 shouldShow = true
                             }
                         } else if (target == "emergency") {
-                            // Check if the user is currently in an SOS state
                             val isSosActive = sharedPrefs.getBoolean("sos_active", false)
                             if (isSosActive) {
                                 shouldShow = true
@@ -332,7 +321,6 @@ class MainActivity : AppCompatActivity() {
                         if (shouldShow) {
                             Log.d("MainActivity", "New notification received: $title")
                             
-                            // Show a Toast so we know the data arrived even if notification fails
                             runOnUiThread {
                                 Toast.makeText(this, "📢 $title: $body", Toast.LENGTH_LONG).show()
                             }

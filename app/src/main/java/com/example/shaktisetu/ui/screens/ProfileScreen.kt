@@ -65,7 +65,6 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Profile Header
             Column(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
@@ -95,7 +94,6 @@ fun ProfileScreen(
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            // Info Cards
             ProfileInfoItem(icon = Icons.Default.Email, label = "Email", value = email)
             Spacer(modifier = Modifier.height(16.dp))
             ProfileInfoItem(icon = Icons.Default.Phone, label = "Phone", value = phone)

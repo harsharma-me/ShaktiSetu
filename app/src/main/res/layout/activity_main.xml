@@ -5,9 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_auth_gradient">
-
-    <!-- Notification Icon -->
-    <ImageButton
+<ImageButton
         android:id="@+id/btnNotification"
         android:layout_width="48dp"
         android:layout_height="48dp"
@@ -20,14 +18,10 @@
         android:scaleType="centerInside"
         android:src="@drawable/ic_notification_bell"
         app:tint="@color/text_brand" />
-
-    <!-- Bottom Navigation -->
-    <include
+<include
         android:id="@+id/navIncludeRoot"
         layout="@layout/nav_bar_include" />
-
-    <!-- Main Content -->
-    <LinearLayout
+<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/navIncludeRoot"
@@ -35,18 +29,14 @@
         android:orientation="vertical"
         android:paddingHorizontal="20dp"
         android:paddingTop="10dp">
-
-        <!-- Logo Title -->
-        <TextView
+<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/bdscript_regular"
             android:text="Shakti Setu"
             android:textColor="@color/text_brand"
             android:textSize="48sp" />
-
-        <!-- Need Help? -->
-        <TextView
+<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/inter_semibold"
@@ -54,23 +44,17 @@
             android:textColor="@color/text_primary"
             android:textSize="24sp"
             android:textStyle="bold" />
-
-        <!-- Tap SOS Now -->
-        <TextView
+<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Instant support when every second matters"
             android:textColor="@color/text_hint"
             android:textSize="16sp" />
-
-        <!-- SOS Button Section -->
-        <FrameLayout
+<FrameLayout
             android:layout_width="280dp"
             android:layout_height="280dp"
             android:layout_marginTop="10dp">
-
-            <!-- Breathing Pulse View -->
-            <View
+<View
                 android:id="@+id/sosPulse"
                 android:layout_width="220dp"
                 android:layout_height="220dp"
@@ -78,9 +62,7 @@
                 android:alpha="0.3"
                 android:background="@drawable/sos_pulse_circle"
                 android:backgroundTint="@color/sos_red" />
-
-            <!-- Main SOS Button -->
-            <FrameLayout
+<FrameLayout
                 android:id="@+id/btnSOS"
                 android:layout_width="230dp"
                 android:layout_height="230dp"
@@ -113,18 +95,14 @@
                 </LinearLayout>
             </FrameLayout>
         </FrameLayout>
-
-        <!-- Quick Action Grid -->
-        <GridLayout
+<GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:columnCount="2"
             android:rowCount="2"
             android:useDefaultMargins="true">
-
-            <!-- Ambulance Card -->
-            <LinearLayout
+<LinearLayout
                 android:id="@+id/cardAmbulance"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
@@ -159,9 +137,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
-
-            <!-- Police Card -->
-            <LinearLayout
+<LinearLayout
                 android:id="@+id/cardPolice"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
@@ -195,9 +171,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
-
-            <!-- Women Safety Card -->
-            <LinearLayout
+<LinearLayout
                 android:id="@+id/cardWomenSafety"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
@@ -231,9 +205,7 @@
                     android:textSize="13sp"
                     android:textStyle="bold" />
             </LinearLayout>
-
-            <!-- Fake Call Card -->
-            <LinearLayout
+<LinearLayout
                 android:id="@+id/cardFakeCall"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
@@ -269,7 +241,6 @@
             </LinearLayout>
 
         </GridLayout>
-
 
     </LinearLayout>
 

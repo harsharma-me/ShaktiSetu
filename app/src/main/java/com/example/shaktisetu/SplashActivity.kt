@@ -35,9 +35,6 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    // =========================
-    // NAVIGATION
-    // =========================
 
     private fun navigateNext() {
 
