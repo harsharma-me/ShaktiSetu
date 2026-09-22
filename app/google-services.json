@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "490445496265",
+    "project_id": "shaktisetu-3",
+    "storage_bucket": "shaktisetu-3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:490445496265:android:a5f1d3be57a4087b419218",
+        "android_client_info": {
+          "package_name": "com.valeno.shaktisetu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "490445496265-u0s1bma0jhnlsgufe48evmqc8eplpdhr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.valeno.shaktisetu",
+            "certificate_hash": "7ee815bba3e70bc2e8ef818e055ddd9d6daeff54"
+          }
+        },
+        {
+          "client_id": "490445496265-i0g68oeoihvi7smdfr3o36roceu3cagr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD0meXntLMP-lfvOkrGywpT_bXEG14BKz8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "490445496265-i0g68oeoihvi7smdfr3o36roceu3cagr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

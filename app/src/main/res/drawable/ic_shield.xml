@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="60dp"
+    android:height="60dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Shield outline -->
+    <path
+        android:pathData="M12,2L4,5v6.09c0,5.05 3.41,9.76 8,10.91c4.59,-1.15 8,-5.86 8,-10.91V5L12,2z"
+        android:strokeWidth="1.5"
+        android:fillColor="#00000000"
+        android:strokeColor="#D4727A"/>
+
+    <!-- Dot 1 -->
+    <path
+        android:pathData="M8.5,11m-1.2,0a1.2,1.2 0,1 1,2.4 0a1.2,1.2 0,1 1,-2.4 0"
+        android:fillColor="#D4727A"/>
+
+    <!-- Dot 2 -->
+    <path
+        android:pathData="M12,11m-1.2,0a1.2,1.2 0,1 1,2.4 0a1.2,1.2 0,1 1,-2.4 0"
+        android:fillColor="#D4727A"/>
+
+    <!-- Dot 3 -->
+    <path
+        android:pathData="M15.5,11m-1.2,0a1.2,1.2 0,1 1,2.4 0a1.2,1.2 0,1 1,-2.4 0"
+        android:fillColor="#D4727A"/>
+</vector>

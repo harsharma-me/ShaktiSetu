@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_auth_gradient"
+    android:clipChildren="false">
+
+    <!-- Ambient Bloom/Glow behind Illustration -->
+    <View
+        android:id="@+id/ambientGlow"
+        android:layout_width="450dp"
+        android:layout_height="450dp"
+        android:layout_centerInParent="true"
+        android:alpha="0.2"
+        android:background="@drawable/bg_premium_glow" />
+
+    <!-- Main Content Container (Centered with slightly lower visual center) -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginTop="40dp"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <!-- Premium Minimalist Line-Art Illustration -->
+
+        <!-- Refined Handwritten Logo -->
+        <ImageView
+            android:id="@+id/ivLogo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginBottom="42dp"
+            android:alpha="0.9"
+            android:src="@drawable/download"
+            app:tint="@color/text_brand" />
+
+        <TextView
+            android:id="@+id/tvAppName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/bdscript_regular"
+            android:letterSpacing="0.02"
+            android:text="ShaktiSetu"
+            android:textColor="@color/text_brand"
+            android:textSize="76sp"
+            android:shadowColor="#20000000"
+            android:shadowDx="0"
+            android:shadowDy="4"
+            android:shadowRadius="10"/>
+
+        <!-- Premium Subtitle -->
+        <TextView
+            android:id="@+id/tvTagline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-12dp"
+            android:fontFamily="@font/inter_semibold"
+            android:letterSpacing="0.6"
+            android:text="A bridge to safety"
+            android:textAllCaps="false"
+            android:textColor="@color/text_secondary"
+            android:textSize="15sp"
+            android:alpha="0.85"/>
+
+    </LinearLayout>
+
+    <!-- Custom Premium Loader -->
+    <ProgressBar
+        android:id="@+id/premiumLoader"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="80dp"
+        android:indeterminate="true"
+        android:indeterminateDrawable="@drawable/premium_loader"
+        android:indeterminateDuration="2000" />
+
+</RelativeLayout>

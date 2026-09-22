@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Spacing -->
+    <dimen name="space_xs">4dp</dimen>
+    <dimen name="space_sm">8dp</dimen>
+    <dimen name="space_md">16dp</dimen>
+    <dimen name="space_lg">24dp</dimen>
+    <dimen name="space_xl">32dp</dimen>
+
+    <!-- Radius -->
+    <dimen name="radius_md">12dp</dimen>
+    <dimen name="radius_lg">18dp</dimen>
+
+    <!-- Text -->
+    <dimen name="text_caption">12sp</dimen>
+    <dimen name="text_body">14sp</dimen>
+    <dimen name="text_section">20sp</dimen>
+    <dimen name="text_heading">26sp</dimen>
+
+    <!-- Components -->
+    <dimen name="card_height">112dp</dimen>
+    <dimen name="sos_size">180dp</dimen>
+
+</resources>

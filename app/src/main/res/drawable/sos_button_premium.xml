@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!-- Premium Outer Glow Ring -->
+    <item>
+        <shape android:shape="oval">
+            <solid android:color="#40D4A5A5"/> <!-- cinematic_glow_soft -->
+            <size
+                android:width="240dp"
+                android:height="240dp"/>
+        </shape>
+    </item>
+
+    <!-- Main Premium SOS Circle -->
+    <item
+        android:left="12dp"
+        android:top="12dp"
+        android:right="12dp"
+        android:bottom="12dp">
+        <shape android:shape="oval">
+            <gradient
+                android:type="linear"
+                android:angle="270"
+                android:startColor="@color/sos_red"
+                android:centerColor="#D32F2F"
+                android:endColor="#B71C1C"/>
+        </shape>
+    </item>
+
+</layer-list>

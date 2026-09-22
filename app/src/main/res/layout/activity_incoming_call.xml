@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_auth_gradient">
+
+    <!-- Top Section -->
+    <LinearLayout
+        android:id="@+id/topSection"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <!-- Status -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Incoming Call"
+            android:textColor="@color/text_secondary"
+            android:textSize="14sp"
+            android:textAllCaps="true"
+            android:letterSpacing="0.2" />
+
+        <!-- Caller Name -->
+        <TextView
+            android:id="@+id/tvIncomingName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Harsh"
+            android:textColor="@color/text_primary"
+            android:textSize="36sp"
+            android:textStyle="bold" />
+
+        <!-- Mobile Number -->
+        <TextView
+            android:id="@+id/tvIncomingNumber"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Mobile +91 82950 00000"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+    <!-- Big Avatar Circle -->
+    <TextView
+        android:id="@+id/tvIncomingAvatar"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerInParent="true"
+        android:background="@drawable/avatar_incoming_circle"
+        android:gravity="center"
+        android:text="H"
+        android:textColor="#FFFFFF"
+        android:textSize="80sp"
+        android:textStyle="bold" />
+
+    <!-- Message Button -->
+    <LinearLayout
+        android:id="@+id/btnMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="44dp"
+        android:layout_above="@id/bottomSection"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="24dp"
+        android:background="@drawable/message_btn_bg"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:paddingStart="20dp"
+        android:paddingEnd="20dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="💬"
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="Message"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <!-- Bottom Action Bar -->
+    <LinearLayout
+        android:id="@+id/bottomSection"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="40dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/bottom_call_bar_bg"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp">
+
+        <!-- Decline -->
+        <TextView
+            android:id="@+id/btnDecline"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Decline"
+            android:textColor="@color/sos_red"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true" />
+
+        <!-- Green Call Button (center) -->
+        <LinearLayout
+            android:id="@+id/btnAccept"
+            android:layout_width="87dp"
+            android:layout_height="64dp"
+            android:background="@drawable/accept_call_circle"
+            android:clickable="true"
+            android:elevation="4dp"
+            android:focusable="true"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="📞"
+                android:textColor="@color/text_primary"
+                android:textSize="26sp" />
+        </LinearLayout>
+
+        <!-- Answer -->
+        <TextView
+            android:id="@+id/btnAnswer"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Answer"
+            android:textColor="#2E7D32"
+            android:textSize="17sp"
+            android:textStyle="bold"
+            android:clickable="true"
+            android:focusable="true" />
+    </LinearLayout>
+
+</RelativeLayout>

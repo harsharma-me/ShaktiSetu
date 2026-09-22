@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:padding="12dp"
+    android:gravity="center_vertical"
+    android:background="@drawable/location_bar_bg"
+    android:layout_marginBottom="8dp">
+
+    <TextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="🎙️"
+        android:textSize="24sp" />
+
+    <TextView
+        android:id="@+id/tvAudioName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="4"
+        android:textColor="@color/text_primary"
+        android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/btnPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="▶ Play"
+        android:textColor="@color/text_action"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        android:padding="8dp"
+        android:clickable="true"
+        android:focusable="true" />
+
+</LinearLayout>

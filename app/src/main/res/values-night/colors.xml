@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Forced Light Mode Redirects -->
+<!--    <color name="bg_gradient_start">@color/bg_gradient_start</color>-->
+<!--    <color name="bg_gradient_center">@color/bg_gradient_center</color>-->
+<!--    <color name="bg_gradient_end">@color/bg_gradient_end</color>-->
+
+<!--    <color name="input_bg">@color/input_bg</color>-->
+<!--    <color name="input_border">@color/input_border</color>-->
+<!--    <color name="input_hint">@color/input_hint</color>-->
+<!--    <color name="input_text">@color/input_text</color>-->
+
+<!--    <color name="background">@color/background</color>-->
+<!--    <color name="logo_bg">@color/logo_bg</color>-->
+<!--    <color name="surface_card">@color/surface_card</color>-->
+<!--    <color name="bg_main">@color/bg_main</color>-->
+<!--    <color name="bg_white">@color/bg_white</color>-->
+
+<!--    <color name="text_primary">@color/text_primary</color>-->
+<!--    <color name="text_secondary">@color/text_secondary</color>-->
+<!--    <color name="text_hint">@color/text_hint</color>-->
+<!--    <color name="text_brand">@color/text_brand</color>-->
+<!--    <color name="text_action">@color/text_action</color>-->
+<!--    <color name="text_dark">@color/text_dark</color>-->
+<!--    <color name="text_black">@color/text_black</color>-->
+<!--    <color name="text_light_gray">@color/text_light_gray</color>-->
+
+<!--    <color name="black">@color/black</color>-->
+<!--    <color name="white">@color/white</color>-->
+<!--    <color name="text_white">@color/text_white</color>-->
+<!--    <color name="keyboard">@color/keyboard</color>-->
+
+<!--    <color name="sos_red">@color/sos_red</color>-->
+<!--    <color name="sos_outer">@color/sos_outer</color>-->
+
+<!--    <color name="nav_active">@color/nav_active</color>-->
+<!--    <color name="timer_unselected_text">@color/timer_unselected_text</color>-->
+
+<!--    <color name="bg_purple_icon">@color/bg_purple_icon</color>-->
+<!--    <color name="bg_orange_icon">@color/bg_orange_icon</color>-->
+<!--    <color name="bg_pink_icon">@color/bg_pink_icon</color>-->
+<!--    <color name="bg_blue_icon">@color/bg_blue_icon</color>-->
+<!--    <color name="bg_cyan_icon">@color/bg_cyan_icon</color>-->
+<!--    <color name="bg_red_icon_light">@color/bg_red_icon_light</color>-->
+
+<!--    <color name="primary_color">@color/primary_color</color>-->
+<!--    <color name="primary_dark_color">@color/primary_dark_color</color>-->
+<!--    <color name="accent_color">@color/accent_color</color>-->
+
+<!--    <color name="black_btn">@color/black_btn</color>-->
+</resources>

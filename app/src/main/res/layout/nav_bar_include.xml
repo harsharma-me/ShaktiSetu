@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navIncludeRoot"
+    android:layout_width="match_parent"
+    android:layout_height="92dp"
+    android:layout_alignParentBottom="true"
+    android:clipChildren="false"
+    android:clipToPadding="false"
+    android:transitionName="bottom_nav">
+
+    <!-- Navigation Background -->
+    <LinearLayout
+        android:id="@+id/navBarBg"
+        android:layout_width="match_parent"
+        android:layout_height="68dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="14dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="8dp"
+        android:background="@drawable/nav_bg"
+        android:elevation="6dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp">
+
+        <!-- Evidence -->
+        <ImageView
+            android:id="@+id/navEvidence"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:src="@drawable/eye_scan_svgrepo_com"
+            android:contentDescription="Evidence"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="fitCenter"
+            app:tint="@color/text_hint" />
+
+        <!-- Contacts -->
+        <ImageView
+            android:id="@+id/navContacts"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_nav_contacts"
+            android:contentDescription="Contacts"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="fitCenter"
+            app:tint="@color/text_hint" />
+
+        <!-- Center Space -->
+        <View
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_weight="1.2" />
+
+        <!-- Call -->
+        <ImageView
+            android:id="@+id/navCall"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_nav_call"
+            android:contentDescription="Call"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="fitCenter"
+            app:tint="@color/text_hint" />
+
+        <!-- Settings -->
+        <ImageView
+            android:id="@+id/navSettings"
+            android:layout_width="0dp"
+            android:layout_height="40dp"
+            android:layout_weight="1"
+            android:src="@drawable/ic_nav_settings"
+            android:contentDescription="Settings"
+            android:clickable="true"
+            android:focusable="true"
+            android:scaleType="fitCenter"
+            app:tint="@color/nav_active" />
+
+    </LinearLayout>
+
+    <!-- Floating Center Button -->
+    <LinearLayout
+        android:id="@+id/navHomeFab"
+        android:layout_width="72dp"
+        android:layout_height="72dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/fab_circle_bg"
+        android:elevation="10dp"
+        android:gravity="center"
+        android:clickable="true"
+        android:focusable="true">
+
+        <ImageView
+            android:layout_width="34dp"
+            android:layout_height="34dp"
+            android:src="@drawable/ic_nav_shield"
+            android:scaleType="fitCenter"
+            android:contentDescription="Home"
+            app:tint="#FFFFFF" />
+
+    </LinearLayout>
+
+</RelativeLayout>
