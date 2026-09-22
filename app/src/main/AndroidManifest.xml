@@ -107,6 +107,12 @@
             android:exported="false"
             android:hardwareAccelerated="true"/>
 
+        <!-- Web Activity -->
+        <activity
+            android:name=".WebActivity"
+            android:exported="false"
+            android:hardwareAccelerated="true"/>
+
         <!-- Fake Call -->
         <activity
             android:name=".FakeCallActivity"
