@@ -2,6 +2,7 @@ package com.valeno.shaktisetu
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.text.InputType
 import android.widget.EditText
@@ -53,7 +54,9 @@ class SettingsActivity : AppCompatActivity() {
                             "profile" -> startActivity(Intent(this, ProfileActivity::class.java))
                             "change_pin" -> showChangePinDialog()
                             "reset_password" -> showResetPasswordDialog()
-                            "terms" -> showTermsDialog()
+                            "privacy" -> openUrl("https://valeno-legal.vercel.app/privacy")
+                            "terms" -> openUrl("https://valeno-legal.vercel.app/terms")
+                            "delete_account" -> openUrl("https://valeno-legal.vercel.app/delete-account")
                             "logout" -> showLogoutDialog()
                         }
                     },
@@ -101,6 +104,11 @@ class SettingsActivity : AppCompatActivity() {
         if (phone.isNotBlank()) completed++
         if (address.isNotBlank()) completed++
         return (completed * 100) / 4
+    }
+
+    private fun openUrl(url: String) {
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivity(intent)
     }
 
     private fun showTermsDialog() {

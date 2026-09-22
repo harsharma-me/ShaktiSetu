@@ -141,11 +141,32 @@ fun SettingsScreen(
 
                 item {
                     ActionSettingItem(
+                        title = "Privacy Policy",
+                        icon = R.drawable.ic_shield,
+                        onClick = { onActionClick("privacy") },
+                        brandColor = currentBrandText,
+                        cardBg = cardBg
+                    )
+                }
+
+                item {
+                    ActionSettingItem(
                         title = "Terms & Conditions",
                         icon = R.drawable.ic_shield_white,
                         onClick = { onActionClick("terms") },
                         brandColor = currentBrandText,
                         cardBg = cardBg
+                    )
+                }
+
+                item {
+                    ActionSettingItem(
+                        title = "Delete Account",
+                        icon = R.drawable.ic_delete_contact,
+                        onClick = { onActionClick("delete_account") },
+                        brandColor = currentBrandText,
+                        cardBg = cardBg,
+                        textColor = Color.Red
                     )
                 }
 
@@ -244,7 +265,14 @@ fun ToggleSettingItem(
 }
 
 @Composable
-fun ActionSettingItem(title: String, icon: Int, onClick: () -> Unit, brandColor: Color, cardBg: Color) {
+fun ActionSettingItem(
+    title: String,
+    icon: Int,
+    onClick: () -> Unit,
+    brandColor: Color,
+    cardBg: Color,
+    textColor: Color = brandColor
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -254,13 +282,13 @@ fun ActionSettingItem(title: String, icon: Int, onClick: () -> Unit, brandColor:
             .padding(16.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        IconBox(icon, brandColor)
+        IconBox(icon, textColor)
         Spacer(modifier = Modifier.width(16.dp))
-        Text(text = title, fontWeight = FontWeight.Medium, color = brandColor, modifier = Modifier.weight(1f))
+        Text(text = title, fontWeight = FontWeight.Medium, color = textColor, modifier = Modifier.weight(1f))
         Icon(
             painter = painterResource(id = R.drawable.ic_back_arrow), // Reuse as forward arrow
             contentDescription = null,
-            tint = brandColor.copy(alpha = 0.4f),
+            tint = textColor.copy(alpha = 0.4f),
             modifier = Modifier.size(16.dp).rotate(180f)
         )
     }
