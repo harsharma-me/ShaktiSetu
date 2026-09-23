@@ -112,7 +112,7 @@ class SosAlertActivity :
 
     companion object {
         private const val SHAKE_THRESHOLD = 25f
-        private const val LOCATION_SMS_INTERVAL = 60000L
+        private const val LOCATION_SMS_INTERVAL = 30000L
     }
 
     // Permission Launcher
@@ -289,14 +289,18 @@ class SosAlertActivity :
         sosJob?.cancel()
         sosJob = lifecycleScope.launch {
             while (sosActive) {
+                kotlinx.coroutines.delay(LOCATION_SMS_INTERVAL)
+                if (!sosActive) break
                 try {
                     refreshLocation()
                     sendLocationSMS()
                     updateLiveLocationInFirebase()
+                    withContext(Dispatchers.Main) {
+                        capturePhoto()
+                    }
                 } catch (e: Exception) {
                     Log.e("SOS_LOOP", "Error in periodic update: ${e.message}")
                 }
-                kotlinx.coroutines.delay(LOCATION_SMS_INTERVAL)
             }
         }
     }
