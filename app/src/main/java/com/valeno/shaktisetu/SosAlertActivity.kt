@@ -35,17 +35,16 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.valeno.shaktisetu.database.AppDatabase
-import com.valeno.shaktisetu.ui.screens.SosAlertScreen
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.GeoPoint
 import com.google.firebase.storage.FirebaseStorage
+import com.valeno.shaktisetu.database.AppDatabase
+import com.valeno.shaktisetu.ui.screens.SosAlertScreen
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -63,20 +62,24 @@ class SosAlertActivity :
     private var isSosActiveState by mutableStateOf(false)
     private var isMutedState by mutableStateOf(false)
 
-    // Audio
+    // Audio State
     private var mediaPlayer: MediaPlayer? = null
     private var vibrator: Vibrator? = null
+    private var mediaRecorder: MediaRecorder? = null
+    private var isRecordingAudio = false
+    private var isStartingAudio = false
+    private var audioFilePath = ""
 
     // Countdown
     private var countDownTimer: CountDownTimer? = null
 
-    // Recording
-    private var mediaRecorder: MediaRecorder? = null
-    private var isRecording = false
-    private var audioFilePath = ""
-
-    // Camera
+    // Camera State
+    private var cameraProvider: ProcessCameraProvider? = null
     private var imageCapture: ImageCapture? = null
+    private var isCameraInitializing = false
+    private var isCameraBound = false
+    private var isCapturingPhoto = false
+    private var pendingPhotoCapture = false
 
     // Location
     private var currentLatitude = 0.0
@@ -108,10 +111,36 @@ class SosAlertActivity :
     private var cachedContacts: List<String> = emptyList()
 
     companion object {
-        private const val PERMISSION_REQUEST_CODE = 100
         private const val SHAKE_THRESHOLD = 25f
         private const val LOCATION_SMS_INTERVAL = 60000L
     }
+
+    // Permission Launcher
+    private val permissionsLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            Log.d("SHAKTI_PERM", "Permissions result callback: $permissions")
+
+            val cameraGranted = permissions[Manifest.permission.CAMERA] == true ||
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED
+            val audioGranted = permissions[Manifest.permission.RECORD_AUDIO] == true ||
+                    ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) == PackageManager.PERMISSION_GRANTED
+
+            if (cameraGranted) {
+                Log.d("SHAKTI_CAMERA", "CAMERA permission granted in result callback")
+                setupCamera()
+            } else {
+                Log.w("SHAKTI_CAMERA", "CAMERA permission denied in result callback")
+                Toast.makeText(this, "⚠️ Camera permission denied. Photo evidence disabled.", Toast.LENGTH_SHORT).show()
+            }
+
+            if (audioGranted) {
+                Log.d("SHAKTI_AUDIO", "RECORD_AUDIO permission granted in result callback")
+                startAudioRecording()
+            } else {
+                Log.w("SHAKTI_AUDIO", "RECORD_AUDIO permission denied in result callback")
+                Toast.makeText(this, "⚠️ Audio permission denied. Audio evidence disabled.", Toast.LENGTH_SHORT).show()
+            }
+        }
 
     // PIN Launcher
     private val dismissLauncher =
@@ -329,15 +358,29 @@ class SosAlertActivity :
     }
 
     private fun requestAllPermissions() {
-        val permissions = arrayOf(Manifest.permission.SEND_SMS, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.CAMERA, Manifest.permission.RECORD_AUDIO, Manifest.permission.VIBRATE)
+        val permissions = arrayOf(
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION,
+            Manifest.permission.CAMERA,
+            Manifest.permission.RECORD_AUDIO,
+            Manifest.permission.VIBRATE
+        )
         val notGranted = permissions.filter { ContextCompat.checkSelfPermission(this, it) != PackageManager.PERMISSION_GRANTED }
-        if (notGranted.isNotEmpty()) ActivityCompat.requestPermissions(this, notGranted.toTypedArray(), PERMISSION_REQUEST_CODE)
+        if (notGranted.isNotEmpty()) {
+            Log.d("SHAKTI_PERM", "Requesting missing permissions: $notGranted")
+            permissionsLauncher.launch(notGranted.toTypedArray())
+        } else {
+            Log.d("SHAKTI_PERM", "All permissions already granted")
+            setupCamera()
+            startAudioRecording()
+        }
     }
 
     private suspend fun refreshLocation() {
         withContext(Dispatchers.IO) {
             try {
-                if (ActivityCompat.checkSelfPermission(this@SosAlertActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) return@withContext
+                if (ContextCompat.checkSelfPermission(this@SosAlertActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) return@withContext
                 val fusedClient = LocationServices.getFusedLocationProviderClient(this@SosAlertActivity)
                 val location: Location? = Tasks.await(fusedClient.getCurrentLocation(Priority.PRIORITY_HIGH_ACCURACY, null))
                 if (location != null) {
@@ -374,60 +417,307 @@ class SosAlertActivity :
     private fun stopVibration() { vibrator?.cancel() }
 
     private fun setupCamera() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            Log.w("SHAKTI_CAMERA", "Cannot setup camera: CAMERA permission not granted")
+            return
+        }
+
+        if (isCameraBound) {
+            Log.d("SHAKTI_CAMERA", "Camera is already initialized and bound.")
+            return
+        }
+
+        if (isCameraInitializing) {
+            Log.d("SHAKTI_CAMERA", "Camera setup is already in progress.")
+            return
+        }
+
+        isCameraInitializing = true
+        Log.d("SHAKTI_CAMERA", "Initializing ProcessCameraProvider...")
+
         val future = ProcessCameraProvider.getInstance(this)
         future.addListener({
             try {
                 val provider = future.get()
-                imageCapture = ImageCapture.Builder().build()
+                cameraProvider = provider
+                imageCapture = ImageCapture.Builder()
+                    .setCaptureMode(ImageCapture.CAPTURE_MODE_MINIMIZE_LATENCY)
+                    .build()
+
                 provider.unbindAll()
-                provider.bindToLifecycle(this, CameraSelector.DEFAULT_FRONT_CAMERA, imageCapture)
-            } catch (e: Exception) { e.printStackTrace() }
+
+                val boundCamera = try {
+                    provider.bindToLifecycle(this, CameraSelector.DEFAULT_FRONT_CAMERA, imageCapture)
+                } catch (e: Exception) {
+                    Log.w("SHAKTI_CAMERA", "Front camera bind failed, trying back camera: ${e.message}")
+                    provider.bindToLifecycle(this, CameraSelector.DEFAULT_BACK_CAMERA, imageCapture)
+                }
+
+                isCameraBound = boundCamera != null
+                Log.d("SHAKTI_CAMERA", "Camera successfully bound to lifecycle! Camera active.")
+
+                if (pendingPhotoCapture) {
+                    pendingPhotoCapture = false
+                    Log.d("SHAKTI_CAMERA", "Executing pending photo capture...")
+                    capturePhoto()
+                }
+            } catch (e: Exception) {
+                Log.e("SHAKTI_CAMERA", "Failed to setup camera: ${e.message}", e)
+                isCameraBound = false
+                Toast.makeText(this, "⚠️ Camera init failed: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+            } finally {
+                isCameraInitializing = false
+            }
         }, ContextCompat.getMainExecutor(this))
     }
 
     private fun capturePhoto() {
-        val imgCapture = imageCapture ?: return
-        val photoFile = File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), "SOS_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())}.jpg")
-        imgCapture.takePicture(ImageCapture.OutputFileOptions.Builder(photoFile).build(), ContextCompat.getMainExecutor(this), object : ImageCapture.OnImageSavedCallback {
-            override fun onImageSaved(output: ImageCapture.OutputFileResults) { uploadEvidence(photoFile, "image") }
-            override fun onError(exception: ImageCaptureException) { exception.printStackTrace() }
-        })
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+            Log.w("SHAKTI_CAMERA", "Cannot capture photo: CAMERA permission not granted")
+            pendingPhotoCapture = true
+            requestAllPermissions()
+            return
+        }
+
+        val imgCapture = imageCapture
+        if (imgCapture == null || !isCameraBound) {
+            Log.w("SHAKTI_CAMERA", "ImageCapture is null or camera not bound. Queuing photo capture.")
+            pendingPhotoCapture = true
+            setupCamera()
+            return
+        }
+
+        if (isCapturingPhoto) {
+            Log.d("SHAKTI_CAMERA", "Photo capture already in progress. Skipping duplicate call.")
+            return
+        }
+
+        val picturesDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        if (picturesDir == null) {
+            Log.e("SHAKTI_CAMERA", "Pictures directory external storage is unavailable")
+            Toast.makeText(this, "⚠️ Storage unavailable for camera photo", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (!picturesDir.exists()) {
+            picturesDir.mkdirs()
+        }
+
+        val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+        val photoFile = File(picturesDir, "SOS_$timeStamp.jpg")
+
+        try {
+            if (photoFile.exists()) photoFile.delete()
+            val fileCreated = photoFile.createNewFile()
+            if (!fileCreated || !photoFile.canWrite()) {
+                Log.e("SHAKTI_CAMERA", "Photo file cannot be created or written to: ${photoFile.absolutePath}")
+                Toast.makeText(this, "⚠️ File creation failed for photo evidence", Toast.LENGTH_SHORT).show()
+                return
+            }
+        } catch (e: Exception) {
+            Log.e("SHAKTI_CAMERA", "Failed to create photo file: ${e.message}", e)
+            Toast.makeText(this, "⚠️ Photo file error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        isCapturingPhoto = true
+        Log.d("SHAKTI_CAMERA", "Taking picture to file: ${photoFile.absolutePath}")
+
+        val outputOptions = ImageCapture.OutputFileOptions.Builder(photoFile).build()
+
+        imgCapture.takePicture(
+            outputOptions,
+            ContextCompat.getMainExecutor(this),
+            object : ImageCapture.OnImageSavedCallback {
+                override fun onImageSaved(output: ImageCapture.OutputFileResults) {
+                    isCapturingPhoto = false
+                    Log.d("SHAKTI_CAMERA", "Photo captured successfully: ${photoFile.absolutePath}, size=${photoFile.length()} bytes")
+                    uploadEvidence(photoFile, "image")
+                }
+
+                override fun onError(exception: ImageCaptureException) {
+                    isCapturingPhoto = false
+                    Log.e("SHAKTI_CAMERA", "Photo capture failed: ${exception.message}", exception)
+                    Toast.makeText(this@SosAlertActivity, "⚠️ Photo capture failed: ${exception.localizedMessage}", Toast.LENGTH_SHORT).show()
+                }
+            }
+        )
     }
 
     private fun uploadEvidence(file: File, type: String) {
-        if (userUid.isEmpty()) return
-        val ref = storage.reference.child("evidence/$userUid/${file.name}")
-        ref.putFile(Uri.fromFile(file)).addOnSuccessListener {
-            ref.downloadUrl.addOnSuccessListener { url ->
-                val field = if (type == "image") "last_photo" else "last_audio"
-                db.collection("live_sos").document(userUid).update(field, url.toString())
-            }
+        if (userUid.isEmpty()) {
+            Log.w("SHAKTI_EVIDENCE", "User UID is empty. Skipping upload.")
+            return
         }
+
+        if (!file.exists() || file.length() == 0L) {
+            Log.w("SHAKTI_EVIDENCE", "Evidence file does not exist or is empty: ${file.absolutePath}")
+            return
+        }
+
+        Log.d("SHAKTI_EVIDENCE", "Uploading $type evidence (${file.name}, ${file.length()} bytes) to Firebase Storage...")
+
+        val ref = storage.reference.child("evidence/$userUid/${file.name}")
+        ref.putFile(Uri.fromFile(file))
+            .addOnSuccessListener {
+                Log.d("SHAKTI_EVIDENCE", "Successfully uploaded $type evidence to Firebase Storage.")
+                ref.downloadUrl.addOnSuccessListener { url ->
+                    val field = if (type == "image") "last_photo" else "last_audio"
+                    db.collection("live_sos").document(userUid)
+                        .update(field, url.toString())
+                        .addOnSuccessListener {
+                            Log.d("SHAKTI_EVIDENCE", "Updated live_sos with $field URL: $url")
+                        }
+                        .addOnFailureListener { e ->
+                            Log.e("SHAKTI_EVIDENCE", "Failed to update live_sos doc: ${e.message}", e)
+                        }
+                }.addOnFailureListener { e ->
+                    Log.e("SHAKTI_EVIDENCE", "Failed to get download URL for $type evidence: ${e.message}", e)
+                }
+            }
+            .addOnFailureListener { e ->
+                Log.e("SHAKTI_EVIDENCE", "Failed to upload $type evidence to Firebase Storage: ${e.message}", e)
+            }
     }
 
     private fun startAudioRecording() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+            Log.w("SHAKTI_AUDIO", "Cannot start audio recording: RECORD_AUDIO permission not granted")
+            return
+        }
+
+        if (isRecordingAudio || isStartingAudio) {
+            Log.d("SHAKTI_AUDIO", "Audio recording already active or starting")
+            return
+        }
+
+        isStartingAudio = true
+
         try {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) return
-            audioFilePath = "${getExternalFilesDir(Environment.DIRECTORY_MUSIC)}/SOS_${SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())}.3gp"
-            mediaRecorder = MediaRecorder().apply {
-                setAudioSource(MediaRecorder.AudioSource.MIC)
-                setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
-                setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
-                setOutputFile(audioFilePath)
-                prepare()
-                start()
+            val musicDir = getExternalFilesDir(Environment.DIRECTORY_MUSIC)
+            if (musicDir == null) {
+                Log.e("SHAKTI_AUDIO", "Music directory external storage is null/unavailable")
+                Toast.makeText(this, "⚠️ Storage unavailable for audio recording", Toast.LENGTH_SHORT).show()
+                isStartingAudio = false
+                return
             }
-            isRecording = true
-        } catch (e: Exception) { e.printStackTrace() }
+
+            if (!musicDir.exists()) {
+                val created = musicDir.mkdirs()
+                Log.d("SHAKTI_AUDIO", "Directory created: $created at ${musicDir.absolutePath}")
+            }
+
+            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault()).format(Date())
+            val outputFile = File(musicDir, "SOS_$timeStamp.3gp")
+
+            try {
+                if (outputFile.exists()) outputFile.delete()
+                val fileCreated = outputFile.createNewFile()
+                if (!fileCreated || !outputFile.canWrite()) {
+                    Log.e("SHAKTI_AUDIO", "Output audio file cannot be created or written to: ${outputFile.absolutePath}")
+                    Toast.makeText(this, "⚠️ Cannot create audio evidence file", Toast.LENGTH_SHORT).show()
+                    isStartingAudio = false
+                    return
+                }
+            } catch (e: Exception) {
+                Log.e("SHAKTI_AUDIO", "Failed to create audio output file: ${e.message}", e)
+                Toast.makeText(this, "⚠️ File creation error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                isStartingAudio = false
+                return
+            }
+
+            audioFilePath = outputFile.absolutePath
+            Log.d("SHAKTI_AUDIO", "Audio output file prepared: $audioFilePath")
+
+            val recorder = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                MediaRecorder(this)
+            } else {
+                @Suppress("DEPRECATION")
+                MediaRecorder()
+            }
+
+            val audioSources = listOf(
+                MediaRecorder.AudioSource.MIC,
+                MediaRecorder.AudioSource.CAMCORDER,
+                MediaRecorder.AudioSource.DEFAULT
+            )
+
+            var prepared = false
+            var lastException: Exception? = null
+
+            for (source in audioSources) {
+                try {
+                    recorder.reset()
+                    recorder.setAudioSource(source)
+                    recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP)
+                    recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB)
+                    recorder.setOutputFile(audioFilePath)
+                    recorder.prepare()
+                    prepared = true
+                    Log.d("SHAKTI_AUDIO", "MediaRecorder prepared successfully with audio source: $source")
+                    break
+                } catch (e: Exception) {
+                    Log.w("SHAKTI_AUDIO", "Failed to prepare MediaRecorder with audio source $source: ${e.message}")
+                    lastException = e
+                }
+            }
+
+            if (!prepared) {
+                recorder.release()
+                Log.e("SHAKTI_AUDIO", "MediaRecorder preparation failed for all audio sources", lastException)
+                Toast.makeText(this, "⚠️ Audio recorder failed to initialize", Toast.LENGTH_SHORT).show()
+                isStartingAudio = false
+                return
+            }
+
+            recorder.start()
+            mediaRecorder = recorder
+            isRecordingAudio = true
+            Log.d("SHAKTI_AUDIO", "Audio recording started successfully!")
+
+        } catch (e: Exception) {
+            Log.e("SHAKTI_AUDIO", "Error starting audio recording: ${e.message}", e)
+            Toast.makeText(this, "⚠️ Audio recording error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+            mediaRecorder?.release()
+            mediaRecorder = null
+            isRecordingAudio = false
+        } finally {
+            isStartingAudio = false
+        }
     }
 
     private fun stopAudioRecording() {
-        if (isRecording) {
-            mediaRecorder?.stop()
-            uploadEvidence(File(audioFilePath), "audio")
-            mediaRecorder?.release()
+        if (!isRecordingAudio && mediaRecorder == null) return
+        Log.d("SHAKTI_AUDIO", "Stopping audio recording...")
+
+        try {
+            mediaRecorder?.apply {
+                try {
+                    stop()
+                    Log.d("SHAKTI_AUDIO", "MediaRecorder stopped successfully.")
+                    if (audioFilePath.isNotEmpty()) {
+                        val file = File(audioFilePath)
+                        if (file.exists() && file.length() > 0) {
+                            uploadEvidence(file, "audio")
+                        } else {
+                            Log.w("SHAKTI_AUDIO", "Recorded audio file is missing or empty: $audioFilePath")
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e("SHAKTI_AUDIO", "Error stopping MediaRecorder (recording might be too short): ${e.message}", e)
+                }
+            }
+        } catch (e: Exception) {
+            Log.e("SHAKTI_AUDIO", "Unexpected error in stopAudioRecording: ${e.message}", e)
+        } finally {
+            try {
+                mediaRecorder?.release()
+            } catch (e: Exception) {
+                Log.e("SHAKTI_AUDIO", "Error releasing MediaRecorder: ${e.message}", e)
+            }
             mediaRecorder = null
-            isRecording = false
+            isRecordingAudio = false
+            isStartingAudio = false
         }
     }
 
@@ -500,5 +790,13 @@ class SosAlertActivity :
         stopPeriodicLocationSMS()
         countDownTimer?.cancel()
         sensorManager?.unregisterListener(this)
+
+        try {
+            cameraProvider?.unbindAll()
+            cameraProvider = null
+            isCameraBound = false
+        } catch (e: Exception) {
+            Log.e("SHAKTI_CAMERA", "Error unbinding camera on destroy: ${e.message}", e)
+        }
     }
 }
